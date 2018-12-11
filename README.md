@@ -10,3 +10,7 @@ Concurrent Visualization of Space Filling Curves for Creating Art Images
 5) In IntelliJ add JavaFX as a library in: File < Project Structure < Libraries, select Java Library and choose the downloaded extracted ZIP
 6) Add this to VM options --module-path /Users/**USERNAME**/Downloads/javafx-sdk-11/lib --add-modules=javafx.controls,javafx.fxml
 7) Run
+
+
+Alternative to Old Scene Builder:
+https://gluonhq.com/products/scene-builder/#download
