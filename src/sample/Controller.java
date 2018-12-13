@@ -74,7 +74,7 @@ public class Controller {
         int start_curve = Integer.parseInt(startCurve.getText());
 
         System.out.println("Color: " + color);
-        System.out.println("Start Kurve: " + start_curve);
+        System.out.println("Start Kurve: " + start_curve);s
        */
 
         //drawShapes(gc);
