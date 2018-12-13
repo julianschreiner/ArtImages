@@ -14,16 +14,29 @@ public class Figures {
         //TODO switch case which calls different figurre methods (dreieck, quadrat etc)
         switch (type){
             case 1:
+
                 line(gc);
+
                 break;
             case 2:
                 triangle(gc);
+            case 3:
+                point(gc);
+                break;
+            case 4:
+                square(gc);
                 break;
             case 5:
                 circle(gc);
                 break;
+            case 6:
+                rectangle(gc);
+                break;
+
+                break;
+
             default:
-                // THROW ERROR
+                // THROW ERRORsssadsad
                 break;
         }
     }
@@ -50,6 +63,27 @@ public class Figures {
 
 
 
+    private void point(GraphicsContext gc)
+    {
+
+        System.out.println("point");
+        gc.strokeOval(200,250, 10, 10);
+        gc.fillOval(200,250,10,10);
+    }
+
+    private void square(GraphicsContext gc)
+    {
+        System.out.println("square");
+        gc.strokeRect(200,250,50,50);
+
+    }
+
+    private void rectangle(GraphicsContext gc)
+    {
+        System.out.println("rectangle");
+        gc.strokeRect(200,250,50, 100);
+        gc.fillRect(200,250,50,100);
+    }
     private void mandelbrot(){}
 
 
