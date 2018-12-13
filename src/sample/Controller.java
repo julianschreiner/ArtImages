@@ -16,10 +16,13 @@ public class Controller {
     // VIEWS
     @FXML private TextField startCurve;
     @FXML private Button drawButton;
+    @FXML private Button clearButton;
     @FXML private Canvas drawArea;
     @FXML private ColorPicker colorInput;
     @FXML private ChoiceBox choiceBox;
-
+    @FXML private TextField startPos;
+    @FXML private TextField layer;
+    @FXML private TextField sizeOfSquare;
 
     // Size of the canvas for the Mandelbrot set
     private static final int CANVAS_WIDTH = 697;
@@ -75,6 +78,11 @@ public class Controller {
 
 
         figures.init(Integer.parseInt(userChoice), gc);
+    }
+
+    @FXML
+    public void clearCanvas(){
+        System.out.println("pressed");
     }
 
 }

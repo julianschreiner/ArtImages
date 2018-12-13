@@ -27,7 +27,6 @@ public class Figures {
     private void line(GraphicsContext gc){
         System.out.println("line");
         gc.strokeLine(200,250,600,250);
-
     }
 
     private void mandelbrot(){}
