@@ -14,12 +14,11 @@ public class Figures {
         //TODO switch case which calls different figurre methods (dreieck, quadrat etc)
         switch (type){
             case 1:
-
                 line(gc);
-
                 break;
             case 2:
                 triangle(gc);
+                break;
             case 3:
                 point(gc);
                 break;
@@ -33,7 +32,6 @@ public class Figures {
                 rectangle(gc);
                 break;
 
-                break;
 
             default:
                 // THROW ERRORsssadsad

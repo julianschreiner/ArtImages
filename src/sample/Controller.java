@@ -83,6 +83,9 @@ public class Controller {
     @FXML
     public void clearCanvas(){
         System.out.println("pressed");
+        GraphicsContext gc = drawArea.getGraphicsContext2D();
+        gc.clearRect(0,0,800,600);
     }
+
 
 }
