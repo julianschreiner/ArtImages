@@ -10,7 +10,7 @@ import javafx.scene.canvas.Canvas;
 import javafx.scene.paint.Color;
 import java.util.*;
 import javafx.collections.*;
-
+import javafx.scene.shape.*;
 
 public class Controller {
     // VIEWS
@@ -40,7 +40,7 @@ public class Controller {
 
 
     public Main main;
-    private Figures figures;
+    private Figures figures = new Figures();
 
 
     public void setMain(Main main){
@@ -69,12 +69,12 @@ public class Controller {
         System.out.println("Start Kurve: " + start_curve);
        */
 
-        //GraphicsContext gc = drawArea.getGraphicsContext2D();
         //drawShapes(gc);
+        GraphicsContext gc = drawArea.getGraphicsContext2D();
+
         String userChoice = choiceBox.getValue().toString();
+        figures.init(Integer.parseInt(userChoice), gc);
 
-
-        start();
     }
 
     public void drawShapes(GraphicsContext gc) {
@@ -85,14 +85,12 @@ public class Controller {
         gc.fillOval(10, 60, 30, 30);
     }
 
-
     public void start() {
         paintSet(drawArea.getGraphicsContext2D(),
                 MANDELBROT_RE_MIN,
                 MANDELBROT_RE_MAX,
                 MANDELBROT_IM_MIN,
                 MANDELBROT_IM_MAX);
-
     }
 
     private void paintSet(GraphicsContext ctx, double reMin, double reMax, double imMin, double imMax) {
