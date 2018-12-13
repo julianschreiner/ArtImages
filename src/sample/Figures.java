@@ -16,7 +16,7 @@ public class Figures {
 
                 break;
             default:
-                // THROW ERROR
+                // THROW ERRORs
                 break;
         }
     }
