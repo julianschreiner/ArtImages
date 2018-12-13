@@ -39,6 +39,7 @@ public class Controller {
     private static double MANDELBROT_IM_MAX = 1.2;
 
 
+
     public Main main;
     private Figures figures = new Figures();
 
@@ -73,7 +74,14 @@ public class Controller {
         GraphicsContext gc = drawArea.getGraphicsContext2D();
 
         String userChoice = choiceBox.getValue().toString();
-        figures.init(Integer.parseInt(userChoice), gc);
+
+        double x1 = 50;
+        double x2 = 100;
+        double y1 = 250;
+        double y2 = 50;
+
+
+        figures.init(Integer.parseInt(userChoice), gc, x1,y1,x2,y2);
 
     }
 
