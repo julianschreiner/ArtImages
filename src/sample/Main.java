@@ -29,6 +29,7 @@ public class Main extends Application {
 
             primaryStage.setMinHeight(800.00);
             primaryStage.setMinWidth(600.00);
+            primaryStage.setTitle("JavaProject");
 
             Controller windowController = loader.getController();
             windowController.setMain(this);
