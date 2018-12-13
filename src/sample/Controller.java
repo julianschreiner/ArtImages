@@ -57,7 +57,6 @@ public class Controller {
         drawArea.setLayoutY(Y_OFFSET);
 
         ObservableList<String> list = FXCollections.observableArrayList("1","2","3","4","5","6","7","8","9","10");
-
         choiceBox.setItems(list);
     }
 
@@ -72,17 +71,10 @@ public class Controller {
 
         //drawShapes(gc);
         GraphicsContext gc = drawArea.getGraphicsContext2D();
-
         String userChoice = choiceBox.getValue().toString();
 
-        double x1 = 50;
-        double x2 = 100;
-        double y1 = 250;
-        double y2 = 50;
 
-
-        figures.init(Integer.parseInt(userChoice), gc, x1,y1,x2,y2);
-
+        figures.init(Integer.parseInt(userChoice), gc);
     }
 
     public void drawShapes(GraphicsContext gc) {
