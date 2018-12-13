@@ -12,13 +12,15 @@ import java.util.*;
 import javafx.collections.*;
 import javafx.scene.shape.*;
 
+
+
 public class Controller {
     // VIEWS
     @FXML private TextField startCurve;
     @FXML private Button drawButton;
     @FXML private Button clearButton;
     @FXML private Canvas drawArea;
-    @FXML private ColorPicker colorInput;
+    @FXML private ChoiceBox colorInput;
     @FXML private ChoiceBox choiceBox;
     @FXML private TextField startPos;
     @FXML private TextField layer;
@@ -61,6 +63,9 @@ public class Controller {
 
         ObservableList<String> list = FXCollections.observableArrayList("1","2","3","4","5","6","7","8","9","10");
         choiceBox.setItems(list);
+
+        ObservableList<String> list2 = FXCollections.observableArrayList("BLUE","BLACK","GREEN","PURPLE","RED","BROWN","CYAN","GREY","PINK","LIME");
+        colorInput.setItems(list2);
     }
 
     @FXML
@@ -75,9 +80,14 @@ public class Controller {
         //drawShapes(gc);
         GraphicsContext gc = drawArea.getGraphicsContext2D();
         String userChoice = choiceBox.getValue().toString();
+        String colorChoice = colorInput.getValue().toString();
+        System.out.println(colorChoice);
 
 
-        figures.init(Integer.parseInt(userChoice), gc);
+        // TODO color berücksichtigen
+        // TODO CANVAS RAHMEN BORDER
+
+        figures.init(Integer.parseInt(userChoice), gc, colorChoice);
     }
 
     @FXML
