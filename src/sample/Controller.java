@@ -1,18 +1,21 @@
 package sample;
 
 import javafx.fxml.FXML;
+import javafx.scene.Node;
+import javafx.scene.Scene;
 import javafx.scene.control.ColorPicker;
 import javafx.scene.control.TextField;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.canvas.Canvas;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 import java.util.*;
 import javafx.collections.*;
-import javafx.scene.shape.*;
-
-
+import javafx.scene.layout.*;
+import javafx.event.*;
+import javafx.scene.shape.Line;
 
 public class Controller {
     // VIEWS
@@ -46,6 +49,9 @@ public class Controller {
 
 
     public Main main;
+    private ArrayList<Node> itemsDrawn;
+
+
     private Figures figures = new Figures();
 
 
@@ -66,35 +72,66 @@ public class Controller {
 
         ObservableList<String> list2 = FXCollections.observableArrayList("BLUE","BLACK","GREEN","PURPLE","RED","BROWN","CYAN","GREY","PINK","LIME");
         colorInput.setItems(list2);
+
+        itemsDrawn = new ArrayList<Node>();
     }
 
     @FXML
     public void testMethod(){
-       /* String color = colorInput.getText();
-        int start_curve = Integer.parseInt(startCurve.getText());
-
-        System.out.println("Color: " + color);
-        System.out.println("Start Kurve: " + start_curve);s
-       */
-
         //drawShapes(gc);
         GraphicsContext gc = drawArea.getGraphicsContext2D();
         String userChoice = choiceBox.getValue().toString();
-        String colorChoice = colorInput.getValue().toString();
-        System.out.println(colorChoice);
+        String colorChoice;
 
+        // FALLBACK COLOR
+        if(colorInput.getValue() != null){
+            colorChoice = colorInput.getValue().toString();
+        }
+        else{
+            colorChoice = "BLACK";
+        }
 
-        // TODO color berücksichtigen
         // TODO CANVAS RAHMEN BORDER
 
-        figures.init(Integer.parseInt(userChoice), gc, colorChoice);
+        Node ret = figures.init(Integer.parseInt(userChoice), gc, colorChoice, 0, 0);
+        System.out.println(ret);
+
+        this.itemsDrawn.add(ret);
+        System.out.println(itemsDrawn.toString());
+        main.getRoot().getChildren().add(ret);
+
+
+        /* Example calling one draw function often
+        double x = 0;
+        double y  = 0;
+
+        for (int i = 0; i < 100 ; i++) {
+
+
+            if(i > 50){
+                x = 50 + i * 10;
+                y = 50 + i * 15;
+            }
+            else{
+                x = 500 - i * 10;
+                y = 600 - i * 15;
+            }
+
+            Node ret2 = figures.init(4,gc,colorChoice,x,y);
+            main.getRoot().getChildren().add(ret2);
+
+            this.itemsDrawn.add(ret2);
+        }
+        */
     }
 
     @FXML
     public void clearCanvas(){
         System.out.println("pressed");
-        GraphicsContext gc = drawArea.getGraphicsContext2D();
-        gc.clearRect(0,0,800,600);
+
+        for (Node item: itemsDrawn) {
+            main.getRoot().getChildren().remove(item);
+        }
     }
 
 

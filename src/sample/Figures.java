@@ -1,93 +1,200 @@
 package sample;
 
+import javafx.scene.Node;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.*;
+import javafx.scene.paint.RadialGradient;
+import javafx.scene.paint.CycleMethod;
+import javafx.scene.paint.Stop;
 
+import java.util.ArrayList;
 
 
 public class Figures {
     private Figure figure;
     private Polygon poly;
+    private GraphicsContext gc;
+    private String colorChoice;
+    private static final double CANVAS_WIDTH = 697;
+    private static final double CANVAS_HEIGHT = 400;
 
-    public void init(int type, GraphicsContext gc, String colorChoice){
+
+
+    public Node init(int type, GraphicsContext gc, String colorChoice, double x, double y){
+        this.gc = gc;
+        this.colorChoice = colorChoice;
+        Node ret = null;
+
         //TODO switch case which calls different figurre methods (dreieck, quadrat etc)
         switch (type){
             case 1:
-                line(gc, colorChoice);
+                ret = line(0, 245);
                 break;
             case 2:
-                triangle(gc, colorChoice);
+                ret = triangle(250, 200);
                 break;
             case 3:
-                point(gc, colorChoice);
+                ret = point(300, 150);
                 break;
             case 4:
-                square(gc, colorChoice);
+                if(x == 0 && y == 0){
+                    ret = square(275, 200);
+                }
+                else{
+                    ret = square(x, y);
+                }
                 break;
             case 5:
-                circle(gc, colorChoice);
+                ret = circle(400,150);
                 break;
             case 6:
-                rectangle(gc,colorChoice);
+                ret = rectangle(50,50);
                 break;
-
-
+            case 7:
+                ret = semiCircle(400,300);
+                break;
+            case 8:
+                ret = twoSquares();
+                break;
             default:
-                // THROW ERRORsssadsad
+                // THROW ERROR
                 break;
         }
+
+        return ret;
     }
 
 
 
-    private void line(GraphicsContext gc, String color){
+    private Node line(double x, double y){
         System.out.println("line");
-        gc.strokeLine(200,250,600,250);
-        gc.setStroke(Color.valueOf(color));
+     //   this.gc.strokeLine(x,y,600,250);
+     //   this.gc.setStroke(Color.valueOf(this.colorChoice));
+
+        Line line = new Line();
+        line.setStartX(x);
+        line.setStartY(y);
+        line.setEndX(800);
+        line.setEndY(245);
+        line.setStroke(Color.valueOf(this.colorChoice));
+
+
+        return line;
+
     }
-    private void circle(GraphicsContext gc, String color){
-        System.out.println("circle");
-        gc.strokeOval(100,150,500,150);
-        gc.setStroke(Color.valueOf(color));
-    }
-    private void triangle(GraphicsContext gc, String color){
+
+    private Node triangle(double x, double y){
         System.out.println("triangle");
-        gc.beginPath();
-        gc.moveTo(30.5, 30.5);
-        gc.lineTo(150.5, 30.5);
-        gc.lineTo(150.5, 150.5);
-        gc.lineTo(30.5, 30.5);
-        gc.setStroke(Color.valueOf(color));
-        gc.stroke();
+
+       /* this.gc.beginPath();
+        this.gc.moveTo(30.5, 30.5);
+        this.gc.lineTo(150.5, 30.5);
+        this.gc.lineTo(150.5, 150.5);
+        this.gc.lineTo(30.5, 30.5);
+        this.gc.setStroke(Color.valueOf(this.colorChoice));
+        this.gc.stroke();
+        */
+        // Create the Triangle
+
+        Polygon triangle = new Polygon();
+        triangle.getPoints().addAll(x, y,  x-50, y+150, x+50, y+150);
+        triangle.setFill(Color.TRANSPARENT);
+        triangle.setStroke(Color.valueOf(this.colorChoice));
+
+        System.out.println(triangle.toString());
+
+        return triangle;
     }
 
-
-
-    private void point(GraphicsContext gc, String color)
-    {
-
+    private Node point(double x, double y){
         System.out.println("point");
-        gc.strokeOval(200,250, 10, 10);
-        gc.fillOval(200,250,10,10);
-        gc.setStroke(Color.valueOf(color));
+       /* gc.strokeOval(300,150, 10, 10);
+        gc.setStroke(Color.valueOf(this.colorChoice));
+        */
+        Ellipse ellipse = new Ellipse();
+        ellipse.setCenterX(x);
+        ellipse.setCenterY(y);
+        ellipse.setRadiusX(10);
+        ellipse.setRadiusY(10);
+        ellipse.setStroke(Color.valueOf(this.colorChoice));
+
+        return ellipse;
+
     }
 
-    private void square(GraphicsContext gc, String color)
-    {
+    private Node square(double x, double y){
         System.out.println("square");
-        gc.strokeRect(200,250,50,50);
-        gc.setStroke(Color.valueOf(color));
+       // gc.strokeRect(x,y,50,50);
+       // gc.setStroke(Color.valueOf(this.colorChoice));
 
+        Rectangle rectangle = new Rectangle();
+        rectangle.setHeight(200);
+        rectangle.setWidth(200);
+        rectangle.setX(x);
+        rectangle.setY(y);
+        rectangle.setStroke(Color.valueOf(this.colorChoice));
+        rectangle.setFill(Color.TRANSPARENT);
+
+        return rectangle;
     }
 
-    private void rectangle(GraphicsContext gc, String color)
-    {
+    private Node circle(double x, double y){
+        System.out.println("circle");
+        //this.gc.strokeOval(100,150,500,150);
+
+        Circle circle = new Circle();
+        circle.setCenterX(x);
+        circle.setCenterY(y);
+        circle.setRadius(50.0f);
+        circle.setFill(Color.TRANSPARENT);
+        circle.setStroke(Color.valueOf(this.colorChoice));
+
+        return circle;
+    }
+
+    private Node rectangle(double x, double y) {
         System.out.println("rectangle");
-        gc.strokeRect(200,250,50, 100);
+
+     /*   gc.strokeRect(200,250,50, 100);
         gc.fillRect(200,250,50,100);
-        gc.setStroke(Color.valueOf(color));
+        gc.setStroke(Color.valueOf(this.colorChoice));
+     */
+
+        Rectangle r = new Rectangle();
+        r.setX(x);
+        r.setY(y);
+        r.setWidth(200);
+        r.setHeight(100);
+        r.setFill(Color.TRANSPARENT);
+        r.setStroke(Color.valueOf(this.colorChoice));
+
+        return r;
     }
+
+    private Node semiCircle(double x, double y){
+        Arc arc = new Arc(x, y, 200, 200, 0, 180);
+        arc.setType(ArcType.OPEN);
+     //   arc.setStrokeWidth(10);
+        arc.setStroke(Color.valueOf(this.colorChoice));
+        arc.setStrokeType(StrokeType.INSIDE);
+        arc.setFill(null);
+
+        return arc;
+    }
+
+    private Node twoSquares(){
+        ArrayList<Node>itemsDrawn = new ArrayList<Node>();
+        Node ret = null;
+        itemsDrawn.add(this.line(200, 250));
+
+        for (int i = 0; i < 50; i++) {
+            itemsDrawn.add(this.square(100 + i * 20, 100 + i * 15));
+        }
+
+        return ret;
+    }
+
     private void mandelbrot(){}
 
 
