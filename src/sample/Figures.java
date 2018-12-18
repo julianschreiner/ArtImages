@@ -26,7 +26,7 @@ public class Figures {
         this.colorChoice = colorChoice;
         Node ret = null;
 
-        //TODO switch case which calls different figurre methods (dreieck, quadrat etc)
+        //TODO switch case which calls different figurre methods (dreieck, quadrat etc))
         switch (type){
             case 1:
                 if(x == 0.0 && y == 0.0) {
