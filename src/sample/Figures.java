@@ -29,16 +29,31 @@ public class Figures {
         //TODO switch case which calls different figurre methods (dreieck, quadrat etc)
         switch (type){
             case 1:
-                ret = line(0, 245);
+                if(x == 0.0 && y == 0.0) {
+                    ret = line(0, 245);
+                }
+                else{
+                    ret = line(x,y);
+                }
                 break;
             case 2:
-                ret = triangle(250, 200);
+                if(x == 0.0 && y == 0.0) {
+                    ret = triangle(250, 200);
+                }
+                else{
+                    ret = triangle(x,y);
+                }
                 break;
             case 3:
-                ret = point(300, 150);
+                if(x == 0.0 && y == 0.0) {
+                    ret = point(300, 150);
+                }
+                else{
+                    ret = point(x,y);
+                }
                 break;
             case 4:
-                if(x == 0 && y == 0){
+                if(x == 0.0 && y == 0.0){
                     ret = square(275, 200);
                 }
                 else{
@@ -46,13 +61,28 @@ public class Figures {
                 }
                 break;
             case 5:
-                ret = circle(400,150);
+                if(x == 0.0 && y == 0.0) {
+                    ret = circle(400, 150);
+                }
+                else{
+                    ret = circle(x,y);
+                }
                 break;
             case 6:
-                ret = rectangle(50,50);
+                if(x == 0.0 && y == 0.0) {
+                    ret = rectangle(50, 50);
+                }
+                else{
+                    ret = rectangle(x,y);
+                }
                 break;
             case 7:
-                ret = semiCircle(400,300);
+                if(x == 0.0 && y == 0.0) {
+                    ret = semiCircle(400, 300);
+                }
+                else{
+                    ret = semiCircle(x,y);
+                }
                 break;
             case 8:
                 ret = twoSquares();

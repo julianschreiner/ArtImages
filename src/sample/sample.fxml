@@ -9,7 +9,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="589.0" prefWidth="796.0" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.Controller">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="589.0" prefWidth="796.0" xmlns="http://javafx.com/javafx/8.0.172-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.Controller">
    <children>
       <Label layoutX="46.0" layoutY="434.0" prefHeight="52.0" prefWidth="126.0" text="Parameters" />
       <Text layoutX="46.0" layoutY="499.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Color" />
@@ -22,7 +22,7 @@
       <ChoiceBox fx:id="choiceBox" layoutX="227.0" layoutY="504.0" prefWidth="150.0" />
       <TextField fx:id="startCurve" layoutX="43.0" layoutY="550.0" />
       <Text layoutX="45.0" layoutY="543.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Start Curve" />
-      <Text layoutX="230.0" layoutY="543.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Start pos" />
+      <Text layoutX="230.0" layoutY="543.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Start pos (x,y)" />
       <TextField fx:id="startPos" layoutX="228.0" layoutY="550.0" />
       <TextField fx:id="sizeOfSquare" layoutX="402.0" layoutY="504.0" />
       <Text layoutX="402.0" layoutY="499.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Size of square" />

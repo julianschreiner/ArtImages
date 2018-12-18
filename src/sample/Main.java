@@ -6,9 +6,8 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.*;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.Pane;
+import javafx.scene.layout.*;
+import javafx.scene.paint.Color;
 import javafx.stage.*;
 import javafx.scene.shape.Rectangle;
 
@@ -42,9 +41,18 @@ public class Main extends Application {
                 }
             });
 
-           // primaryStage.setMinHeight(800.00);
-           // primaryStage.setMinWidth(600.00);
+            // TODO SET PANE HEIGHT
+
+            // TODO CANVAS RAHMEN BORDER
+
+            pane.setBorder(new Border(new BorderStroke(Color.BLACK,
+                    BorderStrokeStyle.SOLID, CornerRadii.EMPTY, BorderWidths.DEFAULT)));
+
+
+            // primaryStage.setMinHeight(800.00);
+            // primaryStage.setMinWidth(600.00);
             primaryStage.setTitle("Java Project");
+
 
 
             Controller windowController = loader.getController();
@@ -54,6 +62,7 @@ public class Main extends Application {
 
             primaryStage.setScene(scene);
             primaryStage.show();
+
 
         }
         catch(IOException e){

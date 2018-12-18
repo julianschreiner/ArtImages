@@ -91,9 +91,24 @@ public class Controller {
             colorChoice = "BLACK";
         }
 
-        // TODO CANVAS RAHMEN BORDER
+        Double startPosX;
+        Double startPosY;
 
-        Node ret = figures.init(Integer.parseInt(userChoice), gc, colorChoice, 0, 0);
+        if(!startPos.getText().isEmpty()){
+            String[] coordinates = startPos.getText().split(",");
+
+            startPosX = Double.parseDouble(coordinates[0]);
+            startPosY = Double.parseDouble(coordinates[1]);
+        }
+        else{
+            startPosX = 0.0;
+            startPosY = 0.0;
+            System.out.println("No starting point provided");
+        }
+
+
+
+        Node ret = figures.init(Integer.parseInt(userChoice), gc, colorChoice, startPosX, startPosY);
         System.out.println(ret);
 
         this.itemsDrawn.add(ret);
