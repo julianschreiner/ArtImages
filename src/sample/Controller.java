@@ -116,7 +116,8 @@ public class Controller {
         main.getRoot().getChildren().add(ret);
 
 
-        /* Example calling one draw function often
+      /*   Example calling one draw function often */
+/*
         double x = 0;
         double y  = 0;
 
@@ -132,12 +133,17 @@ public class Controller {
                 y = 600 - i * 15;
             }
 
+            if(y > 280){
+                y = 250;
+            }
+
             Node ret2 = figures.init(4,gc,colorChoice,x,y);
             main.getRoot().getChildren().add(ret2);
 
             this.itemsDrawn.add(ret2);
         }
         */
+
     }
 
     @FXML
