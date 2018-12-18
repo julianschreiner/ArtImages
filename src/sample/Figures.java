@@ -33,10 +33,10 @@ public class Figures {
         switch (type){
             case 1:
                 if(x == 0.0 && y == 0.0) {
-                    ret = line(0, 245);
+                    ret = line(0, 245, 800, 245);
                 }
                 else{
-                    ret = line(x,y);
+                    ret = line(x,y, 800, 245);  // TODO
                 }
                 retArray.add(ret);
                 break;
@@ -60,10 +60,10 @@ public class Figures {
                 break;
             case 4:
                 if(x == 0.0 && y == 0.0){
-                    ret = square(275, 200);
+                    ret = square(275, 200, 200);
                 }
                 else{
-                    ret = square(x, y);
+                    ret = square(x, y, 200);        // TODO WIDTH DYNAMIC
                 }
                 retArray.add(ret);
                 break;
@@ -117,7 +117,7 @@ public class Figures {
 
 
 
-    private Node line(double x, double y){
+    private Node line(double x, double y, double endX, double endY){
         System.out.println("line");
      //   this.gc.strokeLine(x,y,600,250);
      //   this.gc.setStroke(Color.valueOf(this.colorChoice));
@@ -125,8 +125,8 @@ public class Figures {
         Line line = new Line();
         line.setStartX(x);
         line.setStartY(y);
-        line.setEndX(800);
-        line.setEndY(245);
+        line.setEndX(endX);
+        line.setEndY(endY);
         line.setStroke(Color.valueOf(this.colorChoice));
 
 
@@ -173,14 +173,14 @@ public class Figures {
 
     }
 
-    private Node square(double x, double y){
+    private Node square(double x, double y, double width){
         System.out.println("square");
        // gc.strokeRect(x,y,50,50);
        // gc.setStroke(Color.valueOf(this.colorChoice));
 
         Rectangle rectangle = new Rectangle();
         rectangle.setHeight(200);
-        rectangle.setWidth(200);
+        rectangle.setWidth(width);
         rectangle.setX(x);
         rectangle.setY(y);
         rectangle.setStroke(Color.valueOf(this.colorChoice));
@@ -236,11 +236,10 @@ public class Figures {
     private ArrayList<Node> twoSquares(){
         ArrayList<Node>itemsDrawn = new ArrayList<Node>();
         Node ret = null;
-        itemsDrawn.add(this.line(0,245));
+        itemsDrawn.add(this.line(0,130, 800, 130));
 
-        for(int i = 0; i < 2; i++){
-            itemsDrawn.add(this.square(100 + i * 20, 100 + i * 15));
-        } // s
+        itemsDrawn.add(this.square(1.0, 245, 400));
+        itemsDrawn.add(this.square(401, 245, 400));
 
         return itemsDrawn;
     }
