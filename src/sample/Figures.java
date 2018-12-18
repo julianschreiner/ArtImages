@@ -21,10 +21,13 @@ public class Figures {
 
 
 
-    public Node init(int type, GraphicsContext gc, String colorChoice, double x, double y){
+    public ArrayList<Node> init(int type, GraphicsContext gc, String colorChoice, double x, double y){
         this.gc = gc;
         this.colorChoice = colorChoice;
         Node ret = null;
+
+        ArrayList<Node> retArray = new ArrayList<Node>();
+
 
         //TODO switch case which calls different figurre methods (dreieck, quadrat etc))
         switch (type){
@@ -85,14 +88,21 @@ public class Figures {
                 }
                 break;
             case 8:
-                ret = twoSquares();
+                if(x == 0.0 && y == 0.0) {
+                    ret = oval(400, 300);
+                }
+                else{
+                    ret = oval(x,y);
+                }
                 break;
+
             default:
                 // THROW ERROR
                 break;
         }
 
-        return ret;
+        retArray.add(ret);
+        return retArray;
     }
 
 
@@ -216,13 +226,26 @@ public class Figures {
     private Node twoSquares(){
         ArrayList<Node>itemsDrawn = new ArrayList<Node>();
         Node ret = null;
-        itemsDrawn.add(this.line(200, 250));
+        itemsDrawn.add(this.line(200,250));
 
-        for (int i = 0; i < 50; i++) {
+        for(int i = 0; i < 50; i++){
             itemsDrawn.add(this.square(100 + i * 20, 100 + i * 15));
         }
 
         return ret;
+    }
+
+    private Node oval(double x, double y){
+        Ellipse ellipse = new Ellipse();
+        ellipse.setCenterX(370.0f);
+        ellipse.setCenterY(245.0f);
+
+        ellipse.setRadiusX(450.0f);
+        ellipse.setRadiusY(225.0f);
+        ellipse.setStroke(Color.valueOf(this.colorChoice));
+        ellipse.setFill(Color.TRANSPARENT);
+
+        return ellipse;
     }
 
     private void mandelbrot(){}

@@ -108,12 +108,15 @@ public class Controller {
 
 
 
-        Node ret = figures.init(Integer.parseInt(userChoice), gc, colorChoice, startPosX, startPosY);
-        System.out.println(ret);
+        ArrayList<Node> ret = figures.init(Integer.parseInt(userChoice), gc, colorChoice, startPosX, startPosY);
 
-        this.itemsDrawn.add(ret);
-        System.out.println(itemsDrawn.toString());
-        main.getRoot().getChildren().add(ret);
+        for (Node item: ret) {
+            System.out.println(item);
+            this.itemsDrawn.add(item);
+            System.out.println(itemsDrawn.toString());
+            main.getRoot().getChildren().add(item);
+        }
+
 
 
       /*   Example calling one draw function often */
