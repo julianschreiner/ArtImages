@@ -240,7 +240,7 @@ public class Figures {
 
         for(int i = 0; i < 2; i++){
             itemsDrawn.add(this.square(100 + i * 20, 100 + i * 15));
-        }
+        } // s
 
         return itemsDrawn;
     }
