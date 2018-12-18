@@ -36,7 +36,7 @@ public class Figures {
                     ret = line(0, 245, 800, 245);
                 }
                 else{
-                    ret = line(x,y, 800, 245);  // TODO
+                    ret = line(x,y, 800, 245);  // TODO endX, endY dynamic
                 }
                 retArray.add(ret);
                 break;
@@ -60,10 +60,10 @@ public class Figures {
                 break;
             case 4:
                 if(x == 0.0 && y == 0.0){
-                    ret = square(275, 200, 200);
+                    ret = square(275, 200, 200, 200);
                 }
                 else{
-                    ret = square(x, y, 200);        // TODO WIDTH DYNAMIC
+                    ret = square(x, y, 200, 200);        // TODO WIDTH DYNAMIC
                 }
                 retArray.add(ret);
                 break;
@@ -173,13 +173,13 @@ public class Figures {
 
     }
 
-    private Node square(double x, double y, double width){
+    private Node square(double x, double y, double width, double height){
         System.out.println("square");
        // gc.strokeRect(x,y,50,50);
        // gc.setStroke(Color.valueOf(this.colorChoice));
 
         Rectangle rectangle = new Rectangle();
-        rectangle.setHeight(200);
+        rectangle.setHeight(height);
         rectangle.setWidth(width);
         rectangle.setX(x);
         rectangle.setY(y);
@@ -236,21 +236,23 @@ public class Figures {
     private ArrayList<Node> twoSquares(){
         ArrayList<Node>itemsDrawn = new ArrayList<Node>();
         Node ret = null;
-        itemsDrawn.add(this.line(0,130, 800, 130));
+        itemsDrawn.add(this.line(0,40, 800, 40));
 
-        itemsDrawn.add(this.square(1.0, 245, 400));
-        itemsDrawn.add(this.square(401, 245, 400));
+        itemsDrawn.add(this.square(1.0, 40, 400, 400));
+        itemsDrawn.add(this.square(401, 40, 400,400));
 
         return itemsDrawn;
     }
 
     private Node oval(double x, double y){
         Ellipse ellipse = new Ellipse();
-        ellipse.setCenterX(370.0f);
-        ellipse.setCenterY(245.0f);
+        ellipse.setCenterX(390.0f);
+        ellipse.setCenterY(226.0f);
+        ellipse.setRotate(25);
 
-        ellipse.setRadiusX(450.0f);
-        ellipse.setRadiusY(225.0f);
+        ellipse.setRadiusX(420.0f);
+        ellipse.setRadiusY(125.0f);
+
         ellipse.setStroke(Color.valueOf(this.colorChoice));
         ellipse.setFill(Color.TRANSPARENT);
 
