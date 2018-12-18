@@ -38,6 +38,7 @@ public class Figures {
                 else{
                     ret = line(x,y);
                 }
+                retArray.add(ret);
                 break;
             case 2:
                 if(x == 0.0 && y == 0.0) {
@@ -46,6 +47,7 @@ public class Figures {
                 else{
                     ret = triangle(x,y);
                 }
+                retArray.add(ret);
                 break;
             case 3:
                 if(x == 0.0 && y == 0.0) {
@@ -54,6 +56,7 @@ public class Figures {
                 else{
                     ret = point(x,y);
                 }
+                retArray.add(ret);
                 break;
             case 4:
                 if(x == 0.0 && y == 0.0){
@@ -62,6 +65,7 @@ public class Figures {
                 else{
                     ret = square(x, y);
                 }
+                retArray.add(ret);
                 break;
             case 5:
                 if(x == 0.0 && y == 0.0) {
@@ -70,6 +74,7 @@ public class Figures {
                 else{
                     ret = circle(x,y);
                 }
+                retArray.add(ret);
                 break;
             case 6:
                 if(x == 0.0 && y == 0.0) {
@@ -78,6 +83,7 @@ public class Figures {
                 else{
                     ret = rectangle(x,y);
                 }
+                retArray.add(ret);
                 break;
             case 7:
                 if(x == 0.0 && y == 0.0) {
@@ -86,6 +92,7 @@ public class Figures {
                 else{
                     ret = semiCircle(x,y);
                 }
+                retArray.add(ret);
                 break;
             case 8:
                 if(x == 0.0 && y == 0.0) {
@@ -94,14 +101,17 @@ public class Figures {
                 else{
                     ret = oval(x,y);
                 }
+                retArray.add(ret);
                 break;
-
+            case 9:
+               retArray = twoSquares();
+               break;
             default:
                 // THROW ERROR
                 break;
         }
 
-        retArray.add(ret);
+
         return retArray;
     }
 
@@ -223,16 +233,16 @@ public class Figures {
         return arc;
     }
 
-    private Node twoSquares(){
+    private ArrayList<Node> twoSquares(){
         ArrayList<Node>itemsDrawn = new ArrayList<Node>();
         Node ret = null;
-        itemsDrawn.add(this.line(200,250));
+        itemsDrawn.add(this.line(0,245));
 
-        for(int i = 0; i < 50; i++){
+        for(int i = 0; i < 2; i++){
             itemsDrawn.add(this.square(100 + i * 20, 100 + i * 15));
         }
 
-        return ret;
+        return itemsDrawn;
     }
 
     private Node oval(double x, double y){
