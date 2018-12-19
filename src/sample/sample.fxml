@@ -24,8 +24,8 @@
       <Text layoutX="45.0" layoutY="543.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Start Curve" />
       <Text layoutX="230.0" layoutY="543.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Start pos (x,y)" />
       <TextField fx:id="startPos" layoutX="228.0" layoutY="550.0" />
-      <TextField fx:id="sizeOfSquare" layoutX="402.0" layoutY="504.0" />
-      <Text layoutX="402.0" layoutY="499.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Size of square" />
+      <ChoiceBox fx:id="sizeOfType" layoutX="402.0" layoutY="504.0" />
+      <Text layoutX="402.0" layoutY="499.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Size of Type" />
       <TextField fx:id="layer" layoutX="402.0" layoutY="550.0" />
       <Text layoutX="402.0" layoutY="545.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Layer" />
       <Button fx:id="clearButton" layoutX="729.0" layoutY="550.0" mnemonicParsing="false" onAction="#clearCanvas" text="Clear" />

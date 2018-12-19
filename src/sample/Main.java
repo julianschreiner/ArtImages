@@ -35,9 +35,12 @@ public class Main extends Application {
 
             pane.setOnMouseClicked(new EventHandler<MouseEvent>() {
                 @Override
+
                 public void handle(MouseEvent event) {
                     System.out.println("X: " + event.getSceneX());
                     System.out.println("Y: " + event.getSceneY());
+
+
                 }
             });
 

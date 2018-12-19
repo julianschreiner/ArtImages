@@ -21,7 +21,7 @@ public class Figures {
 
 
 
-    public ArrayList<Node> init(int type, GraphicsContext gc, String colorChoice, double x, double y){
+    public ArrayList<Node> init(int type, GraphicsContext gc, String colorChoice, double x, double y, int size){
         this.gc = gc;
         this.colorChoice = colorChoice;
         Node ret = null;
@@ -33,73 +33,74 @@ public class Figures {
         switch (type){
             case 1:
                 if(x == 0.0 && y == 0.0) {
-                    ret = line(0, 245, 800, 245);
+                    ret = line(0, 245, 800, 245, size);
                 }
                 else{
-                    ret = line(x,y, 800, 245);  // TODO endX, endY dynamic
+                    ret = line(x,y, 800, 245, size);  // TODO endX, endY dynamic
                 }
+
                 retArray.add(ret);
                 break;
             case 2:
                 if(x == 0.0 && y == 0.0) {
-                    ret = triangle(250, 200);
+                    ret = triangle(250, 200, size);
                 }
                 else{
-                    ret = triangle(x,y);
+                    ret = triangle(x ,y, size );
                 }
                 retArray.add(ret);
                 break;
             case 3:
                 if(x == 0.0 && y == 0.0) {
-                    ret = point(300, 150);
+                    ret = point(300, 150, size);
                 }
                 else{
-                    ret = point(x,y);
+                    ret = point( x , y , size);
                 }
                 retArray.add(ret);
                 break;
             case 4:
                 if(x == 0.0 && y == 0.0){
-                    ret = square(275, 200, 200, 200);
+                    ret = square(275, 200, 200, 200, size);
                 }
                 else{
-                    ret = square(x, y, 200, 200);        // TODO WIDTH DYNAMIC
+                    ret = square(x, y, 200, 200, size);        // TODO WIDTH DYNAMIC
                 }
                 retArray.add(ret);
                 break;
             case 5:
                 if(x == 0.0 && y == 0.0) {
-                    ret = circle(400, 150);
+                    ret = circle(400, 150, size);
                 }
                 else{
-                    ret = circle(x,y);
+                    ret = circle(x,y, size);
                 }
                 retArray.add(ret);
                 break;
             case 6:
                 if(x == 0.0 && y == 0.0) {
-                    ret = rectangle(50, 50);
+                    ret = rectangle(50, 50, size);
                 }
                 else{
-                    ret = rectangle(x,y);
+                    ret = rectangle(x,y, size);
                 }
                 retArray.add(ret);
                 break;
             case 7:
                 if(x == 0.0 && y == 0.0) {
-                    ret = semiCircle(400, 300);
+                    ret = semiCircle(400, 300, size);
                 }
                 else{
-                    ret = semiCircle(x,y);
+                    ret = semiCircle(x,y, size);
                 }
                 retArray.add(ret);
                 break;
             case 8:
                 if(x == 0.0 && y == 0.0) {
-                    ret = oval(400, 300);
+                    ret = oval(400, 300, size);
                 }
                 else{
-                    ret = oval(x,y);
+                    ret = oval(x,y, size);
                 }
                 retArray.add(ret);
                 break;
@@ -117,7 +118,7 @@ public class Figures {
 
 
 
-    private Node line(double x, double y, double endX, double endY){
+    private Node line(double x, double y, double endX, double endY, int size){
         System.out.println("line");
      //   this.gc.strokeLine(x,y,600,250);
      //   this.gc.setStroke(Color.valueOf(this.colorChoice));
@@ -127,6 +128,7 @@ public class Figures {
         line.setStartY(y);
         line.setEndX(endX);
         line.setEndY(endY);
+        line.setStrokeWidth(5.0 * size);
         line.setStroke(Color.valueOf(this.colorChoice));
 
 
@@ -134,7 +136,7 @@ public class Figures {
 
     }
 
-    private Node triangle(double x, double y){
+    private Node triangle(double x, double y, int size){
         System.out.println("triangle");
 
        /* this.gc.beginPath();
@@ -150,6 +152,7 @@ public class Figures {
         Polygon triangle = new Polygon();
         triangle.getPoints().addAll(x, y,  x-50, y+150, x+50, y+150);
         triangle.setFill(Color.TRANSPARENT);
+        triangle.setStrokeWidth(5.0 * size);
         triangle.setStroke(Color.valueOf(this.colorChoice));
 
         System.out.println(triangle.toString());
@@ -157,7 +160,7 @@ public class Figures {
         return triangle;
     }
 
-    private Node point(double x, double y){
+    private Node point(double x, double y, int size){
         System.out.println("point");
        /* gc.strokeOval(300,150, 10, 10);
         gc.setStroke(Color.valueOf(this.colorChoice));
@@ -167,13 +170,14 @@ public class Figures {
         ellipse.setCenterY(y);
         ellipse.setRadiusX(10);
         ellipse.setRadiusY(10);
+        ellipse.setStrokeWidth(5.0 * size);
         ellipse.setStroke(Color.valueOf(this.colorChoice));
 
         return ellipse;
 
     }
 
-    private Node square(double x, double y, double width, double height){
+    private Node square(double x, double y, double width, double height, int size){
         System.out.println("square");
        // gc.strokeRect(x,y,50,50);
        // gc.setStroke(Color.valueOf(this.colorChoice));
@@ -185,11 +189,11 @@ public class Figures {
         rectangle.setY(y);
         rectangle.setStroke(Color.valueOf(this.colorChoice));
         rectangle.setFill(Color.TRANSPARENT);
-
+        rectangle.setStrokeWidth(5.0 * size);
         return rectangle;
     }
 
-    private Node circle(double x, double y){
+    private Node circle(double x, double y, int size){
         System.out.println("circle");
         //this.gc.strokeOval(100,150,500,150);
 
@@ -199,11 +203,11 @@ public class Figures {
         circle.setRadius(50.0f);
         circle.setFill(Color.TRANSPARENT);
         circle.setStroke(Color.valueOf(this.colorChoice));
-
+        circle.setStrokeWidth(5.0 * size);
         return circle;
     }
 
-    private Node rectangle(double x, double y) {
+    private Node rectangle(double x, double y, int size) {
         System.out.println("rectangle");
 
      /*   gc.strokeRect(200,250,50, 100);
@@ -218,33 +222,33 @@ public class Figures {
         r.setHeight(100);
         r.setFill(Color.TRANSPARENT);
         r.setStroke(Color.valueOf(this.colorChoice));
-
+        r.setStrokeWidth(5.0 * size);
         return r;
     }
 
-    private Node semiCircle(double x, double y){
+    private Node semiCircle(double x, double y, int size){
         Arc arc = new Arc(x, y, 200, 200, 0, 180);
         arc.setType(ArcType.OPEN);
      //   arc.setStrokeWidth(10);
         arc.setStroke(Color.valueOf(this.colorChoice));
         arc.setStrokeType(StrokeType.INSIDE);
         arc.setFill(null);
-
+        arc.setStrokeWidth(5.0 * size);
         return arc;
     }
 
     private ArrayList<Node> twoSquares(){
         ArrayList<Node>itemsDrawn = new ArrayList<Node>();
         Node ret = null;
-        itemsDrawn.add(this.line(0,40, 800, 40));
+        itemsDrawn.add(this.line(0,40, 800, 40, 1));
 
-        itemsDrawn.add(this.square(1.0, 40, 400, 400));
-        itemsDrawn.add(this.square(401, 40, 400,400));
+        itemsDrawn.add(this.square(1.0, 40, 400, 400, 1));
+        itemsDrawn.add(this.square(401, 40, 400,400, 1));
 
         return itemsDrawn;
     }
 
-    private Node oval(double x, double y){
+    private Node oval(double x, double y, int size){
         Ellipse ellipse = new Ellipse();
         ellipse.setCenterX(390.0f);
         ellipse.setCenterY(226.0f);
@@ -255,7 +259,7 @@ public class Figures {
 
         ellipse.setStroke(Color.valueOf(this.colorChoice));
         ellipse.setFill(Color.TRANSPARENT);
-
+        ellipse.setStrokeWidth(5.0 * size);
         return ellipse;
     }
 
