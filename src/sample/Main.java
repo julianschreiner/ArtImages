@@ -35,16 +35,14 @@ public class Main extends Application {
 
             pane.setOnMouseClicked(new EventHandler<MouseEvent>() {
                 @Override
-
                 public void handle(MouseEvent event) {
                     System.out.println("X: " + event.getSceneX());
                     System.out.println("Y: " + event.getSceneY());
-
-
                 }
             });
 
             // TODO SET PANE HEIGHT
+
 
             // TODO CANVAS RAHMEN BORDER
 
@@ -52,8 +50,9 @@ public class Main extends Application {
                     BorderStrokeStyle.SOLID, CornerRadii.EMPTY, BorderWidths.DEFAULT)));
 
 
-            // primaryStage.setMinHeight(800.00);
-            // primaryStage.setMinWidth(600.00);
+            //primaryStage.setMinHeight(800.00);
+            //primaryStage.setMinWidth(600.00);
+
             primaryStage.setTitle("Java Project");
 
 
