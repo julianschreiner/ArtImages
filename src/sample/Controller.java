@@ -40,16 +40,19 @@ public class Controller {
     private static final int Y_OFFSET = 25;
 
 
-    // Values for the Mandelbro set
-    private static double MANDELBROT_RE_MIN = -2;
-    private static double MANDELBROT_RE_MAX = 1;
-    private static double MANDELBROT_IM_MIN = -1.2;
-    private static double MANDELBROT_IM_MAX = 1.2;
+    // VALUES FOR CURVE POINTS
+    private static final double[] a = {0, 0.5, 0.5, 0},
+                                  b = {0.5, 0, 0, -0.5},
+                                  c = {0.5, 0, 0, -0.5},
+                                  d = {0, 0.5, 0.5, 0},
+                                  e = {0, 0, 0.5, 1},
+                                  f = {0, 0.5, 0.5, 0.5};
 
 
 
     public Main main;
     private ArrayList<Node> itemsDrawn;
+    private Coordinates points;
 
 
     private Figures figures = new Figures();
@@ -150,12 +153,54 @@ public class Controller {
     }
 
     @FXML
-    public void clearCanvas(){
+    public void clearCanvas() {
+
         System.out.println("pressed");
 
-        for (Node item: itemsDrawn) {
+        for (Node item : itemsDrawn) {
             main.getRoot().getChildren().remove(item);
         }
+
+    }
+
+
+    private void calculatePoint(double i, double j){
+        double iNew = 0.0;
+        double jNew = 0.0;
+        Coordinates[] retArray = new Coordinates[4];
+
+
+        // CALCULATE 4 POINTS
+
+        for(int k = 0; k < 4; k++){
+            points = new Coordinates();
+
+            iNew = 800 * (a[k] * i / 800.0 + b[k] * j/800.0 + e[k]);
+            jNew = 800 * (c[k] * i / 800.0 + d[k] * j/800.0 + f[k]);
+
+            points.setX(iNew);
+            points.setY(jNew);
+
+            retArray[k] = points;
+        }
+
+        GraphicsContext gc = drawArea.getGraphicsContext2D();
+        for(Coordinates item : retArray){
+            System.out.println(item.toString());
+
+            ArrayList<Node> ret = figures.init(3, gc, "BLACK", item.getX(), item.getY());
+
+            for (Node itemm: ret) {
+                this.itemsDrawn.add(itemm);
+                main.getRoot().getChildren().add(itemm);
+            }
+        }
+
+
+
+
+
+
     }
 
 
