@@ -12,8 +12,13 @@ package sample;/**
 import java.util.*;
 
 public class Coordinates {
-    private static double x;
-    private static double y;
+    private double x;
+    private double y;
+
+    public Coordinates(double x, double y){
+        this.x = x;
+        this.y = y;
+    }
 
     public static void main(String[] args) {
         Scanner reader = new Scanner(System.in);
@@ -24,18 +29,18 @@ public class Coordinates {
     }
 
     public void setX(double x) {
-        Coordinates.x = x;
+        this.x = x;
     }
 
     public  double getY() {
-        return y;
+        return this.y;
     }
 
     public void setY(double y) {
-        Coordinates.y = y;
+        this.y = y;
     }
 
     public String toString(){
-        return Double.toString(Coordinates.x) + " , " + Double.toString(Coordinates.y);
+        return Double.toString(this.x) + " , " + Double.toString(this.y);
     }
 }

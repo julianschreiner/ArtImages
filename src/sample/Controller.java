@@ -157,8 +157,12 @@ public class Controller {
 
         System.out.println("pressed");
 
+        calculatePoint(250, 49);
+      //   calculatePoint(250, 120);
+      //  calculatePoint(150, 100);
+
         for (Node item : itemsDrawn) {
-            main.getRoot().getChildren().remove(item);
+      //      main.getRoot().getChildren().remove(item);
         }
 
     }
@@ -171,34 +175,33 @@ public class Controller {
 
 
         // CALCULATE 4 POINTS
-
         for(int k = 0; k < 4; k++){
-            points = new Coordinates();
-
             iNew = 800 * (a[k] * i / 800.0 + b[k] * j/800.0 + e[k]);
             jNew = 800 * (c[k] * i / 800.0 + d[k] * j/800.0 + f[k]);
 
-            points.setX(iNew);
-            points.setY(jNew);
+            points = new Coordinates(iNew, jNew);
 
             retArray[k] = points;
         }
 
+
+
+
+        // DRAWING
         GraphicsContext gc = drawArea.getGraphicsContext2D();
         for(Coordinates item : retArray){
             System.out.println(item.toString());
 
-            ArrayList<Node> ret = figures.init(3, gc, "BLACK", item.getX(), item.getY());
+            double x = item.getX();
+            double y = item.getY();
+
+            ArrayList<Node> ret = figures.init(3, gc, "BLACK", x, y);
 
             for (Node itemm: ret) {
                 this.itemsDrawn.add(itemm);
                 main.getRoot().getChildren().add(itemm);
             }
         }
-
-
-
-
 
 
     }
