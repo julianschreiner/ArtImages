@@ -111,7 +111,7 @@ public class Controller {
 
 
 
-        ArrayList<Node> ret = figures.init(Integer.parseInt(userChoice), gc, colorChoice, startPosX, startPosY);
+        ArrayList<Node> ret = figures.init(Integer.parseInt(userChoice), gc, colorChoice, startPosX, startPosY, 0.0, 0.0);
 
         for (Node item: ret) {
             System.out.println(item);
@@ -157,9 +157,20 @@ public class Controller {
 
         System.out.println("pressed");
 
-        calculatePoint(250, 49);
-      //   calculatePoint(250, 120);
-      //  calculatePoint(150, 100);
+        for (int i = 0; i < 150; i++) {
+            double randomX = Math.random() * 750 + 50;
+            double randomY = Math.random() * 900 + 100;
+
+            calculatePoint(randomX, randomY, 3);
+        }
+
+
+
+      //   calculatePoint(250, 50, 6);
+      //  calculatePoint(250, 50, 4);
+      //  calculatePoint(250, 120, 3);
+      //  calculatePoint(150, 240, 2);
+      //  calculatePoint(150, 150, 8);
 
         for (Node item : itemsDrawn) {
       //      main.getRoot().getChildren().remove(item);
@@ -168,7 +179,7 @@ public class Controller {
     }
 
 
-    private void calculatePoint(double i, double j){
+    private void calculatePoint(double i, double j, int type){
         double iNew = 0.0;
         double jNew = 0.0;
         Coordinates[] retArray = new Coordinates[4];
@@ -178,6 +189,16 @@ public class Controller {
         for(int k = 0; k < 4; k++){
             iNew = 800 * (a[k] * i / 800.0 + b[k] * j/800.0 + e[k]);
             jNew = 800 * (c[k] * i / 800.0 + d[k] * j/800.0 + f[k]);
+
+
+            if(iNew >= 770){
+                iNew = 520;
+            }
+
+            if(jNew >= 420){
+                jNew = 420 ;
+            }
+
 
             points = new Coordinates(iNew, jNew);
 
@@ -189,18 +210,40 @@ public class Controller {
 
         // DRAWING
         GraphicsContext gc = drawArea.getGraphicsContext2D();
+
+        ArrayList<Node> lines = figures.init(1, gc, "GREEN", retArray[0].getX(),retArray[0].getY(), retArray[1].getX(), retArray[1].getY());
+        lines.addAll(figures.init(1,gc, "GREEN", retArray[2].getX(), retArray[2].getY(), retArray[3].getX(), retArray[3].getY()));
+
+        lines.addAll(figures.init(1,gc, "GREEN", retArray[0].getX(), retArray[0].getY(), retArray[3].getX(), retArray[3].getY()));
+        lines.addAll(figures.init(1,gc, "GREEN", retArray[1].getX(), retArray[1].getY(), retArray[2].getX(), retArray[2].getY()));
+
+
+
+
+        ArrayList<Node> ret = new ArrayList<>();
+
         for(Coordinates item : retArray){
-            System.out.println(item.toString());
+          //  System.out.println(item.toString());
 
             double x = item.getX();
             double y = item.getY();
 
-            ArrayList<Node> ret = figures.init(3, gc, "BLACK", x, y);
+           ret.addAll(figures.init(type, gc, "BLACK", x, y, 0.0, 0.0));
 
-            for (Node itemm: ret) {
-                this.itemsDrawn.add(itemm);
-                main.getRoot().getChildren().add(itemm);
-            }
+        }
+
+        // MERGE 2 ARRAYLIST'S
+        // ret.addAll(lines);
+
+        for (Node line: lines){
+            if (!ret.contains(line))
+                ret.add(line);
+        }
+
+        for (Node itemm: ret) {
+            System.out.println("ITEM: " +  itemm.toString());
+            this.itemsDrawn.add(itemm);
+            main.getRoot().getChildren().add(itemm);
         }
 
 

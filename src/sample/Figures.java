@@ -21,7 +21,7 @@ public class Figures {
 
 
 
-    public ArrayList<Node> init(int type, GraphicsContext gc, String colorChoice, double x, double y){
+    public ArrayList<Node> init(int type, GraphicsContext gc, String colorChoice, double x, double y, double endX, double endY){
         this.gc = gc;
         this.colorChoice = colorChoice;
         Node ret = null;
@@ -36,7 +36,7 @@ public class Figures {
                     ret = line(0, 245, 800, 245);
                 }
                 else{
-                    ret = line(x,y, 800, 245);  // TODO endX, endY dynamic
+                    ret = line(x,y, endX, endY);
                 }
                 retArray.add(ret);
                 break;
@@ -162,11 +162,12 @@ public class Figures {
        /* gc.strokeOval(300,150, 10, 10);
         gc.setStroke(Color.valueOf(this.colorChoice));
         */
+
         Ellipse ellipse = new Ellipse();
         ellipse.setCenterX(x);
         ellipse.setCenterY(y);
-        ellipse.setRadiusX(10);
-        ellipse.setRadiusY(10);
+        ellipse.setRadiusX(1);
+        ellipse.setRadiusY(1);
         ellipse.setStroke(Color.valueOf(this.colorChoice));
 
         return ellipse;
