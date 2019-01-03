@@ -157,20 +157,16 @@ public class Controller {
 
         System.out.println("pressed");
 
+        /*
         for (int i = 0; i < 150; i++) {
             double randomX = Math.random() * 750 + 50;
             double randomY = Math.random() * 900 + 100;
 
             calculatePoint(randomX, randomY, 3);
         }
+        */
+        drawTree(400, 500, -90, 9);
 
-
-
-      //   calculatePoint(250, 50, 6);
-      //  calculatePoint(250, 50, 4);
-      //  calculatePoint(250, 120, 3);
-      //  calculatePoint(150, 240, 2);
-      //  calculatePoint(150, 150, 8);
 
         for (Node item : itemsDrawn) {
       //      main.getRoot().getChildren().remove(item);
@@ -180,6 +176,7 @@ public class Controller {
 
 
     private void calculatePoint(double i, double j, int type){
+
         double iNew = 0.0;
         double jNew = 0.0;
         Coordinates[] retArray = new Coordinates[4];
@@ -187,8 +184,8 @@ public class Controller {
 
         // CALCULATE 4 POINTS
         for(int k = 0; k < 4; k++){
-            iNew = 800 * (a[k] * i / 800.0 + b[k] * j/800.0 + e[k]);
-            jNew = 800 * (c[k] * i / 800.0 + d[k] * j/800.0 + f[k]);
+            iNew = 800 * (a[k] * i / 800 + b[k] * j/800 + e[k]);
+            jNew = 800 * (c[k] * i / 800 + d[k] * j/800 + f[k]);
 
 
             if(iNew >= 770){
@@ -247,6 +244,25 @@ public class Controller {
         }
 
 
+    }
+
+    private void drawTree(int x1, int y1, double angle, int depth) {
+        if (depth == 0) return;
+        int x2 = x1 + (int) (Math.cos(Math.toRadians(angle)) * depth * 10.0);
+        int y2 = y1 + (int) (Math.sin(Math.toRadians(angle)) * depth * 10.0);
+
+        GraphicsContext gc = drawArea.getGraphicsContext2D();
+        ArrayList<Node> lines = figures.init(1, gc, "BLACK", x1,y1, x2, y2);
+
+
+        for (Node itemm: lines) {
+          //  System.out.println("ITEM: " +  itemm.toString());
+            this.itemsDrawn.add(itemm);
+            main.getRoot().getChildren().add(itemm);
+        }
+
+        drawTree(x2, y2, angle - 20, depth - 1);
+        drawTree(x2, y2, angle + 20, depth - 1);
     }
 
 
