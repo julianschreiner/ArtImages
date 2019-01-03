@@ -21,7 +21,7 @@ public class Figures {
 
 
 
-    public ArrayList<Node> init(int type, GraphicsContext gc, String colorChoice, double x, double y, double endX, double endY){
+    public ArrayList<Node> init(int type, GraphicsContext gc, String colorChoice, double x, double y, double endX, double endY, float radius){
         this.gc = gc;
         this.colorChoice = colorChoice;
         Node ret = null;
@@ -69,10 +69,10 @@ public class Figures {
                 break;
             case 5:
                 if(x == 0.0 && y == 0.0) {
-                    ret = circle(400, 150);
+                    ret = circle(400, 150, 50f);
                 }
                 else{
-                    ret = circle(x,y);
+                    ret = circle(x,y, radius);
                 }
                 retArray.add(ret);
                 break;
@@ -190,14 +190,14 @@ public class Figures {
         return rectangle;
     }
 
-    private Node circle(double x, double y){
+    private Node circle(double x, double y, float radius){
         System.out.println("circle");
         //this.gc.strokeOval(100,150,500,150);
 
         Circle circle = new Circle();
         circle.setCenterX(x);
         circle.setCenterY(y);
-        circle.setRadius(50.0f);
+        circle.setRadius(radius);
         circle.setFill(Color.TRANSPARENT);
         circle.setStroke(Color.valueOf(this.colorChoice));
 

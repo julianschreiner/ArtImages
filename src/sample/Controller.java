@@ -111,7 +111,7 @@ public class Controller {
 
 
 
-        ArrayList<Node> ret = figures.init(Integer.parseInt(userChoice), gc, colorChoice, startPosX, startPosY, 0.0, 0.0);
+        ArrayList<Node> ret = figures.init(Integer.parseInt(userChoice), gc, colorChoice, startPosX, startPosY, 0.0, 0.0, 0);
 
         for (Node item: ret) {
             System.out.println(item);
@@ -162,11 +162,14 @@ public class Controller {
             double randomX = Math.random() * 750 + 50;
             double randomY = Math.random() * 900 + 100;
 
-            calculatePoint(randomX, randomY, 3);
+
         }
         */
-        drawTree(400, 500, -90, 9);
 
+//        calculatePoint(800, 500, 3, 800);
+
+       // drawTree(400, 500, -90, 9);
+        drawCircle(365,220, 190.0f);
 
         for (Node item : itemsDrawn) {
       //      main.getRoot().getChildren().remove(item);
@@ -175,7 +178,7 @@ public class Controller {
     }
 
 
-    private void calculatePoint(double i, double j, int type){
+    private void calculatePoint(double i, double j, int type, double calc){
 
         double iNew = 0.0;
         double jNew = 0.0;
@@ -184,16 +187,16 @@ public class Controller {
 
         // CALCULATE 4 POINTS
         for(int k = 0; k < 4; k++){
-            iNew = 800 * (a[k] * i / 800 + b[k] * j/800 + e[k]);
-            jNew = 800 * (c[k] * i / 800 + d[k] * j/800 + f[k]);
+            iNew = calc * (a[k] * i / calc + b[k] * j/calc + e[k]);
+            jNew = calc * (c[k] * i / calc + d[k] * j/calc + f[k]);
 
 
             if(iNew >= 770){
-                iNew = 520;
+                iNew = Math.random() * 520 + 20;
             }
 
             if(jNew >= 420){
-                jNew = 420 ;
+                jNew = Math.random() * 420 + 1;
             }
 
 
@@ -208,11 +211,11 @@ public class Controller {
         // DRAWING
         GraphicsContext gc = drawArea.getGraphicsContext2D();
 
-        ArrayList<Node> lines = figures.init(1, gc, "GREEN", retArray[0].getX(),retArray[0].getY(), retArray[1].getX(), retArray[1].getY());
-        lines.addAll(figures.init(1,gc, "GREEN", retArray[2].getX(), retArray[2].getY(), retArray[3].getX(), retArray[3].getY()));
+        ArrayList<Node> lines = figures.init(1, gc, "GREEN", retArray[0].getX(),retArray[0].getY(), retArray[1].getX(), retArray[1].getY(),0);
+        lines.addAll(figures.init(1,gc, "GREEN", retArray[2].getX(), retArray[2].getY(), retArray[3].getX(), retArray[3].getY(),0));
 
-        lines.addAll(figures.init(1,gc, "GREEN", retArray[0].getX(), retArray[0].getY(), retArray[3].getX(), retArray[3].getY()));
-        lines.addAll(figures.init(1,gc, "GREEN", retArray[1].getX(), retArray[1].getY(), retArray[2].getX(), retArray[2].getY()));
+        lines.addAll(figures.init(1,gc, "GREEN", retArray[0].getX(), retArray[0].getY(), retArray[3].getX(), retArray[3].getY(), 0));
+        lines.addAll(figures.init(1,gc, "GREEN", retArray[1].getX(), retArray[1].getY(), retArray[2].getX(), retArray[2].getY(), 0));
 
 
 
@@ -225,7 +228,7 @@ public class Controller {
             double x = item.getX();
             double y = item.getY();
 
-           ret.addAll(figures.init(type, gc, "BLACK", x, y, 0.0, 0.0));
+           ret.addAll(figures.init(type, gc, "BLACK", x, y, 0.0, 0.0, 0));
 
         }
 
@@ -252,7 +255,7 @@ public class Controller {
         int y2 = y1 + (int) (Math.sin(Math.toRadians(angle)) * depth * 10.0);
 
         GraphicsContext gc = drawArea.getGraphicsContext2D();
-        ArrayList<Node> lines = figures.init(1, gc, "BLACK", x1,y1, x2, y2);
+        ArrayList<Node> lines = figures.init(1, gc, "BLACK", x1,y1, x2, y2, 0);
 
 
         for (Node itemm: lines) {
@@ -265,5 +268,21 @@ public class Controller {
         drawTree(x2, y2, angle + 20, depth - 1);
     }
 
+
+    private void drawCircle(int x, int y, float radius){
+        GraphicsContext gc = drawArea.getGraphicsContext2D();
+        ArrayList<Node> lines = figures.init(5, gc, "BLACK", x,y, 0, 0, radius);
+
+        for (Node itemm: lines) {
+            //  System.out.println("ITEM: " +  itemm.toString());
+            this.itemsDrawn.add(itemm);
+            main.getRoot().getChildren().add(itemm);
+        }
+
+        if(radius > 2) {
+            radius *= 0.75f;
+            drawCircle(x, y, radius);
+        }
+    }
 
 }
