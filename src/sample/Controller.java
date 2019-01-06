@@ -1,5 +1,6 @@
 package sample;
 
+import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.Scene;
@@ -58,6 +59,7 @@ public class Controller {
     private static final String TREE = "Tree";
     private static final String CIRCLE = "Endless Circle";
     private static final String SPONGE = "Sponge";
+    private static final String ROTSQUARE = "Squares";
 
 
     public Main main;
@@ -80,7 +82,7 @@ public class Controller {
         drawArea.setLayoutX(X_OFFSET);
         drawArea.setLayoutY(Y_OFFSET);
 
-        ObservableList<String> list = FXCollections.observableArrayList(POINTALG,TREE,CIRCLE,SPONGE);
+        ObservableList<String> list = FXCollections.observableArrayList(POINTALG,TREE,CIRCLE,SPONGE, ROTSQUARE);
         choiceBox.setItems(list);
 
         ObservableList<String> list2 = FXCollections.observableArrayList("BLUE","BLACK","GREEN","PURPLE","RED","BROWN","CYAN","GREY","PINK","LIME");
@@ -120,12 +122,24 @@ public class Controller {
             System.out.println("No starting point provided");
         }
 
+        Integer curveStart;
+
+        if(startCurve.getText().isEmpty()){
+            curveStart = 5;
+        }
+        else{
+            curveStart = Integer.parseInt(startCurve.getText().toString());
+        }
+        System.out.println("Curve Start: " + curveStart);
+
+
+
         switch(userChoice){
             case POINTALG:
                 calculatePoint(800, 500, 3, 800);
                 break;
             case TREE:
-                drawTree(600, 300, -90, 9);
+                drawTree(380, 300, -90, 9);
                 break;
             case CIRCLE:
                 drawCircle(380,260, 190.0f);
@@ -134,6 +148,44 @@ public class Controller {
                 double size = CANVAS_WIDTH > CANVAS_HEIGHT ? (int) (CANVAS_HEIGHT * 0.8) : (int) (CANVAS_WIDTH * 0.8);
                 sponge(5,size, size, CANVAS_WIDTH / 2 - size / 2, CANVAS_HEIGHT / 2 - size / 2);
                 break;
+            case ROTSQUARE:
+                double sizeRotSquare = CANVAS_WIDTH > CANVAS_HEIGHT ? CANVAS_HEIGHT / 3 : CANVAS_WIDTH / 3;
+                System.out.println("First Drawing with count 1");
+                rotatedSquare(
+                        CANVAS_WIDTH / 2 - sizeRotSquare / 2,
+                        CANVAS_HEIGHT / 2 - sizeRotSquare / 2,
+                        sizeRotSquare,
+                        sizeRotSquare,
+                        1);
+
+                Timer timer = new Timer();
+                timer.scheduleAtFixedRate(new TimerTask() {
+                    int i = 1;
+                                              @Override
+                                              public void run() {
+                                                  Platform.runLater(() -> {
+                                                      // your code here
+                                                      System.out.println("Count: " + i++);
+
+                                                      if(i > 7){
+                                                          timer.cancel();
+                                                          timer.purge();
+                                                      }
+
+                                                      rotatedSquare(
+                                                              CANVAS_WIDTH / 2 - sizeRotSquare / 2,
+                                                              CANVAS_HEIGHT / 2 - sizeRotSquare / 2,
+                                                              sizeRotSquare,
+                                                              sizeRotSquare,
+                                                              i++);
+
+                                                  });
+                                              }
+                                          },  5000,5000
+                );
+
+
+
             default:
                 break;
         }
@@ -157,7 +209,7 @@ public class Controller {
     @FXML
     public void clearCanvas() {
 
-        System.out.println("pressed");
+        System.out.println("CLEARING...");
 /*
         CustomThread t1 = new CustomThread("ABC THREAD");
 
@@ -167,10 +219,10 @@ public class Controller {
 
    //
 
+
         for (Node item : itemsDrawn) {
             main.getRoot().getChildren().remove(item);
         }
-
     }
 
 
@@ -344,4 +396,26 @@ public class Controller {
         }
     }
 
+
+    private void rotatedSquare(double x, double y, double width, double height, int count){
+        //g.drawRect(r.x, r.y, r.width, r.height);
+        GraphicsContext gc = drawArea.getGraphicsContext2D();
+
+        ArrayList<Node> rectangles = figures.init(6, gc, "BLACK", x,y, 0, 0, 0, height, width);
+
+        for (Node item: rectangles) {
+            this.itemsDrawn.add(item);
+            this.main.getRoot().getChildren().add(item);
+        }
+
+        if(count < 1)
+            return;
+
+        double newSize = width / 2;
+
+        rotatedSquare(x - newSize / 2, y, newSize, newSize, count - 1);
+        rotatedSquare(x + width - newSize, y - newSize / 2, newSize, newSize, count - 1);
+        rotatedSquare(x + width - newSize / 2, y + height - newSize, newSize, newSize, count - 1);
+        rotatedSquare(x, y + height - newSize / 2, newSize, newSize, count - 1);
+    }
 }
