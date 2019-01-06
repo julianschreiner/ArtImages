@@ -12,10 +12,13 @@ import javafx.scene.canvas.Canvas;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 import java.util.*;
+import java.util.concurrent.TimeUnit;
+
 import javafx.collections.*;
 import javafx.scene.layout.*;
 import javafx.event.*;
 import javafx.scene.shape.Line;
+
 
 public class Controller {
     // VIEWS
@@ -47,7 +50,6 @@ public class Controller {
                                   d = {0, 0.5, 0.5, 0},
                                   e = {0, 0, 0.5, 1},
                                   f = {0, 0.5, 0.5, 0.5};
-
 
 
     public Main main;
@@ -166,10 +168,13 @@ public class Controller {
         }
         */
 
-//        calculatePoint(800, 500, 3, 800);
+        // calculatePoint(800, 500, 3, 800);
 
-       // drawTree(400, 500, -90, 9);
-        drawCircle(365,220, 190.0f);
+       //drawTree(400, 500, -90, 15);
+      //drawTree(600, 300, -90, 9);
+
+       drawCircle(380,260, 190.0f);
+
 
         for (Node item : itemsDrawn) {
       //      main.getRoot().getChildren().remove(item);
@@ -191,13 +196,18 @@ public class Controller {
             jNew = calc * (c[k] * i / calc + d[k] * j/calc + f[k]);
 
 
+            iNew += (double) (Math.cos(Math.toRadians(-90)) * 6 * 5.0);
+            jNew += (double) (Math.cos(Math.toRadians(-90)) * 5 * 5.0);
+
+
             if(iNew >= 770){
-                iNew = Math.random() * 520 + 20;
+                iNew = Math.random() * 770 + 20;
             }
 
             if(jNew >= 420){
                 jNew = Math.random() * 420 + 1;
             }
+
 
 
             points = new Coordinates(iNew, jNew);
@@ -251,8 +261,8 @@ public class Controller {
 
     private void drawTree(int x1, int y1, double angle, int depth) {
         if (depth == 0) return;
-        int x2 = x1 + (int) (Math.cos(Math.toRadians(angle)) * depth * 10.0);
-        int y2 = y1 + (int) (Math.sin(Math.toRadians(angle)) * depth * 10.0);
+        int x2 = x1 + (int) (Math.cos(Math.toRadians(angle)) * depth * 5.0);
+        int y2 = y1 + (int) (Math.sin(Math.toRadians(angle)) * depth * 5.0);
 
         GraphicsContext gc = drawArea.getGraphicsContext2D();
         ArrayList<Node> lines = figures.init(1, gc, "BLACK", x1,y1, x2, y2, 0);
@@ -269,7 +279,7 @@ public class Controller {
     }
 
 
-    private void drawCircle(int x, int y, float radius){
+    private void drawCircle(double x, double y, float radius){
         GraphicsContext gc = drawArea.getGraphicsContext2D();
         ArrayList<Node> lines = figures.init(5, gc, "BLACK", x,y, 0, 0, radius);
 
@@ -281,8 +291,36 @@ public class Controller {
 
         if(radius > 2) {
             radius *= 0.75f;
-            drawCircle(x, y, radius);
+           // drawCircle(x, y, radius);
+
+            /*
+            drawCircle(x + radius/2, y, radius/2);
+            drawCircle(x - radius/2, y, radius/2);
+            */
+            
+            drawCircle(x + radius/2, y, radius/2);
+            drawCircle(x - radius/2, y, radius/2);
+            drawCircle(x, y + radius/2, radius/2);
+            drawCircle(x, y - radius/2, radius/2);
+
+            //x 380 - y 260
+            // + 150  - 150
+            // 530     110
+
+            drawCircle(x + radius/2 + 150, y, radius/2);
+            drawCircle(x - radius/2 + 150, y, radius/2);
+            drawCircle(x, y + radius/2 - 150, radius/2);
+            drawCircle(x, y - radius/2 - 150, radius/2);
+
+
+            drawCircle(x + radius/2 - 150, y, radius/2);
+            drawCircle(x - radius/2 - 150, y, radius/2);
+            drawCircle(x, y + radius/2 + 50, radius/2);
+            drawCircle(x, y - radius/2 + 50, radius/2);
+
+
         }
+
     }
 
 }
