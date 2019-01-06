@@ -21,7 +21,7 @@ public class Figures {
 
 
 
-    public ArrayList<Node> init(int type, GraphicsContext gc, String colorChoice, double x, double y, double endX, double endY, float radius){
+    public ArrayList<Node> init(int type, GraphicsContext gc, String colorChoice, double x, double y, double endX, double endY, float radius, double height, double width){
         this.gc = gc;
         this.colorChoice = colorChoice;
         Node ret = null;
@@ -63,7 +63,7 @@ public class Figures {
                     ret = square(275, 200, 200, 200);
                 }
                 else{
-                    ret = square(x, y, 200, 200);        // TODO WIDTH DYNAMIC
+                    ret = square(x, y, width, height);        // TODO WIDTH DYNAMIC
                 }
                 retArray.add(ret);
                 break;
@@ -78,10 +78,10 @@ public class Figures {
                 break;
             case 6:
                 if(x == 0.0 && y == 0.0) {
-                    ret = rectangle(50, 50);
+                    ret = rectangle(50, 50, 100, 200);
                 }
                 else{
-                    ret = rectangle(x,y);
+                    ret = rectangle(x,y, height, width);
                 }
                 retArray.add(ret);
                 break;
@@ -204,7 +204,7 @@ public class Figures {
         return circle;
     }
 
-    private Node rectangle(double x, double y) {
+    private Node rectangle(double x, double y, double height, double width) {
         System.out.println("rectangle");
 
      /*   gc.strokeRect(200,250,50, 100);
@@ -215,8 +215,8 @@ public class Figures {
         Rectangle r = new Rectangle();
         r.setX(x);
         r.setY(y);
-        r.setWidth(200);
-        r.setHeight(100);
+        r.setWidth(width);
+        r.setHeight(height);
         r.setFill(Color.TRANSPARENT);
         r.setStroke(Color.valueOf(this.colorChoice));
 

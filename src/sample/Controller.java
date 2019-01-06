@@ -19,6 +19,7 @@ import javafx.scene.layout.*;
 import javafx.event.*;
 import javafx.scene.shape.Line;
 
+import static java.lang.Thread.sleep;
 
 public class Controller {
     // VIEWS
@@ -33,8 +34,8 @@ public class Controller {
     @FXML private TextField sizeOfSquare;
 
     // Size of the canvas for the Mandelbrot set
-    private static final int CANVAS_WIDTH = 697;
-    private static final int CANVAS_HEIGHT = 400;
+    private static final double CANVAS_WIDTH = 697;
+    private static final double CANVAS_HEIGHT = 400;
 
     // Left and right border
     private static final int X_OFFSET = 25;
@@ -50,6 +51,13 @@ public class Controller {
                                   d = {0, 0.5, 0.5, 0},
                                   e = {0, 0, 0.5, 1},
                                   f = {0, 0.5, 0.5, 0.5};
+
+
+
+    private static final String POINTALG = "Points (Logofatu Alg.)";
+    private static final String TREE = "Tree";
+    private static final String CIRCLE = "Endless Circle";
+    private static final String SPONGE = "Sponge";
 
 
     public Main main;
@@ -72,7 +80,7 @@ public class Controller {
         drawArea.setLayoutX(X_OFFSET);
         drawArea.setLayoutY(Y_OFFSET);
 
-        ObservableList<String> list = FXCollections.observableArrayList("1","2","3","4","5","6","7","8","9","10");
+        ObservableList<String> list = FXCollections.observableArrayList(POINTALG,TREE,CIRCLE,SPONGE);
         choiceBox.setItems(list);
 
         ObservableList<String> list2 = FXCollections.observableArrayList("BLUE","BLACK","GREEN","PURPLE","RED","BROWN","CYAN","GREY","PINK","LIME");
@@ -87,6 +95,7 @@ public class Controller {
         GraphicsContext gc = drawArea.getGraphicsContext2D();
         String userChoice = choiceBox.getValue().toString();
         String colorChoice;
+
 
         // FALLBACK COLOR
         if(colorInput.getValue() != null){
@@ -111,46 +120,37 @@ public class Controller {
             System.out.println("No starting point provided");
         }
 
+        switch(userChoice){
+            case POINTALG:
+                calculatePoint(800, 500, 3, 800);
+                break;
+            case TREE:
+                drawTree(600, 300, -90, 9);
+                break;
+            case CIRCLE:
+                drawCircle(380,260, 190.0f);
+                break;
+            case SPONGE:
+                double size = CANVAS_WIDTH > CANVAS_HEIGHT ? (int) (CANVAS_HEIGHT * 0.8) : (int) (CANVAS_WIDTH * 0.8);
+                sponge(5,size, size, CANVAS_WIDTH / 2 - size / 2, CANVAS_HEIGHT / 2 - size / 2);
+                break;
+            default:
+                break;
+        }
 
 
-        ArrayList<Node> ret = figures.init(Integer.parseInt(userChoice), gc, colorChoice, startPosX, startPosY, 0.0, 0.0, 0);
 
+     //   ArrayList<Node> ret = figures.init(Integer.parseInt(userChoice), gc, colorChoice, startPosX, startPosY, 0.0, 0.0, 0, 0 ,0); // TODO HEIGHT WIDTH
+/*
         for (Node item: ret) {
             System.out.println(item);
             this.itemsDrawn.add(item);
             System.out.println(itemsDrawn.toString());
             main.getRoot().getChildren().add(item);
         }
+*/
 
 
-
-      /*   Example calling one draw function often */
-/*
-        double x = 0;
-        double y  = 0;
-
-        for (int i = 0; i < 100 ; i++) {
-
-
-            if(i > 50){
-                x = 50 + i * 10;
-                y = 50 + i * 15;
-            }
-            else{
-                x = 500 - i * 10;
-                y = 600 - i * 15;
-            }
-
-            if(y > 280){
-                y = 250;
-            }
-
-            Node ret2 = figures.init(4,gc,colorChoice,x,y);
-            main.getRoot().getChildren().add(ret2);
-
-            this.itemsDrawn.add(ret2);
-        }
-        */
 
     }
 
@@ -158,26 +158,17 @@ public class Controller {
     public void clearCanvas() {
 
         System.out.println("pressed");
+/*
+        CustomThread t1 = new CustomThread("ABC THREAD");
 
-        /*
-        for (int i = 0; i < 150; i++) {
-            double randomX = Math.random() * 750 + 50;
-            double randomY = Math.random() * 900 + 100;
+        t1.start();
+*/
 
 
-        }
-        */
-
-        // calculatePoint(800, 500, 3, 800);
-
-       //drawTree(400, 500, -90, 15);
-      //drawTree(600, 300, -90, 9);
-
-       drawCircle(380,260, 190.0f);
-
+   //
 
         for (Node item : itemsDrawn) {
-      //      main.getRoot().getChildren().remove(item);
+            main.getRoot().getChildren().remove(item);
         }
 
     }
@@ -221,11 +212,11 @@ public class Controller {
         // DRAWING
         GraphicsContext gc = drawArea.getGraphicsContext2D();
 
-        ArrayList<Node> lines = figures.init(1, gc, "GREEN", retArray[0].getX(),retArray[0].getY(), retArray[1].getX(), retArray[1].getY(),0);
-        lines.addAll(figures.init(1,gc, "GREEN", retArray[2].getX(), retArray[2].getY(), retArray[3].getX(), retArray[3].getY(),0));
+        ArrayList<Node> lines = figures.init(1, gc, "GREEN", retArray[0].getX(),retArray[0].getY(), retArray[1].getX(), retArray[1].getY(),0, 0, 0);
+        lines.addAll(figures.init(1,gc, "GREEN", retArray[2].getX(), retArray[2].getY(), retArray[3].getX(), retArray[3].getY(),0, 0, 0));
 
-        lines.addAll(figures.init(1,gc, "GREEN", retArray[0].getX(), retArray[0].getY(), retArray[3].getX(), retArray[3].getY(), 0));
-        lines.addAll(figures.init(1,gc, "GREEN", retArray[1].getX(), retArray[1].getY(), retArray[2].getX(), retArray[2].getY(), 0));
+        lines.addAll(figures.init(1,gc, "GREEN", retArray[0].getX(), retArray[0].getY(), retArray[3].getX(), retArray[3].getY(), 0, 0, 0));
+        lines.addAll(figures.init(1,gc, "GREEN", retArray[1].getX(), retArray[1].getY(), retArray[2].getX(), retArray[2].getY(), 0, 0, 0));
 
 
 
@@ -238,7 +229,7 @@ public class Controller {
             double x = item.getX();
             double y = item.getY();
 
-           ret.addAll(figures.init(type, gc, "BLACK", x, y, 0.0, 0.0, 0));
+           ret.addAll(figures.init(type, gc, "BLACK", x, y, 0.0, 0.0, 0, 0, 0));
 
         }
 
@@ -265,7 +256,7 @@ public class Controller {
         int y2 = y1 + (int) (Math.sin(Math.toRadians(angle)) * depth * 5.0);
 
         GraphicsContext gc = drawArea.getGraphicsContext2D();
-        ArrayList<Node> lines = figures.init(1, gc, "BLACK", x1,y1, x2, y2, 0);
+        ArrayList<Node> lines = figures.init(1, gc, "BLACK", x1,y1, x2, y2, 0, 0, 0);
 
 
         for (Node itemm: lines) {
@@ -278,10 +269,9 @@ public class Controller {
         drawTree(x2, y2, angle + 20, depth - 1);
     }
 
-
     private void drawCircle(double x, double y, float radius){
         GraphicsContext gc = drawArea.getGraphicsContext2D();
-        ArrayList<Node> lines = figures.init(5, gc, "BLACK", x,y, 0, 0, radius);
+        ArrayList<Node> lines = figures.init(5, gc, "BLACK", x,y, 0, 0, radius, 0,0);
 
         for (Node itemm: lines) {
             //  System.out.println("ITEM: " +  itemm.toString());
@@ -297,7 +287,7 @@ public class Controller {
             drawCircle(x + radius/2, y, radius/2);
             drawCircle(x - radius/2, y, radius/2);
             */
-            
+
             drawCircle(x + radius/2, y, radius/2);
             drawCircle(x - radius/2, y, radius/2);
             drawCircle(x, y + radius/2, radius/2);
@@ -321,6 +311,37 @@ public class Controller {
 
         }
 
+    }
+
+    private void sponge(int count, double width, double height, double x, double y) {
+        System.out.println(x + " , " + y);
+        GraphicsContext gc = drawArea.getGraphicsContext2D();
+        if(count < 1) {
+           // g.drawRect(r.x, r.y, r.width, r.height);
+
+            ArrayList<Node> lines = figures.init(6, gc, "BLACK", x,y, 0, 0, 0, height, width);
+
+            for (Node itemm: lines) {
+                //  System.out.println("ITEM: " +  itemm.toString());
+                this.itemsDrawn.add(itemm);
+                main.getRoot().getChildren().add(itemm);
+            }
+
+            return;
+        }
+
+        double width2 = width / 3;
+        double height2 = height / 3;
+
+        for(int i = 0; i < 3; i++) {
+            for(int j = 0; j < 3; j++) {
+                if(!(i == 1 && j == 1)) {
+                   // fractal(new Rectangle(r.x + (int) (i * width), r.y + (int) (j * height), (int) width, (int) height), count - 1);
+
+                    sponge(count - 1, width2, height2, x + (int) (i * width2), y + (int) (j * height2));
+                }
+            }
+        }
     }
 
 }
