@@ -61,6 +61,8 @@ public class Controller {
     private static final String SPONGE = "Sponge";
     private static final String ROTSQUARE = "Squares";
 
+    private static String[] colors = {"BLUE","BLACK","GREEN","PURPLE","RED","BROWN","CYAN","GREY","PINK","LIME"};
+
 
     public Main main;
     private ArrayList<Node> itemsDrawn;
@@ -137,6 +139,31 @@ public class Controller {
         switch(userChoice){
             case POINTALG:
                 calculatePoint(800, 500, 3, 800);
+                Timer timer = new Timer();
+                timer.scheduleAtFixedRate(new TimerTask() {
+                                              int i = 0;
+                                              @Override
+                                              public void run() {
+                                                  Platform.runLater(() -> {
+                                                      // your code here
+                                                      i++;
+                                                      System.out.println("Count: " + i);
+                                                      int type;
+
+                                                      if(i % 2 == 0){
+                                                          type = 3;
+                                                      }
+                                                      else{
+                                                          type = 9;
+                                                      }
+
+                                                      calculatePoint(800, 500, type, 800);
+
+                                                  });
+                                              }
+                                          },  20,20
+                );
+
                 break;
             case TREE:
                 drawTree(380, 300, -90, 9);
@@ -150,38 +177,41 @@ public class Controller {
                 break;
             case ROTSQUARE:
                 double sizeRotSquare = CANVAS_WIDTH > CANVAS_HEIGHT ? CANVAS_HEIGHT / 3 : CANVAS_WIDTH / 3;
-                System.out.println("First Drawing with count 1");
+                System.out.println(CANVAS_WIDTH / 2 - sizeRotSquare / 2);
+                System.out.println(CANVAS_HEIGHT / 2 - sizeRotSquare / 2);
+
                 rotatedSquare(
                         CANVAS_WIDTH / 2 - sizeRotSquare / 2,
-                        CANVAS_HEIGHT / 2 - sizeRotSquare / 2,
-                        sizeRotSquare,
+                        CANVAS_HEIGHT / 2 - sizeRotSquare / 2 + 50,
+                        sizeRotSquare + 150,
                         sizeRotSquare,
                         1);
 
-                Timer timer = new Timer();
-                timer.scheduleAtFixedRate(new TimerTask() {
+                Timer timer2 = new Timer();
+                timer2.scheduleAtFixedRate(new TimerTask() {
                     int i = 1;
                                               @Override
                                               public void run() {
                                                   Platform.runLater(() -> {
                                                       // your code here
-                                                      System.out.println("Count: " + i++);
+                                                      i++;
+                                                      System.out.println("Count: " + i);
 
-                                                      if(i > 7){
-                                                          timer.cancel();
-                                                          timer.purge();
+                                                      if(i > 6){
+                                                          timer2.cancel();
+                                                          timer2.purge();
                                                       }
 
                                                       rotatedSquare(
                                                               CANVAS_WIDTH / 2 - sizeRotSquare / 2,
-                                                              CANVAS_HEIGHT / 2 - sizeRotSquare / 2,
+                                                              CANVAS_HEIGHT / 2 - sizeRotSquare / 2 + 50,
+                                                              sizeRotSquare + 150,
                                                               sizeRotSquare,
-                                                              sizeRotSquare,
-                                                              i++);
+                                                              i);
 
                                                   });
                                               }
-                                          },  5000,5000
+                                          },  2500,2500
                 );
 
 
@@ -264,11 +294,11 @@ public class Controller {
         // DRAWING
         GraphicsContext gc = drawArea.getGraphicsContext2D();
 
-        ArrayList<Node> lines = figures.init(1, gc, "GREEN", retArray[0].getX(),retArray[0].getY(), retArray[1].getX(), retArray[1].getY(),0, 0, 0);
-        lines.addAll(figures.init(1,gc, "GREEN", retArray[2].getX(), retArray[2].getY(), retArray[3].getX(), retArray[3].getY(),0, 0, 0));
+        ArrayList<Node> lines = figures.init(1, gc, this.colors[(int) (Math.random() * 10) ], retArray[0].getX(),retArray[0].getY(), retArray[1].getX(), retArray[1].getY(),0, 0, 0);
+        lines.addAll(figures.init(1,gc, this.colors[(int) (Math.random() * 10) ], retArray[2].getX(), retArray[2].getY(), retArray[3].getX(), retArray[3].getY(),0, 0, 0));
 
-        lines.addAll(figures.init(1,gc, "GREEN", retArray[0].getX(), retArray[0].getY(), retArray[3].getX(), retArray[3].getY(), 0, 0, 0));
-        lines.addAll(figures.init(1,gc, "GREEN", retArray[1].getX(), retArray[1].getY(), retArray[2].getX(), retArray[2].getY(), 0, 0, 0));
+        lines.addAll(figures.init(1,gc, this.colors[(int) (Math.random() * 10) ], retArray[0].getX(), retArray[0].getY(), retArray[3].getX(), retArray[3].getY(), 0, 0, 0));
+        lines.addAll(figures.init(1,gc, this.colors[(int) (Math.random() * 10) ], retArray[1].getX(), retArray[1].getY(), retArray[2].getX(), retArray[2].getY(), 0, 0, 0));
 
 
 
@@ -281,7 +311,7 @@ public class Controller {
             double x = item.getX();
             double y = item.getY();
 
-           ret.addAll(figures.init(type, gc, "BLACK", x, y, 0.0, 0.0, 0, 0, 0));
+           ret.addAll(figures.init(type, gc, this.colors[(int) (Math.random() * 10) ], x, y, 0.0, 0.0, 0, 0, 0));
 
         }
 
@@ -308,7 +338,7 @@ public class Controller {
         int y2 = y1 + (int) (Math.sin(Math.toRadians(angle)) * depth * 5.0);
 
         GraphicsContext gc = drawArea.getGraphicsContext2D();
-        ArrayList<Node> lines = figures.init(1, gc, "BLACK", x1,y1, x2, y2, 0, 0, 0);
+        ArrayList<Node> lines = figures.init(1, gc, this.colors[(int) (Math.random() * 10) ], x1,y1, x2, y2, 0, 0, 0);
 
 
         for (Node itemm: lines) {
@@ -323,7 +353,9 @@ public class Controller {
 
     private void drawCircle(double x, double y, float radius){
         GraphicsContext gc = drawArea.getGraphicsContext2D();
-        ArrayList<Node> lines = figures.init(5, gc, "BLACK", x,y, 0, 0, radius, 0,0);
+
+
+        ArrayList<Node> lines = figures.init(5, gc, this.colors[(int) (Math.random() * 10) ], x,y, 0, 0, radius, 0,0);
 
         for (Node itemm: lines) {
             //  System.out.println("ITEM: " +  itemm.toString());
@@ -348,7 +380,7 @@ public class Controller {
             //x 380 - y 260
             // + 150  - 150
             // 530     110
-
+/*
             drawCircle(x + radius/2 + 150, y, radius/2);
             drawCircle(x - radius/2 + 150, y, radius/2);
             drawCircle(x, y + radius/2 - 150, radius/2);
@@ -359,7 +391,7 @@ public class Controller {
             drawCircle(x - radius/2 - 150, y, radius/2);
             drawCircle(x, y + radius/2 + 50, radius/2);
             drawCircle(x, y - radius/2 + 50, radius/2);
-
+*/
 
         }
 
@@ -371,7 +403,7 @@ public class Controller {
         if(count < 1) {
            // g.drawRect(r.x, r.y, r.width, r.height);
 
-            ArrayList<Node> lines = figures.init(6, gc, "BLACK", x,y, 0, 0, 0, height, width);
+            ArrayList<Node> lines = figures.init(6, gc, this.colors[(int) (Math.random() * 10) ], x,y, 0, 0, 0, height, width);
 
             for (Node itemm: lines) {
                 //  System.out.println("ITEM: " +  itemm.toString());
@@ -398,10 +430,10 @@ public class Controller {
 
 
     private void rotatedSquare(double x, double y, double width, double height, int count){
-        //g.drawRect(r.x, r.y, r.width, r.height);
         GraphicsContext gc = drawArea.getGraphicsContext2D();
 
-        ArrayList<Node> rectangles = figures.init(6, gc, "BLACK", x,y, 0, 0, 0, height, width);
+
+        ArrayList<Node> rectangles = figures.init(6, gc, this.colors[(int) (Math.random() * 10) ], x,y, 0, 0, 0, height, width);
 
         for (Node item: rectangles) {
             this.itemsDrawn.add(item);

@@ -96,7 +96,7 @@ public class Figures {
                 break;
             case 8:
                 if(x == 0.0 && y == 0.0) {
-                    ret = oval(400, 300);
+                    ret = oval(390.0f, 226.0f);
                 }
                 else{
                     ret = oval(x,y);
@@ -205,7 +205,7 @@ public class Figures {
     }
 
     private Node rectangle(double x, double y, double height, double width) {
-        System.out.println("rectangle");
+       // System.out.println("rectangle");
 
      /*   gc.strokeRect(200,250,50, 100);
         gc.fillRect(200,250,50,100);
@@ -247,8 +247,8 @@ public class Figures {
 
     private Node oval(double x, double y){
         Ellipse ellipse = new Ellipse();
-        ellipse.setCenterX(390.0f);
-        ellipse.setCenterY(226.0f);
+        ellipse.setCenterX(x);
+        ellipse.setCenterY(y);
         ellipse.setRotate(25);
 
         ellipse.setRadiusX(420.0f);
@@ -259,8 +259,5 @@ public class Figures {
 
         return ellipse;
     }
-
-    private void mandelbrot(){}
-
 
 }
