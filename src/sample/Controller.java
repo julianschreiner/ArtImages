@@ -68,6 +68,7 @@ public class Controller {
     public Main main;
     private ArrayList<Node> itemsDrawn;
     private Coordinates points;
+    private ArrayList<Integer> angleList;
 
 
     private Figures figures = new Figures();
@@ -92,6 +93,7 @@ public class Controller {
         colorInput.setItems(list2);
 
         itemsDrawn = new ArrayList<Node>();
+        angleList = new ArrayList<Integer>();
     }
 
     @FXML
@@ -167,7 +169,7 @@ public class Controller {
 
                 break;
             case TREE:
-                drawTree(380, 400, -90, 9, true);
+                drawTree(380, 400, -90, 9, true,3.0f);
                 Timer timer4 = new Timer();
                 timer4.scheduleAtFixedRate(new TimerTask() {
                                                int i = 1;
@@ -178,12 +180,12 @@ public class Controller {
                                                        i++;
                                                        System.out.println("Count: " + i);
 
-                                                       if(i > 10){
+                                                       if(i > 20){
                                                            timer4.cancel();
                                                            timer4.purge();
                                                        }
 
-                                                       drawTree(380, 400, -90, 9, false);
+                                                       drawTree(380, 400, -90, 9, false,3.0f);
 
                                                    });
                                                }
@@ -379,12 +381,19 @@ public class Controller {
 
     }
 
-    private void drawTree(int x1, int y1, double angle, int depth, Boolean firstCall) {
+    private void drawTree(int x1, int y1, double angle, int depth, Boolean firstCall, float widthModifier) {
         if (depth == 0) return;
-        int x2 = x1 + (int) (Math.cos(Math.toRadians(angle)) * depth * 8.0);
-        int y2 = y1 + (int) (Math.sin(Math.toRadians(angle)) * depth * 8.0);
+        int x2 = x1 + (int) (Math.cos(Math.toRadians(angle)) * depth * 11.5);
+        int y2 = y1 + (int) (Math.sin(Math.toRadians(angle)) * depth * 9.0);
 
-        int angleModifier = (int) (Math.random() * 45) + 20;
+        int angleModifier;
+        int angleCount = 20;
+        do {
+            angleModifier = (int) (Math.random() * 45) + 20;
+            if(!angleList.contains(angleModifier)){
+                angleList.add(angleModifier);
+            }
+        }while(angleList.size()<angleCount);
 
         GraphicsContext gc = drawArea.getGraphicsContext2D();
 
@@ -395,7 +404,11 @@ public class Controller {
              lines = figures.init(1, gc, "BLACK", x1,y1 + 50, x2, y2, 0, 0, 5);
         }
         else{
-            lines = figures.init(1, gc, this.colors[(int) (Math.random() * 10) ], x1,y1, x2, y2, 0, 0, 2);
+            lines = figures.init(1, gc, this.colors[(int) (Math.random() * 10) ], x1,y1, x2, y2, 0, 0, widthModifier);
+            widthModifier -= 0.5f;
+            if(widthModifier < 0.5){
+                widthModifier = 0.25f;
+            }
         }
 
 
@@ -404,9 +417,12 @@ public class Controller {
             this.itemsDrawn.add(itemm);
             main.getRoot().getChildren().add(itemm);
         }
-
-        drawTree(x2, y2, angle - angleModifier, depth - 1, false);
-        drawTree(x2, y2, angle + angleModifier, depth - 1, false);
+        System.out.println(angleList.toString());
+        System.out.println(angleList.get((int) Math.random() * angleList.size()));
+        int randomAngle = angleList.get((int) (Math.random() * angleList.size()));
+        angleList.remove(angleList.indexOf(randomAngle));
+        drawTree(x2, y2, angle - randomAngle, depth - 1, false, widthModifier);
+        drawTree(x2, y2, angle + randomAngle, depth - 1, false, widthModifier);
     }
 
     private void drawCircle(double x, double y, float radius){
