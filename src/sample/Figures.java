@@ -33,10 +33,10 @@ public class Figures {
         switch (type){
             case 1:
                 if(x == 0.0 && y == 0.0) {
-                    ret = line(0, 245, 800, 245);
+                    ret = line(0, 245, 800, 245, 1);
                 }
                 else{
-                    ret = line(x,y, endX, endY);
+                    ret = line(x,y, endX, endY, width);
                 }
                 retArray.add(ret);
                 break;
@@ -117,7 +117,7 @@ public class Figures {
 
 
 
-    private Node line(double x, double y, double endX, double endY){
+    private Node line(double x, double y, double endX, double endY, double width){
         System.out.println("line");
      //   this.gc.strokeLine(x,y,600,250);
      //   this.gc.setStroke(Color.valueOf(this.colorChoice));
@@ -125,6 +125,7 @@ public class Figures {
         Line line = new Line();
         line.setStartX(x);
         line.setStartY(y);
+        line.setStrokeWidth(width);
         line.setEndX(endX);
         line.setEndY(endY);
         line.setStroke(Color.valueOf(this.colorChoice));
@@ -237,7 +238,7 @@ public class Figures {
     private ArrayList<Node> twoSquares(){
         ArrayList<Node>itemsDrawn = new ArrayList<Node>();
         Node ret = null;
-        itemsDrawn.add(this.line(0,40, 800, 40));
+        itemsDrawn.add(this.line(0,40, 800, 40, 4));
 
         itemsDrawn.add(this.square(1.0, 40, 400, 400));
         itemsDrawn.add(this.square(401, 40, 400,400));

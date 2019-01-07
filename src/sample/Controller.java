@@ -47,11 +47,11 @@ public class Controller {
 
     // VALUES FOR CURVE POINTS
     private static final double[] a = {0, 0.5, 0.5, 0},
-            b = {0.5, 0, 0, -0.5},
-            c = {0.5, 0, 0, -0.5},
-            d = {0, 0.5, 0.5, 0},
-            e = {0, 0, 0.5, 1},
-            f = {0, 0.5, 0.5, 0.5};
+                                  b = {0.5, 0, 0, -0.5},
+                                  c = {0.5, 0, 0, -0.5},
+                                  d = {0, 0.5, 0.5, 0},
+                                  e = {0, 0, 0.5, 1},
+                                  f = {0, 0.5, 0.5, 0.5};
 
 
 
@@ -60,6 +60,7 @@ public class Controller {
     private static final String CIRCLE = "Endless Circle";
     private static final String SPONGE = "Sponge";
     private static final String ROTSQUARE = "Squares";
+    private static final String CANTOR = "Cantor";
 
     private static String[] colors = {"BLUE","BLACK","GREEN","PURPLE","RED","BROWN","CYAN","GREY","PINK","LIME"};
 
@@ -84,7 +85,7 @@ public class Controller {
         drawArea.setLayoutX(X_OFFSET);
         drawArea.setLayoutY(Y_OFFSET);
 
-        ObservableList<String> list = FXCollections.observableArrayList(POINTALG,TREE,CIRCLE,SPONGE, ROTSQUARE);
+        ObservableList<String> list = FXCollections.observableArrayList(POINTALG,TREE,CIRCLE,SPONGE, ROTSQUARE, CANTOR);
         choiceBox.setItems(list);
 
         ObservableList<String> list2 = FXCollections.observableArrayList("BLUE","BLACK","GREEN","PURPLE","RED","BROWN","CYAN","GREY","PINK","LIME");
@@ -154,7 +155,7 @@ public class Controller {
                                                           type = 3;
                                                       }
                                                       else{
-                                                          type = 0;
+                                                          type = 9;
                                                       }
 
                                                       calculatePoint(800, 500, type, 800);
@@ -166,7 +167,7 @@ public class Controller {
 
                 break;
             case TREE:
-                drawTree(380, 400, -90, 9);
+                drawTree(380, 400, -90, 9, true);
                 Timer timer4 = new Timer();
                 timer4.scheduleAtFixedRate(new TimerTask() {
                                                int i = 1;
@@ -182,9 +183,7 @@ public class Controller {
                                                            timer4.purge();
                                                        }
 
-                                                       drawTree(380, 400, -90, 9);
-
-
+                                                       drawTree(380, 400, -90, 9, false);
 
                                                    });
                                                }
@@ -212,7 +211,37 @@ public class Controller {
 
                 Timer timer2 = new Timer();
                 timer2.scheduleAtFixedRate(new TimerTask() {
+                    int i = 1;
+                                              @Override
+                                              public void run() {
+                                                  Platform.runLater(() -> {
+                                                      // your code here
+                                                      i++;
+                                                      System.out.println("Count: " + i);
+
+                                                      if(i > 6){
+                                                          timer2.cancel();
+                                                          timer2.purge();
+                                                      }
+
+                                                      rotatedSquare(
+                                                              CANVAS_WIDTH / 2 - sizeRotSquare / 2,
+                                                              CANVAS_HEIGHT / 2 - sizeRotSquare / 2 + 50,
+                                                              sizeRotSquare + 150,
+                                                              sizeRotSquare,
+                                                              i);
+
+                                                  });
+                                              }
+                                          },  2500,2500
+                );
+
+            case CANTOR:
+                cantor(10,20, CANVAS_WIDTH-20, 190.0f);
+                Timer timer3 = new Timer();
+                timer3.scheduleAtFixedRate(new TimerTask() {
                                                int i = 1;
+                                               int y = 20;
                                                @Override
                                                public void run() {
                                                    Platform.runLater(() -> {
@@ -220,24 +249,19 @@ public class Controller {
                                                        i++;
                                                        System.out.println("Count: " + i);
 
-                                                       if(i > 6){
-                                                           timer2.cancel();
-                                                           timer2.purge();
+                                                       if(i > 7){
+                                                           drawCircle(380,260, 190.0f);
+                                                           timer3.cancel();
+                                                           timer3.purge();
                                                        }
+                                                       y+= 50;
 
-                                                       rotatedSquare(
-                                                               CANVAS_WIDTH / 2 - sizeRotSquare / 2,
-                                                               CANVAS_HEIGHT / 2 - sizeRotSquare / 2 + 50,
-                                                               sizeRotSquare + 150,
-                                                               sizeRotSquare,
-                                                               i);
+                                                       cantor(10,y, CANVAS_WIDTH-20, 190.0f);
 
                                                    });
                                                }
-                                           },  2500,2500
+                                           },  500,500
                 );
-
-
 
             default:
                 break;
@@ -245,7 +269,7 @@ public class Controller {
 
 
 
-        //   ArrayList<Node> ret = figures.init(Integer.parseInt(userChoice), gc, colorChoice, startPosX, startPosY, 0.0, 0.0, 0, 0 ,0); // TODO HEIGHT WIDTH
+     //   ArrayList<Node> ret = figures.init(Integer.parseInt(userChoice), gc, colorChoice, startPosX, startPosY, 0.0, 0.0, 0, 0 ,0); // TODO HEIGHT WIDTH
 /*
         for (Node item: ret) {
             System.out.println(item);
@@ -265,11 +289,12 @@ public class Controller {
         System.out.println("CLEARING...");
 /*
         CustomThread t1 = new CustomThread("ABC THREAD");
+
         t1.start();
 */
 
 
-        //
+   //
 
 
         for (Node item : itemsDrawn) {
@@ -328,12 +353,12 @@ public class Controller {
         ArrayList<Node> ret = new ArrayList<>();
 
         for(Coordinates item : retArray){
-            //  System.out.println(item.toString());
+          //  System.out.println(item.toString());
 
             double x = item.getX();
             double y = item.getY();
 
-            ret.addAll(figures.init(type, gc, this.colors[(int) (Math.random() * 10) ], x, y, 0.0, 0.0, 0, 0, 0));
+           ret.addAll(figures.init(type, gc, this.colors[(int) (Math.random() * 10) ], x, y, 0.0, 0.0, 0, 0, 0));
 
         }
 
@@ -341,8 +366,8 @@ public class Controller {
         // ret.addAll(lines);
 
         for (Node line: lines){
-            if (!ret.contains(line));
-                //ret.add(line);
+            if (!ret.contains(line))
+                ret.add(line);
         }
 
         for (Node itemm: ret) {
@@ -354,7 +379,7 @@ public class Controller {
 
     }
 
-    private void drawTree(int x1, int y1, double angle, int depth) {
+    private void drawTree(int x1, int y1, double angle, int depth, Boolean firstCall) {
         if (depth == 0) return;
         int x2 = x1 + (int) (Math.cos(Math.toRadians(angle)) * depth * 8.0);
         int y2 = y1 + (int) (Math.sin(Math.toRadians(angle)) * depth * 8.0);
@@ -362,17 +387,26 @@ public class Controller {
         int angleModifier = (int) (Math.random() * 45) + 20;
 
         GraphicsContext gc = drawArea.getGraphicsContext2D();
-        ArrayList<Node> lines = figures.init(1, gc, this.colors[(int) (Math.random() * 10) ], x1,y1, x2, y2, 0, 0, 0);
+
+        ArrayList<Node> lines;
+
+
+        if(firstCall){
+             lines = figures.init(1, gc, "BLACK", x1,y1 + 50, x2, y2, 0, 0, 5);
+        }
+        else{
+            lines = figures.init(1, gc, this.colors[(int) (Math.random() * 10) ], x1,y1, x2, y2, 0, 0, 2);
+        }
 
 
         for (Node itemm: lines) {
-            //  System.out.println("ITEM: " +  itemm.toString());
+          //  System.out.println("ITEM: " +  itemm.toString());
             this.itemsDrawn.add(itemm);
             main.getRoot().getChildren().add(itemm);
         }
 
-        drawTree(x2, y2, angle - angleModifier, depth - 1);
-        drawTree(x2, y2, angle + angleModifier, depth - 1);
+        drawTree(x2, y2, angle - angleModifier, depth - 1, false);
+        drawTree(x2, y2, angle + angleModifier, depth - 1, false);
     }
 
     private void drawCircle(double x, double y, float radius){
@@ -389,7 +423,7 @@ public class Controller {
 
         if(radius > 2) {
             radius *= 0.75f;
-            // drawCircle(x, y, radius);
+           // drawCircle(x, y, radius);
 
             /*
             drawCircle(x + radius/2, y, radius/2);
@@ -409,6 +443,8 @@ public class Controller {
             drawCircle(x - radius/2 + 150, y, radius/2);
             drawCircle(x, y + radius/2 - 150, radius/2);
             drawCircle(x, y - radius/2 - 150, radius/2);
+
+
             drawCircle(x + radius/2 - 150, y, radius/2);
             drawCircle(x - radius/2 - 150, y, radius/2);
             drawCircle(x, y + radius/2 + 50, radius/2);
@@ -423,7 +459,7 @@ public class Controller {
         System.out.println(x + " , " + y);
         GraphicsContext gc = drawArea.getGraphicsContext2D();
         if(count < 1) {
-            // g.drawRect(r.x, r.y, r.width, r.height);
+           // g.drawRect(r.x, r.y, r.width, r.height);
 
             ArrayList<Node> lines = figures.init(6, gc, this.colors[(int) (Math.random() * 10) ], x,y, 0, 0, 0, height, width);
 
@@ -442,7 +478,7 @@ public class Controller {
         for(int i = 0; i < 3; i++) {
             for(int j = 0; j < 3; j++) {
                 if(!(i == 1 && j == 1)) {
-                    // fractal(new Rectangle(r.x + (int) (i * width), r.y + (int) (j * height), (int) width, (int) height), count - 1);
+                   // fractal(new Rectangle(r.x + (int) (i * width), r.y + (int) (j * height), (int) width, (int) height), count - 1);
 
                     sponge(count - 1, width2, height2, x + (int) (i * width2), y + (int) (j * height2));
                 }
@@ -472,4 +508,30 @@ public class Controller {
         rotatedSquare(x + width - newSize / 2, y + height - newSize, newSize, newSize, count - 1);
         rotatedSquare(x, y + height - newSize / 2, newSize, newSize, count - 1);
     }
+
+
+    private void cantor(double x, double y, double len, float radius) {
+        GraphicsContext gc = drawArea.getGraphicsContext2D();
+
+        if (len >= 1 && radius > 2) {
+            ArrayList<Node> rectangles = figures.init(1, gc, this.colors[(int) (Math.random() * 10)], x, y, x + len, y, 0, 0, 0);
+
+            for (Node item : rectangles) {
+                this.itemsDrawn.add(item);
+                this.main.getRoot().getChildren().add(item);
+            }
+
+            y += 20;
+            radius *= 0.75f;
+
+            cantor(x, y, len / 3, radius);
+            cantor(x + len * 2 / 3, y, len / 3, radius);
+
+            cantor(x + len * 2 / 6, y, len / 6, radius);
+
+
+        }
+    }
+
+
 }
