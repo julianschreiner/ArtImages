@@ -61,6 +61,7 @@ public class Controller {
     private static final String SPONGE = "Sponge";
     private static final String ROTSQUARE = "Squares";
     private static final String CANTOR = "Cantor";
+    private static final String KOCHCURVE = "Koch Curve";
 
     private static String[] colors = {"BLUE","BLACK","GREEN","PURPLE","RED","BROWN","CYAN","GREY","PINK","LIME"};
 
@@ -86,7 +87,7 @@ public class Controller {
         drawArea.setLayoutX(X_OFFSET);
         drawArea.setLayoutY(Y_OFFSET);
 
-        ObservableList<String> list = FXCollections.observableArrayList(POINTALG,TREE,CIRCLE,SPONGE, ROTSQUARE, CANTOR);
+        ObservableList<String> list = FXCollections.observableArrayList(POINTALG,TREE,CIRCLE,SPONGE, ROTSQUARE, CANTOR,KOCHCURVE);
         choiceBox.setItems(list);
 
         ObservableList<String> list2 = FXCollections.observableArrayList("BLUE","BLACK","GREEN","PURPLE","RED","BROWN","CYAN","GREY","PINK","LIME");
@@ -157,7 +158,7 @@ public class Controller {
                                                           type = 3;
                                                       }
                                                       else{
-                                                          type = 9;
+                                                          type = 0;
                                                       }
 
                                                       calculatePoint(800, 500, type, 800);
@@ -186,6 +187,7 @@ public class Controller {
                                                        }
 
                                                        drawTree(380, 400, -90, 9, false,3.0f);
+
 
                                                    });
                                                }
@@ -237,7 +239,7 @@ public class Controller {
                                               }
                                           },  2500,2500
                 );
-
+                break;
             case CANTOR:
                 cantor(10,20, CANVAS_WIDTH-20, 190.0f);
                 Timer timer3 = new Timer();
@@ -252,7 +254,6 @@ public class Controller {
                                                        System.out.println("Count: " + i);
 
                                                        if(i > 7){
-                                                           drawCircle(380,260, 190.0f);
                                                            timer3.cancel();
                                                            timer3.purge();
                                                        }
@@ -267,6 +268,34 @@ public class Controller {
 
             default:
                 break;
+            case KOCHCURVE:
+                Coordinates c1 = new Coordinates(100,200);
+                Coordinates c2 = new Coordinates(500,200);
+                Timer timer5 = new Timer();
+                timer5.scheduleAtFixedRate(new TimerTask() {
+                                               int i = 1;
+                                               int kochTimer = 4;
+                                               @Override
+                                               public void run() {
+                                                   Platform.runLater(() -> {
+                                                       // your code here
+                                                       i++;
+                                                       System.out.println("Count: " + i);
+
+                                                       if(i > 10){
+                                                           timer5.cancel();
+                                                           timer5.purge();
+                                                       }
+
+                                                       kochCurve(c1,c2,kochTimer);
+                                                       kochTimer++;
+
+
+                                                   });
+                                               }
+                                           },  1500,1500
+                );
+
         }
 
 
@@ -530,7 +559,7 @@ public class Controller {
         GraphicsContext gc = drawArea.getGraphicsContext2D();
 
         if (len >= 1 && radius > 2) {
-            ArrayList<Node> rectangles = figures.init(1, gc, this.colors[(int) (Math.random() * 10)], x, y, x + len, y, 0, 0, 0);
+            ArrayList<Node> rectangles = figures.init(1, gc, this.colors[(int) (Math.random() * 10)], x, y, x + len, y, 0, 0, 1);
 
             for (Node item : rectangles) {
                 this.itemsDrawn.add(item);
@@ -547,6 +576,27 @@ public class Controller {
 
 
         }
+    }
+    private void kochCurve(Coordinates c1, Coordinates c2, int times){
+        GraphicsContext gc = drawArea.getGraphicsContext2D();
+        Coordinates c3,c4,c5;
+        double theta = Math.PI/3;
+
+        if(times>0){
+
+            c3 = new Coordinates((2*c1.getX()+c2.getX())/3,(2*c1.getY()+c2.getY())/3);
+            c5 = new Coordinates((2*c2.getX()+c1.getX())/3,(2*c2.getY()+c1.getY())/3);
+            c4 = new Coordinates(c3.getX() + (c5.getX() - c3.getX())*Math.cos(theta) + (c5.getY() - c3.getY())*Math.sin(theta),c3.getY() - (c5.getX() - c3.getX())*Math.sin(theta) + (c5.getY() - c3.getY())*Math.cos(theta));
+
+            kochCurve(c1,c3,times-1);
+            kochCurve(c3,c4,times-1);
+            kochCurve(c4,c5,times-1);
+            kochCurve(c5,c2,times-1);
+        }
+        else{
+            gc.strokeLine(c1.getX(),c1.getY(),c2.getX(),c2.getY());
+        }
+
     }
 
 
