@@ -281,7 +281,6 @@ public class Controller {
                                            },  500,500
                 );
                 break;
-
             case KOCHCURVE:
                 Coordinates c1 = new Coordinates(100,200);
                 Coordinates c2 = new Coordinates(500,200);
@@ -303,7 +302,6 @@ public class Controller {
                                                        }
 
                                                        kochCurve(c1,c2,kochTimer);
-                                                       //kochCurve(c3,c4,kochTimer);
                                                        kochTimer++;
 
 
@@ -364,15 +362,20 @@ public class Controller {
 
         timer1.cancel();
         timer1.purge();
+        timer1Counter = 0;
 
         timer2.cancel();
         timer2.purge();
+        timer2Counter = 0;
+
 
         timer3.cancel();
         timer3.purge();
+        timer3Counter = 0;
 
         timer4.cancel();
         timer4.purge();
+        timer4Counter = 0;
 
 
     }
@@ -670,14 +673,13 @@ public class Controller {
             kochCurve(c5,c2,times-1);
         }
         else{
-            //gc.strokeLine(c1.getX(),c1.getY(),c2.getX(),c2.getY());
-
             ArrayList<Node> koch = figures.init(1,gc,"BLACK",c1.getX(),c1.getY(),c2.getX(),c2.getY(),0,0,1);
 
             for (Node item : koch) {
                 this.itemsDrawn.add(item);
                 this.main.getRoot().getChildren().add(item);
             }
+
         }
 
     }
