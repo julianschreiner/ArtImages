@@ -31,6 +31,7 @@
       <Button fx:id="clearButton" layoutX="729.0" layoutY="550.0" mnemonicParsing="false" onAction="#clearCanvas" text="Clear" />
       <ChoiceBox fx:id="colorInput" layoutX="44.0" layoutY="504.0" prefWidth="150.0" />
       <Button fx:id="resetButton" layoutX="656.0" layoutY="550.0" mnemonicParsing="false" onAction="#resetTimer" text="Reset" />
-      <Button fx:id="pauseButton" layoutX="586.0" layoutY="550.0" mnemonicParsing="false" onAction="#pauseTimer" text="Pause" />
+      <Button fx:id="pauseButton" layoutX="586.0" layoutY="550.0" mnemonicParsing="false" onAction="#pauseTimer" text="Stop" />
+      <Button fx:id="startButton" layoutX="585.0" layoutY="504.0" mnemonicParsing="false" onAction="#resumeTimer" text="Start" />
    </children>
 </AnchorPane>

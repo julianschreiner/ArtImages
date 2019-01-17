@@ -29,6 +29,7 @@ public class Controller {
     @FXML private Button clearButton;
     @FXML private Button pauseButton;
     @FXML private Button resetButton;
+    @FXML private Button startButton;
     @FXML private Canvas drawArea;
     @FXML private ChoiceBox colorInput;
     @FXML private ChoiceBox choiceBox;
@@ -81,6 +82,23 @@ public class Controller {
         this.main = main;
         initialize();
     }
+
+    private Timer timer = new Timer();
+    private Timer timer1 = new Timer();
+    private Timer timer2 = new Timer();
+    private Timer timer3 = new Timer();
+    private Timer timer4 = new Timer();
+
+    private int timer1Border = 20;
+    private int timer2Border = 6;
+    private int timer3Border = 7;
+    private int timer4Border = 10;
+
+
+    private int timer1Counter = 1;
+    private int timer2Counter = 1;
+    private int timer3Counter = 1;
+    private int timer4Counter = 1;
 
     @FXML
     private void initialize(){
@@ -145,7 +163,6 @@ public class Controller {
         switch(userChoice){
             case POINTALG:
                 calculatePoint(800, 500, 3, 800);
-                Timer timer = new Timer();
                 timer.scheduleAtFixedRate(new TimerTask() {
                                               int i = 0;
                                               @Override
@@ -173,19 +190,18 @@ public class Controller {
                 break;
             case TREE:
                 drawTree(380, 400, -90, 9, true,3.0f);
-                Timer timer4 = new Timer();
-                timer4.scheduleAtFixedRate(new TimerTask() {
-                                               int i = 1;
+                timer1.scheduleAtFixedRate(new TimerTask() {
+                                               //int i = 1;
                                                @Override
                                                public void run() {
                                                    Platform.runLater(() -> {
                                                        // your code here
-                                                       i++;
-                                                       System.out.println("Count: " + i);
+                                                       timer1Counter++;
+                                                       System.out.println("COUNT: " + timer1Counter);
 
-                                                       if(i > 20){
-                                                           timer4.cancel();
-                                                           timer4.purge();
+                                                       if(timer1Counter >= timer1Border){
+                                                           timer1.cancel();
+                                                           timer1.purge();
                                                        }
 
                                                        drawTree(380, 400, -90, 9, false,3.0f);
@@ -214,18 +230,16 @@ public class Controller {
                         sizeRotSquare + 150,
                         sizeRotSquare,
                         1);
-
-                Timer timer2 = new Timer();
                 timer2.scheduleAtFixedRate(new TimerTask() {
                     int i = 1;
                                               @Override
                                               public void run() {
                                                   Platform.runLater(() -> {
                                                       // your code here
-                                                      i++;
-                                                      System.out.println("Count: " + i);
+                                                      timer2Counter++;
+                                                      System.out.println("Count2: " + timer2Counter);
 
-                                                      if(i > 6){
+                                                      if(timer2Counter > timer2Border){
                                                           timer2.cancel();
                                                           timer2.purge();
                                                       }
@@ -244,7 +258,6 @@ public class Controller {
                 break;
             case CANTOR:
                 cantor(10,20, CANVAS_WIDTH-20, 190.0f);
-                Timer timer3 = new Timer();
                 timer3.scheduleAtFixedRate(new TimerTask() {
                                                int i = 1;
                                                int y = 20;
@@ -252,10 +265,10 @@ public class Controller {
                                                public void run() {
                                                    Platform.runLater(() -> {
                                                        // your code here
-                                                       i++;
-                                                       System.out.println("Count: " + i);
+                                                       timer3Counter++;
+                                                       System.out.println("Count3: " + timer3Counter);
 
-                                                       if(i > 7){
+                                                       if(timer3Counter > timer3Border){
                                                            timer3.cancel();
                                                            timer3.purge();
                                                        }
@@ -274,20 +287,19 @@ public class Controller {
                 Coordinates c2 = new Coordinates(500,200);
                 Coordinates c3 = new Coordinates(100,400);
                 Coordinates c4 = new Coordinates(500,400);
-                Timer timer5 = new Timer();
-                timer5.scheduleAtFixedRate(new TimerTask() {
+                timer4.scheduleAtFixedRate(new TimerTask() {
                                                int i = 1;
                                                int kochTimer = 4;
                                                @Override
                                                public void run() {
                                                    Platform.runLater(() -> {
                                                        // your code here
-                                                       i++;
-                                                       System.out.println("Count: " + i);
+                                                       timer4Counter++;
+                                                       System.out.println("Count: " + timer4Counter);
 
-                                                       if(i > 5){
-                                                           timer5.cancel();
-                                                           timer5.purge();
+                                                       if(timer4Counter > timer4Border){
+                                                           timer4.cancel();
+                                                           timer4.purge();
                                                        }
 
                                                        kochCurve(c1,c2,kochTimer);
@@ -345,10 +357,53 @@ public class Controller {
     @FXML
     public void resetTimer(){
         System.out.println("Reset");
+
+
+        timer.cancel();
+        timer.purge();
+
+        timer1.cancel();
+        timer1.purge();
+
+        timer2.cancel();
+        timer2.purge();
+
+        timer3.cancel();
+        timer3.purge();
+
+        timer4.cancel();
+        timer4.purge();
+
+
     }
     @FXML
     public void pauseTimer(){
         System.out.println("Pause");
+
+        timer.cancel();
+
+
+        timer1.cancel();
+
+
+        timer2.cancel();
+
+
+        timer3.cancel();
+
+
+        timer4.cancel();
+
+    }
+
+    @FXML
+    public void resumeTimer(){
+        timer = new Timer();
+        timer1 = new Timer();
+        timer2 = new Timer();
+        timer3 = new Timer();
+        timer4 = new Timer();
+        testMethod();
     }
 
 
@@ -467,8 +522,8 @@ public class Controller {
             this.itemsDrawn.add(itemm);
             main.getRoot().getChildren().add(itemm);
         }
-        System.out.println(angleList.toString());
-        System.out.println(angleList.get((int) Math.random() * angleList.size()));
+     //   System.out.println(angleList.toString());
+       // System.out.println(angleList.get((int) Math.random() * angleList.size()));
         int randomAngle = angleList.get((int) (Math.random() * angleList.size()));
         angleList.remove(angleList.indexOf(randomAngle));
         drawTree(x2, y2, angle - randomAngle, depth - 1, false, widthModifier);
