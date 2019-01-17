@@ -281,6 +281,7 @@ public class Controller {
                                            },  500,500
                 );
                 break;
+
             case KOCHCURVE:
                 Coordinates c1 = new Coordinates(100,200);
                 Coordinates c2 = new Coordinates(500,200);
@@ -302,6 +303,7 @@ public class Controller {
                                                        }
 
                                                        kochCurve(c1,c2,kochTimer);
+                                                       //kochCurve(c3,c4,kochTimer);
                                                        kochTimer++;
 
 
@@ -367,7 +369,6 @@ public class Controller {
         timer2.cancel();
         timer2.purge();
         timer2Counter = 0;
-
 
         timer3.cancel();
         timer3.purge();
@@ -679,7 +680,6 @@ public class Controller {
                 this.itemsDrawn.add(item);
                 this.main.getRoot().getChildren().add(item);
             }
-
         }
 
     }

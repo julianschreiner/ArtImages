@@ -118,7 +118,7 @@ public class Figures {
 
 
     private Node line(double x, double y, double endX, double endY, double width){
-        System.out.println("line");
+        //System.out.println("line");
      //   this.gc.strokeLine(x,y,600,250);
      //   this.gc.setStroke(Color.valueOf(this.colorChoice));
 
