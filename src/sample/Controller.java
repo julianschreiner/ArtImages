@@ -27,6 +27,8 @@ public class Controller {
     @FXML private TextField startCurve;
     @FXML private Button drawButton;
     @FXML private Button clearButton;
+    @FXML private Button pauseButton;
+    @FXML private Button resetButton;
     @FXML private Canvas drawArea;
     @FXML private ChoiceBox colorInput;
     @FXML private ChoiceBox choiceBox;
@@ -265,12 +267,13 @@ public class Controller {
                                                }
                                            },  500,500
                 );
-
-            default:
                 break;
+
             case KOCHCURVE:
                 Coordinates c1 = new Coordinates(100,200);
                 Coordinates c2 = new Coordinates(500,200);
+                Coordinates c3 = new Coordinates(100,400);
+                Coordinates c4 = new Coordinates(500,400);
                 Timer timer5 = new Timer();
                 timer5.scheduleAtFixedRate(new TimerTask() {
                                                int i = 1;
@@ -282,12 +285,13 @@ public class Controller {
                                                        i++;
                                                        System.out.println("Count: " + i);
 
-                                                       if(i > 10){
+                                                       if(i > 5){
                                                            timer5.cancel();
                                                            timer5.purge();
                                                        }
 
                                                        kochCurve(c1,c2,kochTimer);
+                                                       //kochCurve(c3,c4,kochTimer);
                                                        kochTimer++;
 
 
@@ -295,6 +299,10 @@ public class Controller {
                                                }
                                            },  1500,1500
                 );
+                break;
+
+            default:
+                break;
 
         }
 
@@ -332,6 +340,19 @@ public class Controller {
             main.getRoot().getChildren().remove(item);
         }
     }
+
+
+    @FXML
+    public void resetTimer(){
+        System.out.println("Reset");
+    }
+    @FXML
+    public void pauseTimer(){
+        System.out.println("Pause");
+    }
+
+
+
 
 
     private void calculatePoint(double i, double j, int type, double calc){
@@ -372,11 +393,11 @@ public class Controller {
         // DRAWING
         GraphicsContext gc = drawArea.getGraphicsContext2D();
 
-        ArrayList<Node> lines = figures.init(1, gc, this.colors[(int) (Math.random() * 10) ], retArray[0].getX(),retArray[0].getY(), retArray[1].getX(), retArray[1].getY(),0, 0, 0);
-        lines.addAll(figures.init(1,gc, this.colors[(int) (Math.random() * 10) ], retArray[2].getX(), retArray[2].getY(), retArray[3].getX(), retArray[3].getY(),0, 0, 0));
+        ArrayList<Node> lines = figures.init(1, gc, this.colors[(int) (Math.random() * 10) ], retArray[0].getX(),retArray[0].getY(), retArray[1].getX(), retArray[1].getY(),0, 0, 1);
+        lines.addAll(figures.init(1,gc, this.colors[(int) (Math.random() * 10) ], retArray[2].getX(), retArray[2].getY(), retArray[3].getX(), retArray[3].getY(),0, 0, 1));
 
-        lines.addAll(figures.init(1,gc, this.colors[(int) (Math.random() * 10) ], retArray[0].getX(), retArray[0].getY(), retArray[3].getX(), retArray[3].getY(), 0, 0, 0));
-        lines.addAll(figures.init(1,gc, this.colors[(int) (Math.random() * 10) ], retArray[1].getX(), retArray[1].getY(), retArray[2].getX(), retArray[2].getY(), 0, 0, 0));
+        lines.addAll(figures.init(1,gc, this.colors[(int) (Math.random() * 10) ], retArray[0].getX(), retArray[0].getY(), retArray[3].getX(), retArray[3].getY(), 0, 0, 1));
+        lines.addAll(figures.init(1,gc, this.colors[(int) (Math.random() * 10) ], retArray[1].getX(), retArray[1].getY(), retArray[2].getX(), retArray[2].getY(), 0, 0, 1));
 
 
 
@@ -594,7 +615,14 @@ public class Controller {
             kochCurve(c5,c2,times-1);
         }
         else{
-            gc.strokeLine(c1.getX(),c1.getY(),c2.getX(),c2.getY());
+            //gc.strokeLine(c1.getX(),c1.getY(),c2.getX(),c2.getY());
+
+            ArrayList<Node> koch = figures.init(1,gc,"BLACK",c1.getX(),c1.getY(),c2.getX(),c2.getY(),0,0,1);
+
+            for (Node item : koch) {
+                this.itemsDrawn.add(item);
+                this.main.getRoot().getChildren().add(item);
+            }
         }
 
     }
