@@ -169,13 +169,13 @@ public class Controller {
                     break;
 
                 case TREE:
-                    startPosX = 380.0;
-                    startPosY = 400.0;
+                    startPosX = 450.0;
+                    startPosY = 450.0;
                     break;
 
                 case CIRCLE:
-                    startPosX = 380.0;
-                    startPosY = 260.0;
+                    startPosX = 475.0;
+                    startPosY = 350.0;
                     break;
 
                 case CANTOR:
@@ -184,8 +184,8 @@ public class Controller {
                     break;
 
                 case KOCHCURVE:
-                    startPosX = 100.0;
-                    startPosY = 200.0;
+                    startPosX = 250.0;
+                    startPosY = 350.0;
                     break;
 
                     default:
