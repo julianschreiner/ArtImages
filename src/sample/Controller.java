@@ -531,10 +531,16 @@ public class Controller {
 
 
         if(firstCall){
-             lines = figures.init(1, gc, "BLACK", x1,y1 + 50, x2, y2, 0, 0, 5);
+            lines = figures.init(1, gc, "BLACK", x1,y1 + 50, x2, y2, 0, 0, 5);
+
+            gc.strokeLine(x1, y1+50, x2, y2);
+            gc.setStroke(Color.valueOf(this.colors[(int) (Math.random() * 10)]));
         }
         else{
             lines = figures.init(1, gc, this.colors[(int) (Math.random() * 10) ], x1,y1, x2, y2, 0, 0, widthModifier);
+            gc.strokeLine(x1, y1, x2, y2);
+            gc.setStroke(Color.valueOf(this.colors[(int) (Math.random() * 10)]));
+
             widthModifier -= 0.5f;
             if(widthModifier < 0.5){
                 widthModifier = 0.25f;
@@ -544,8 +550,8 @@ public class Controller {
 
         for (Node itemm: lines) {
           //  System.out.println("ITEM: " +  itemm.toString());
-            this.itemsDrawn.add(itemm);
-            main.getRoot().getChildren().add(itemm);
+        //    this.itemsDrawn.add(itemm);
+       //     main.getRoot().getChildren().add(itemm);
         }
      //   System.out.println(angleList.toString());
        // System.out.println(angleList.get((int) Math.random() * angleList.size()));
