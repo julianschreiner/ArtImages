@@ -41,8 +41,8 @@ public class Controller {
     @FXML private TextField sizeOfSquare;
 
     // Size of the canvas for the Mandelbrot set
-    private static final double CANVAS_WIDTH = 697;
-    private static final double CANVAS_HEIGHT = 400;
+    private static final double CANVAS_WIDTH = 999;
+    private static final double CANVAS_HEIGHT = 690;
 
     // Left and right border
     private static final int X_OFFSET = 25;
