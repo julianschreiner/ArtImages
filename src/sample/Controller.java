@@ -592,8 +592,10 @@ public class Controller {
 
             for (Node itemm: lines) {
                 //  System.out.println("ITEM: " +  itemm.toString());
-                this.itemsDrawn.add(itemm);
-                main.getRoot().getChildren().add(itemm);
+                //this.itemsDrawn.add(itemm);
+                //main.getRoot().getChildren().add(itemm);
+                gc.strokeRect(x,y,height,width);
+                gc.setStroke(Color.valueOf(this.colors[(int) (Math.random() * 10) ]));
             }
 
             return;
