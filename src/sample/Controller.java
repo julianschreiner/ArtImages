@@ -86,11 +86,19 @@ public class Controller {
         initialize();
     }
 
-    private Timer timer = new Timer();
-    private Timer timer1 = new Timer();
-    private Timer timer2 = new Timer();
-    private Timer timer3 = new Timer();
-    private Timer timer4 = new Timer();
+    private Timer timer;
+    private Timer timer1;
+    private Timer timer2;
+    private Timer timer3;
+    private Timer timer4;
+
+    private Boolean checkTimerOn = false;
+    private Boolean checkTimer1On = false;
+    private Boolean checkTimer2On = false;
+    private Boolean checkTimer3On = false;
+    private Boolean checkTimer4On = false;
+
+
 
     private int timer1Border = 20;
     private int timer2Border = 6;
@@ -203,6 +211,8 @@ public class Controller {
                 calculatePoint(startPosX, startPosY, 3, 800);
                 final double xPosPointAlg = startPosX;
                 final double yPosPointAlg = startPosY;
+                timer = new Timer();
+                this.checkTimerOn = true;
                 timer.scheduleAtFixedRate(new TimerTask() {
                                               int i = 0;
                                               @Override
@@ -232,6 +242,8 @@ public class Controller {
                 drawTree(startPosX, startPosY, -90, 9, true,3.0f);
                 final double xPosTree = startPosX;
                 final double yPosTree = startPosY;
+                timer1 = new Timer();
+                this.checkTimer1On = true;
                 timer1.scheduleAtFixedRate(new TimerTask() {
                                                //int i = 1;
                                                @Override
@@ -272,6 +284,9 @@ public class Controller {
                         sizeRotSquare + 150,
                         sizeRotSquare,
                         1);
+
+                timer2 = new Timer();
+                this.checkTimer2On = true;
                 timer2.scheduleAtFixedRate(new TimerTask() {
                                                int i = 1;
                                                @Override
@@ -302,6 +317,8 @@ public class Controller {
                 cantor(startPosX,startPosY, CANVAS_WIDTH-20, 190.0f);
                 double yPosCantor = startPosY;
                 final double xPosCantor = startPosX;
+                timer3 = new Timer();
+                this.checkTimer3On = true;
                 timer3.scheduleAtFixedRate(new TimerTask() {
                                                int i = 1;
                                                int y = (int) yPosCantor;
@@ -329,6 +346,8 @@ public class Controller {
             case KOCHCURVE:
                 Coordinates c1 = new Coordinates(startPosX,startPosY);
                 Coordinates c2 = new Coordinates(startPosX+400,startPosY);
+                timer4 = new Timer();
+                this.checkTimer4On = true;
                 timer4.scheduleAtFixedRate(new TimerTask() {
                                                int i = 1;
                                                int kochTimer = 4;
@@ -398,25 +417,38 @@ public class Controller {
     public void resetTimer(){
         System.out.println("Reset");
 
-
-        timer.cancel();
-        timer.purge();
-
-        timer1.cancel();
-        timer1.purge();
-        timer1Counter = 0;
-
-        timer2.cancel();
-        timer2.purge();
-        timer2Counter = 0;
-
-        timer3.cancel();
-        timer3.purge();
-        timer3Counter = 0;
-
-        timer4.cancel();
-        timer4.purge();
-        timer4Counter = 0;
+        if(checkTimerOn){
+            timer.cancel();
+            timer.purge();
+            this.checkTimerOn = false;
+        }
+        else if(checkTimer1On){
+            timer1.cancel();
+            timer1.purge();
+            timer1Counter = 0;
+            this.checkTimer1On = false;
+        }
+        else if(checkTimer2On){
+            timer2.cancel();
+            timer2.purge();
+            timer2Counter = 0;
+            this.checkTimer2On = false;
+        }
+        else if(checkTimer3On){
+            timer3.cancel();
+            timer3.purge();
+            timer3Counter = 0;
+            this.checkTimer3On = false;
+        }
+        else if(checkTimer4On){
+            timer4.cancel();
+            timer4.purge();
+            timer4Counter = 0;
+            this.checkTimer4On = false;
+        }
+        else{
+            return;
+        }
 
 
     }
@@ -424,19 +456,29 @@ public class Controller {
     public void pauseTimer(){
         System.out.println("Pause");
 
-        timer.cancel();
-
-
-        timer1.cancel();
-
-
-        timer2.cancel();
-
-
-        timer3.cancel();
-
-
-        timer4.cancel();
+        if(checkTimerOn){
+            timer.cancel();
+            this.checkTimerOn = false;
+        }
+        else if(checkTimer1On){
+            timer1.cancel();
+            this.checkTimer1On = false;
+        }
+        else if(checkTimer2On){
+            timer2.cancel();
+            this.checkTimer2On = false;
+        }
+        else if(checkTimer3On){
+            timer3.cancel();
+            this.checkTimer3On = false;
+        }
+        else if(checkTimer4On){
+            timer4.cancel();
+            this.checkTimer4On = false;
+        }
+        else{
+            return;
+        }
 
     }
 
