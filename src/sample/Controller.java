@@ -203,6 +203,11 @@ public class Controller {
         System.out.println("Curve Start: " + curveStart);
 
 
+        this.timer1Counter = 1;
+        this.timer2Counter = 1;
+        this.timer3Counter = 1;
+        this.timer4Counter = 1;
+
 
         switch(userChoice){
             case POINTALG:
