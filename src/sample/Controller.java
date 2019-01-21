@@ -13,12 +13,15 @@ import javafx.scene.canvas.Canvas;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 import java.util.*;
+import java.util.Timer;
 import java.util.concurrent.TimeUnit;
 
 import javafx.collections.*;
 import javafx.scene.layout.*;
 import javafx.event.*;
 import javafx.scene.shape.Line;
+
+import javax.swing.*;
 
 import static java.lang.Thread.sleep;
 
@@ -92,7 +95,7 @@ public class Controller {
     private int timer1Border = 20;
     private int timer2Border = 6;
     private int timer3Border = 7;
-    private int timer4Border = 10;
+    private int timer4Border = 5;
 
 
     private int timer1Counter = 1;
@@ -138,8 +141,8 @@ public class Controller {
             colorChoice = "BLACK";
         }
 
-        Double startPosX;
-        Double startPosY;
+        Double startPosX = 0.0;
+        Double startPosY = 0.0;
 
         if(!startPos.getText().isEmpty()){
             String[] coordinates = startPos.getText().split(",");
@@ -148,9 +151,36 @@ public class Controller {
             startPosY = Double.parseDouble(coordinates[1]);
         }
         else{
-            startPosX = 0.0;
-            startPosY = 0.0;
-            System.out.println("No starting point provided");
+            switch(userChoice){
+                case POINTALG:
+                    startPosX = 800.0;
+                    startPosY = 500.0;
+                    break;
+
+                case TREE:
+                    startPosX = 380.0;
+                    startPosY = 400.0;
+                    break;
+
+                case CIRCLE:
+                    startPosX = 380.0;
+                    startPosY = 260.0;
+                    break;
+
+                case CANTOR:
+                    startPosX = 10.0;
+                    startPosY = 20.0;
+                    break;
+
+                case KOCHCURVE:
+                    startPosX = 100.0;
+                    startPosY = 200.0;
+                    break;
+
+                    default:
+                        break;
+
+            }
         }
 
         Integer curveStart;
@@ -167,7 +197,9 @@ public class Controller {
 
         switch(userChoice){
             case POINTALG:
-                calculatePoint(800, 500, 3, 800);
+                calculatePoint(startPosX, startPosY, 3, 800);
+                final double xPosPointAlg = startPosX;
+                final double yPosPointAlg = startPosY;
                 timer.scheduleAtFixedRate(new TimerTask() {
                                               int i = 0;
                                               @Override
@@ -194,7 +226,9 @@ public class Controller {
 
                 break;
             case TREE:
-                drawTree(380, 400, -90, 9, true,3.0f);
+                drawTree(startPosX, startPosY, -90, 9, true,3.0f);
+                final double xPosTree = startPosX;
+                final double yPosTree = startPosY;
                 timer1.scheduleAtFixedRate(new TimerTask() {
                                                //int i = 1;
                                                @Override
@@ -209,7 +243,7 @@ public class Controller {
                                                            timer1.purge();
                                                        }
 
-                                                       drawTree(380, 400, -90, 9, false,3.0f);
+                                                       drawTree(xPosTree, yPosTree, -90, 9, false,3.0f);
 
 
                                                    });
@@ -218,7 +252,7 @@ public class Controller {
                 );
                 break;
             case CIRCLE:
-                drawCircle(380,260, 190.0f);
+                drawCircle(startPosX,startPosY, 190.0f);
                 break;
             case SPONGE:
                 double size = CANVAS_WIDTH > CANVAS_HEIGHT ? (int) (CANVAS_HEIGHT * 0.8) : (int) (CANVAS_WIDTH * 0.8);
@@ -236,18 +270,18 @@ public class Controller {
                         sizeRotSquare,
                         1);
                 timer2.scheduleAtFixedRate(new TimerTask() {
-                    int i = 1;
-                                              @Override
-                                              public void run() {
-                                                  Platform.runLater(() -> {
-                                                      // your code here
-                                                      timer2Counter++;
-                                                      System.out.println("Count2: " + timer2Counter);
+                                               int i = 1;
+                                               @Override
+                                               public void run() {
+                                                   Platform.runLater(() -> {
+                                                       // your code here
+                                                       timer2Counter++;
+                                                       System.out.println("Count2: " + timer2Counter);
 
-                                                      if(timer2Counter > timer2Border){
-                                                          timer2.cancel();
-                                                          timer2.purge();
-                                                      }
+                                                       if(timer2Counter > timer2Border){
+                                                           timer2.cancel();
+                                                           timer2.purge();
+                                                       }
 
                                                       rotatedSquare(
                                                               CANVAS_WIDTH / 2 - sizeRotSquare / 2,
@@ -262,10 +296,12 @@ public class Controller {
                 );
                 break;
             case CANTOR:
-                cantor(10,20, CANVAS_WIDTH-20, 190.0f);
+                cantor(startPosX,startPosY, CANVAS_WIDTH-20, 190.0f);
+                double yPosCantor = startPosY;
+                final double xPosCantor = startPosX;
                 timer3.scheduleAtFixedRate(new TimerTask() {
                                                int i = 1;
-                                               int y = 20;
+                                               int y = (int) yPosCantor;
                                                @Override
                                                public void run() {
                                                    Platform.runLater(() -> {
@@ -279,18 +315,17 @@ public class Controller {
                                                        }
                                                        y+= 50;
 
-                                                       cantor(10,y, CANVAS_WIDTH-20, 190.0f);
+                                                       cantor(xPosCantor,y, CANVAS_WIDTH-20, 190.0f);
 
                                                    });
                                                }
                                            },  500,500
                 );
                 break;
+
             case KOCHCURVE:
-                Coordinates c1 = new Coordinates(100,200);
-                Coordinates c2 = new Coordinates(500,200);
-                Coordinates c3 = new Coordinates(100,400);
-                Coordinates c4 = new Coordinates(500,400);
+                Coordinates c1 = new Coordinates(startPosX,startPosY);
+                Coordinates c2 = new Coordinates(startPosX+400,startPosY);
                 timer4.scheduleAtFixedRate(new TimerTask() {
                                                int i = 1;
                                                int kochTimer = 4;
@@ -323,7 +358,7 @@ public class Controller {
 
 
 
-     //   ArrayList<Node> ret = figures.init(Integer.parseInt(userChoice), gc, colorChoice, startPosX, startPosY, 0.0, 0.0, 0, 0 ,0); // TODO HEIGHT WIDTH
+        //   ArrayList<Node> ret = figures.init(Integer.parseInt(userChoice), gc, colorChoice, startPosX, startPosY, 0.0, 0.0, 0, 0 ,0); // TODO HEIGHT WIDTH
 /*
         for (Node item: ret) {
             System.out.println(item);
@@ -343,12 +378,11 @@ public class Controller {
         System.out.println("CLEARING...");
 /*
         CustomThread t1 = new CustomThread("ABC THREAD");
-
         t1.start();
 */
 
 
-   //
+        //
         this.drawArea.getGraphicsContext2D().clearRect(0,0, CANVAS_WIDTH, CANVAS_HEIGHT);
 
         for (Node item : itemsDrawn) {
@@ -372,7 +406,6 @@ public class Controller {
         timer2.cancel();
         timer2.purge();
         timer2Counter = 0;
-
 
         timer3.cancel();
         timer3.purge();
@@ -482,7 +515,7 @@ public class Controller {
         ArrayList<Node> ret = new ArrayList<>();
 
         for(Coordinates item : retArray){
-          //  System.out.println(item.toString());
+            //  System.out.println(item.toString());
 
             double x = item.getX();
             double y = item.getY();
@@ -511,10 +544,10 @@ public class Controller {
 
     }
 
-    private void drawTree(int x1, int y1, double angle, int depth, Boolean firstCall, float widthModifier) {
+    private void drawTree(double x1, double y1, double angle, int depth, Boolean firstCall, float widthModifier) {
         if (depth == 0) return;
-        int x2 = x1 + (int) (Math.cos(Math.toRadians(angle)) * depth * 11.5);
-        int y2 = y1 + (int) (Math.sin(Math.toRadians(angle)) * depth * 9.0);
+        double x2 = x1 + (int) (Math.cos(Math.toRadians(angle)) * depth * 11.5);
+        double y2 = y1 + (int) (Math.sin(Math.toRadians(angle)) * depth * 9.0);
 
         int angleModifier;
         int angleCount = 20;
@@ -549,9 +582,9 @@ public class Controller {
 
 
         for (Node itemm: lines) {
-          //  System.out.println("ITEM: " +  itemm.toString());
-        //    this.itemsDrawn.add(itemm);
-       //     main.getRoot().getChildren().add(itemm);
+            //  System.out.println("ITEM: " +  itemm.toString());
+            //    this.itemsDrawn.add(itemm);
+            //     main.getRoot().getChildren().add(itemm);
         }
      //   System.out.println(angleList.toString());
        // System.out.println(angleList.get((int) Math.random() * angleList.size()));
@@ -575,7 +608,7 @@ public class Controller {
 
         if(radius > 2) {
             radius *= 0.75f;
-           // drawCircle(x, y, radius);
+            // drawCircle(x, y, radius);
 
             /*
             drawCircle(x + radius/2, y, radius/2);
@@ -621,6 +654,7 @@ public class Controller {
                 //main.getRoot().getChildren().add(itemm);
                 gc.strokeRect(x,y,height,width);
                 gc.setStroke(Color.valueOf(this.colors[(int) (Math.random() * 10) ]));
+
             }
 
             return;
@@ -632,7 +666,7 @@ public class Controller {
         for(int i = 0; i < 3; i++) {
             for(int j = 0; j < 3; j++) {
                 if(!(i == 1 && j == 1)) {
-                   // fractal(new Rectangle(r.x + (int) (i * width), r.y + (int) (j * height), (int) width, (int) height), count - 1);
+                    // fractal(new Rectangle(r.x + (int) (i * width), r.y + (int) (j * height), (int) width, (int) height), count - 1);
 
                     sponge(count - 1, width2, height2, x + (int) (i * width2), y + (int) (j * height2));
                 }
@@ -679,8 +713,6 @@ public class Controller {
                // this.main.getRoot().getChildren().add(item);
             }
 
-
-
             y += 20;
             radius *= 0.75f;
 
@@ -710,7 +742,7 @@ public class Controller {
         }
         else{
             ArrayList<Node> koch = figures.init(1,gc,"BLACK",c1.getX(),c1.getY(),c2.getX(),c2.getY(),0,0,1);
-/*
+            /*
             for (Node item : koch) {
                 this.itemsDrawn.add(item);
                 this.main.getRoot().getChildren().add(item);
