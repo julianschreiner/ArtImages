@@ -121,6 +121,9 @@ public class Controller {
     public void testMethod(){
         //drawShapes(gc);
         GraphicsContext gc = drawArea.getGraphicsContext2D();
+
+
+
         String userChoice = choiceBox.getValue().toString();
         String colorChoice;
 
@@ -147,6 +150,7 @@ public class Controller {
             startPosY = 0.0;
             System.out.println("No starting point provided");
         }
+
 
         Integer curveStart;
 
@@ -346,7 +350,7 @@ public class Controller {
 
 
    //
-
+        this.drawArea.getGraphicsContext2D().clearRect(0,0, CANVAS_WIDTH, CANVAS_HEIGHT);
 
         for (Node item : itemsDrawn) {
             main.getRoot().getChildren().remove(item);
@@ -459,6 +463,20 @@ public class Controller {
         lines.addAll(figures.init(1,gc, this.colors[(int) (Math.random() * 10) ], retArray[1].getX(), retArray[1].getY(), retArray[2].getX(), retArray[2].getY(), 0, 0, 1));
 
 
+        gc.strokeLine(retArray[0].getX(),retArray[0].getY(), retArray[1].getX(), retArray[1].getY());
+        gc.setStroke(Color.valueOf(this.colors[(int) (Math.random() * 10)]));
+
+        gc.strokeLine(retArray[2].getX(), retArray[2].getY(), retArray[3].getX(), retArray[3].getY());
+        gc.setStroke(Color.valueOf(this.colors[(int) (Math.random() * 10)]));
+
+        gc.strokeLine(retArray[0].getX(), retArray[0].getY(), retArray[3].getX(), retArray[3].getY());
+        gc.setStroke(Color.valueOf(this.colors[(int) (Math.random() * 10)]));
+
+        gc.strokeLine(retArray[1].getX(), retArray[1].getY(), retArray[2].getX(), retArray[2].getY());
+        gc.setStroke(Color.valueOf(this.colors[(int) (Math.random() * 10)]));
+
+
+
 
 
         ArrayList<Node> ret = new ArrayList<>();
@@ -471,6 +489,9 @@ public class Controller {
 
            ret.addAll(figures.init(type, gc, this.colors[(int) (Math.random() * 10) ], x, y, 0.0, 0.0, 0, 0, 0));
 
+
+            gc.strokeLine(x, y, 0.0, 0.0);
+            gc.setStroke(Color.valueOf(this.colors[(int) (Math.random() * 10)]));
         }
 
         // MERGE 2 ARRAYLIST'S
@@ -483,8 +504,8 @@ public class Controller {
 
         for (Node itemm: ret) {
             System.out.println("ITEM: " +  itemm.toString());
-            this.itemsDrawn.add(itemm);
-            main.getRoot().getChildren().add(itemm);
+            // this.itemsDrawn.add(itemm);
+           // main.getRoot().getChildren().add(itemm);
         }
 
 
@@ -619,8 +640,10 @@ public class Controller {
         ArrayList<Node> rectangles = figures.init(6, gc, this.colors[(int) (Math.random() * 10) ], x,y, 0, 0, 0, height, width);
 
         for (Node item: rectangles) {
-            this.itemsDrawn.add(item);
-            this.main.getRoot().getChildren().add(item);
+            gc.strokeRect(x, y-50, width, height);
+            gc.setStroke(Color.valueOf(this.colors[(int) (Math.random() * 10)]));
+            //this.itemsDrawn.add(item);
+            //this.main.getRoot().getChildren().add(item);
         }
 
         if(count < 1)
@@ -642,9 +665,13 @@ public class Controller {
             ArrayList<Node> rectangles = figures.init(1, gc, this.colors[(int) (Math.random() * 10)], x, y, x + len, y, 0, 0, 1);
 
             for (Node item : rectangles) {
-                this.itemsDrawn.add(item);
-                this.main.getRoot().getChildren().add(item);
+                gc.strokeLine(x, y, x+len, y);
+                gc.setStroke(Color.valueOf(this.colors[(int) (Math.random() * 10)]));
+               // this.itemsDrawn.add(item);
+               // this.main.getRoot().getChildren().add(item);
             }
+
+
 
             y += 20;
             radius *= 0.75f;
@@ -653,6 +680,8 @@ public class Controller {
             cantor(x + len * 2 / 3, y, len / 3, radius);
 
             cantor(x + len * 2 / 6, y, len / 6, radius);
+
+
 
 
         }
@@ -675,11 +704,15 @@ public class Controller {
         }
         else{
             ArrayList<Node> koch = figures.init(1,gc,"BLACK",c1.getX(),c1.getY(),c2.getX(),c2.getY(),0,0,1);
-
+/*
             for (Node item : koch) {
                 this.itemsDrawn.add(item);
                 this.main.getRoot().getChildren().add(item);
             }
+            */
+
+            gc.strokeLine(c1.getX(), c1.getY(), c2.getX(), c2.getY());
+            gc.setStroke(Color.valueOf(this.colors[(int) (Math.random() * 10)]));
         }
 
     }

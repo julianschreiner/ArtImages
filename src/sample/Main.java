@@ -58,12 +58,15 @@ public class Main extends Application {
                     pane.getTransforms().add(scaleTransform);
                     */
 
+                    System.out.println("zooming");
                     double zoomFactor = 1.5;
                     if (zoomEvent.getDeltaY() <= 0) {
                         // zoom out
                         zoomFactor = 1 / zoomFactor;
                     }
-                    zoomOperator.zoom(pane, zoomFactor, zoomEvent.getSceneX(), zoomEvent.getSceneY());
+
+
+                    zoomOperator.zoom(pane.getChildren().get(4), zoomFactor, zoomEvent.getSceneX(), zoomEvent.getSceneY());
 
                 }
             });
@@ -83,7 +86,6 @@ public class Main extends Application {
             //primaryStage.setMinWidth(600.00);
 
             primaryStage.setTitle("Java Project");
-
 
 
             Controller windowController = loader.getController();
