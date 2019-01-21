@@ -6,6 +6,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.*;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.input.ScrollEvent;
 import javafx.scene.input.ZoomEvent;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
@@ -22,6 +23,8 @@ public class Main extends Application {
     private Stage primaryStage;
     private AnchorPane pane;
     private Scale scaleTransform;
+    // Create operator
+    private AnimatedZoomOperator zoomOperator = new AnimatedZoomOperator();
 
     @Override
     public void start(Stage primaryStage) throws Exception{
@@ -45,14 +48,23 @@ public class Main extends Application {
                 }
             });
 
-            pane.setOnZoomStarted(new EventHandler<ZoomEvent>() {
+            pane.setOnScroll(new EventHandler<ScrollEvent>() {
                 @Override
-                public void handle(ZoomEvent zoomEvent) {
-                    System.out.println("zooms");
+                public void handle(ScrollEvent zoomEvent) {
+                    /*System.out.println("zooms");
                     double scaleValue = 1.5;
-                    scaleTransform = new Scale(scaleValue, scaleValue, 0, 0);
+                    scaleTransform = new Scale(scaleValue, scaleValue, scaleValue, 0);
                     System.out.println("Scale: " + scaleTransform);
                     pane.getTransforms().add(scaleTransform);
+                    */
+
+                    double zoomFactor = 1.5;
+                    if (zoomEvent.getDeltaY() <= 0) {
+                        // zoom out
+                        zoomFactor = 1 / zoomFactor;
+                    }
+                    zoomOperator.zoom(pane, zoomFactor, zoomEvent.getSceneX(), zoomEvent.getSceneY());
+
                 }
             });
 
