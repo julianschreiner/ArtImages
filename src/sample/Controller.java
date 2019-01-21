@@ -254,7 +254,7 @@ public class Controller {
                                                               CANVAS_HEIGHT / 2 - sizeRotSquare / 2 + 50,
                                                               sizeRotSquare + 150,
                                                               sizeRotSquare,
-                                                              i);
+                                                              timer2Counter);
 
                                                   });
                                               }
