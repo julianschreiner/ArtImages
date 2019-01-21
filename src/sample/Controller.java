@@ -103,6 +103,9 @@ public class Controller {
     private int timer3Counter = 1;
     private int timer4Counter = 1;
 
+    private String colorChoice;
+
+
     @FXML
     private void initialize(){
         drawArea.setHeight(CANVAS_HEIGHT);
@@ -130,15 +133,15 @@ public class Controller {
         pauseButton.setDisable(false);
         GraphicsContext gc = drawArea.getGraphicsContext2D();
         String userChoice = choiceBox.getValue().toString();
-        String colorChoice;
+
 
 
         // FALLBACK COLOR
         if(colorInput.getValue() != null){
-            colorChoice = colorInput.getValue().toString();
+            this.colorChoice = colorInput.getValue().toString();
         }
         else{
-            colorChoice = "BLACK";
+            this.colorChoice = "XXX";        // FALLBACK
         }
 
         Double startPosX = 0.0;
@@ -489,24 +492,50 @@ public class Controller {
         // DRAWING
         GraphicsContext gc = drawArea.getGraphicsContext2D();
 
-        ArrayList<Node> lines = figures.init(1, gc, this.colors[(int) (Math.random() * 10) ], retArray[0].getX(),retArray[0].getY(), retArray[1].getX(), retArray[1].getY(),0, 0, 1);
-        lines.addAll(figures.init(1,gc, this.colors[(int) (Math.random() * 10) ], retArray[2].getX(), retArray[2].getY(), retArray[3].getX(), retArray[3].getY(),0, 0, 1));
+        ArrayList<Node> lines = new ArrayList<>();
 
-        lines.addAll(figures.init(1,gc, this.colors[(int) (Math.random() * 10) ], retArray[0].getX(), retArray[0].getY(), retArray[3].getX(), retArray[3].getY(), 0, 0, 1));
-        lines.addAll(figures.init(1,gc, this.colors[(int) (Math.random() * 10) ], retArray[1].getX(), retArray[1].getY(), retArray[2].getX(), retArray[2].getY(), 0, 0, 1));
+        if(colorChoice.equals("XXX")){
+            lines = figures.init(1, gc, this.colors[(int) (Math.random() * 10) ], retArray[0].getX(),retArray[0].getY(), retArray[1].getX(), retArray[1].getY(),0, 0, 1);
+            lines.addAll(figures.init(1,gc, this.colors[(int) (Math.random() * 10) ], retArray[2].getX(), retArray[2].getY(), retArray[3].getX(), retArray[3].getY(),0, 0, 1));
+
+            lines.addAll(figures.init(1,gc, this.colors[(int) (Math.random() * 10) ], retArray[0].getX(), retArray[0].getY(), retArray[3].getX(), retArray[3].getY(), 0, 0, 1));
+            lines.addAll(figures.init(1,gc, this.colors[(int) (Math.random() * 10) ], retArray[1].getX(), retArray[1].getY(), retArray[2].getX(), retArray[2].getY(), 0, 0, 1));
 
 
-        gc.strokeLine(retArray[0].getX(),retArray[0].getY(), retArray[1].getX(), retArray[1].getY());
-        gc.setStroke(Color.valueOf(this.colors[(int) (Math.random() * 10)]));
+            gc.strokeLine(retArray[0].getX(),retArray[0].getY(), retArray[1].getX(), retArray[1].getY());
+            gc.setStroke(Color.valueOf(this.colors[(int) (Math.random() * 10)]));
 
-        gc.strokeLine(retArray[2].getX(), retArray[2].getY(), retArray[3].getX(), retArray[3].getY());
-        gc.setStroke(Color.valueOf(this.colors[(int) (Math.random() * 10)]));
+            gc.strokeLine(retArray[2].getX(), retArray[2].getY(), retArray[3].getX(), retArray[3].getY());
+            gc.setStroke(Color.valueOf(this.colors[(int) (Math.random() * 10)]));
 
-        gc.strokeLine(retArray[0].getX(), retArray[0].getY(), retArray[3].getX(), retArray[3].getY());
-        gc.setStroke(Color.valueOf(this.colors[(int) (Math.random() * 10)]));
+            gc.strokeLine(retArray[0].getX(), retArray[0].getY(), retArray[3].getX(), retArray[3].getY());
+            gc.setStroke(Color.valueOf(this.colors[(int) (Math.random() * 10)]));
 
-        gc.strokeLine(retArray[1].getX(), retArray[1].getY(), retArray[2].getX(), retArray[2].getY());
-        gc.setStroke(Color.valueOf(this.colors[(int) (Math.random() * 10)]));
+            gc.strokeLine(retArray[1].getX(), retArray[1].getY(), retArray[2].getX(), retArray[2].getY());
+            gc.setStroke(Color.valueOf(this.colors[(int) (Math.random() * 10)]));
+        }
+        else{
+            lines = figures.init(1, gc, colorChoice, retArray[0].getX(),retArray[0].getY(), retArray[1].getX(), retArray[1].getY(),0, 0, 1);
+            lines.addAll(figures.init(1,gc, colorChoice, retArray[2].getX(), retArray[2].getY(), retArray[3].getX(), retArray[3].getY(),0, 0, 1));
+
+            lines.addAll(figures.init(1,gc, colorChoice, retArray[0].getX(), retArray[0].getY(), retArray[3].getX(), retArray[3].getY(), 0, 0, 1));
+            lines.addAll(figures.init(1,gc, colorChoice, retArray[1].getX(), retArray[1].getY(), retArray[2].getX(), retArray[2].getY(), 0, 0, 1));
+
+
+            gc.strokeLine(retArray[0].getX(),retArray[0].getY(), retArray[1].getX(), retArray[1].getY());
+            gc.setStroke(Color.valueOf(colorChoice));
+
+            gc.strokeLine(retArray[2].getX(), retArray[2].getY(), retArray[3].getX(), retArray[3].getY());
+            gc.setStroke(Color.valueOf(colorChoice));
+
+            gc.strokeLine(retArray[0].getX(), retArray[0].getY(), retArray[3].getX(), retArray[3].getY());
+            gc.setStroke(Color.valueOf(colorChoice));
+
+            gc.strokeLine(retArray[1].getX(), retArray[1].getY(), retArray[2].getX(), retArray[2].getY());
+            gc.setStroke(Color.valueOf(colorChoice));
+        }
+
+
 
 
 
@@ -520,11 +549,19 @@ public class Controller {
             double x = item.getX();
             double y = item.getY();
 
-           ret.addAll(figures.init(type, gc, this.colors[(int) (Math.random() * 10) ], x, y, 0.0, 0.0, 0, 0, 0));
+
+            if(colorChoice.equals("XXX")){
+                ret.addAll(figures.init(type, gc, this.colors[(int) (Math.random() * 10) ], x, y, 0.0, 0.0, 0, 0, 0));
+                gc.strokeLine(x, y, 0.0, 0.0);
+                gc.setStroke(Color.valueOf(this.colors[(int) (Math.random() * 10)]));
+            }
+            else{
+                ret.addAll(figures.init(type, gc, colorChoice, x, y, 0.0, 0.0, 0, 0, 0));
+                gc.strokeLine(x, y, 0.0, 0.0);
+                gc.setStroke(Color.valueOf(colorChoice));
+            }
 
 
-            gc.strokeLine(x, y, 0.0, 0.0);
-            gc.setStroke(Color.valueOf(this.colors[(int) (Math.random() * 10)]));
         }
 
         // MERGE 2 ARRAYLIST'S
@@ -567,12 +604,20 @@ public class Controller {
             lines = figures.init(1, gc, "BLACK", x1,y1 + 50, x2, y2, 0, 0, 5);
 
             gc.strokeLine(x1, y1+50, x2, y2);
-            gc.setStroke(Color.valueOf(this.colors[(int) (Math.random() * 10)]));
+            gc.setStroke(Color.valueOf("BLACK"));
         }
         else{
-            lines = figures.init(1, gc, this.colors[(int) (Math.random() * 10) ], x1,y1, x2, y2, 0, 0, widthModifier);
-            gc.strokeLine(x1, y1, x2, y2);
-            gc.setStroke(Color.valueOf(this.colors[(int) (Math.random() * 10)]));
+
+            if(colorChoice.equals("XXX")){
+                lines = figures.init(1, gc, this.colors[(int) (Math.random() * 10) ], x1,y1, x2, y2, 0, 0, widthModifier);
+                gc.strokeLine(x1, y1, x2, y2);
+                gc.setStroke(Color.valueOf(this.colors[(int) (Math.random() * 10)]));
+            }
+            else{
+                lines = figures.init(1, gc, colorChoice, x1,y1, x2, y2, 0, 0, widthModifier);
+                gc.strokeLine(x1, y1, x2, y2);
+                gc.setStroke(Color.valueOf(colorChoice));
+            }
 
             widthModifier -= 0.5f;
             if(widthModifier < 0.5){
@@ -596,9 +641,14 @@ public class Controller {
 
     private void drawCircle(double x, double y, float radius){
         GraphicsContext gc = drawArea.getGraphicsContext2D();
+        ArrayList<Node> lines = new ArrayList<>();
 
-
-        ArrayList<Node> lines = figures.init(5, gc, this.colors[(int) (Math.random() * 10) ], x,y, 0, 0, radius, 0,0);
+        if(colorChoice.equals("XXX")){
+            lines = figures.init(5, gc, this.colors[(int) (Math.random() * 10) ], x,y, 0, 0, radius, 0,0);
+        }
+        else{
+            lines = figures.init(5, gc, colorChoice, x,y, 0, 0, radius, 0,0);
+        }
 
         for (Node itemm: lines) {
             //  System.out.println("ITEM: " +  itemm.toString());
@@ -645,15 +695,26 @@ public class Controller {
         GraphicsContext gc = drawArea.getGraphicsContext2D();
         if(count < 1) {
            // g.drawRect(r.x, r.y, r.width, r.height);
-
-            ArrayList<Node> lines = figures.init(6, gc, this.colors[(int) (Math.random() * 10) ], x,y, 0, 0, 0, height, width);
+            ArrayList<Node> lines = new ArrayList<>();
+            if(colorChoice.equals("XXX")){
+                lines = figures.init(6, gc, this.colors[(int) (Math.random() * 10) ], x,y, 0, 0, 0, height, width);
+            }
+            else{
+                lines = figures.init(6, gc, colorChoice, x,y, 0, 0, 0, height, width);
+            }
 
             for (Node itemm: lines) {
                 //  System.out.println("ITEM: " +  itemm.toString());
                 //this.itemsDrawn.add(itemm);
                 //main.getRoot().getChildren().add(itemm);
                 gc.strokeRect(x,y,height,width);
-                gc.setStroke(Color.valueOf(this.colors[(int) (Math.random() * 10) ]));
+
+                if(colorChoice.equals("XXX")) {
+                    gc.setStroke(Color.valueOf(this.colors[(int) (Math.random() * 10)]));
+                }
+                else{
+                    gc.setStroke(Color.valueOf(colorChoice));
+                }
 
             }
 
@@ -677,13 +738,24 @@ public class Controller {
 
     private void rotatedSquare(double x, double y, double width, double height, int count){
         GraphicsContext gc = drawArea.getGraphicsContext2D();
+        ArrayList<Node> rectangles = new ArrayList<>();
 
-
-        ArrayList<Node> rectangles = figures.init(6, gc, this.colors[(int) (Math.random() * 10) ], x,y, 0, 0, 0, height, width);
+        if(colorChoice.equals("XXX")){
+            rectangles = figures.init(6, gc, this.colors[(int) (Math.random() * 10) ], x,y, 0, 0, 0, height, width);
+        }
+        else{
+            rectangles = figures.init(6, gc, colorChoice, x,y, 0, 0, 0, height, width);
+        }
 
         for (Node item: rectangles) {
             gc.strokeRect(x, y-50, width, height);
-            gc.setStroke(Color.valueOf(this.colors[(int) (Math.random() * 10)]));
+
+            if(colorChoice.equals("XXX")){
+                gc.setStroke(Color.valueOf(this.colors[(int) (Math.random() * 10)]));
+            }
+            else{
+                gc.setStroke(Color.valueOf(colorChoice));
+            }
             //this.itemsDrawn.add(item);
             //this.main.getRoot().getChildren().add(item);
         }
@@ -704,11 +776,23 @@ public class Controller {
         GraphicsContext gc = drawArea.getGraphicsContext2D();
 
         if (len >= 1 && radius > 2) {
-            ArrayList<Node> rectangles = figures.init(1, gc, this.colors[(int) (Math.random() * 10)], x, y, x + len, y, 0, 0, 1);
+            ArrayList<Node> rectangles = new ArrayList<>();
+
+            if(colorChoice.equals("XXX")){
+                rectangles = figures.init(1, gc, this.colors[(int) (Math.random() * 10)], x, y, x + len, y, 0, 0, 1);
+            }
+            else{
+                rectangles = figures.init(1, gc, colorChoice, x, y, x + len, y, 0, 0, 1);
+            }
 
             for (Node item : rectangles) {
                 gc.strokeLine(x, y, x+len, y);
-                gc.setStroke(Color.valueOf(this.colors[(int) (Math.random() * 10)]));
+                if(colorChoice.equals("XXX")){
+                    gc.setStroke(Color.valueOf(this.colors[(int) (Math.random() * 10)]));
+                }
+                else{
+                    gc.setStroke(Color.valueOf(colorChoice));
+                }
                // this.itemsDrawn.add(item);
                // this.main.getRoot().getChildren().add(item);
             }
@@ -741,7 +825,13 @@ public class Controller {
             kochCurve(c5,c2,times-1);
         }
         else{
-            ArrayList<Node> koch = figures.init(1,gc,"BLACK",c1.getX(),c1.getY(),c2.getX(),c2.getY(),0,0,1);
+            ArrayList<Node> koch = new ArrayList<>();
+            if(colorChoice.equals("XXX")){
+                koch = figures.init(1,gc,this.colors[(int) (Math.random() * 10)],c1.getX(),c1.getY(),c2.getX(),c2.getY(),0,0,1);
+            }
+            else{
+                koch = figures.init(1,gc,colorChoice,c1.getX(),c1.getY(),c2.getX(),c2.getY(),0,0,1);
+            }
             /*
             for (Node item : koch) {
                 this.itemsDrawn.add(item);
@@ -750,7 +840,13 @@ public class Controller {
             */
 
             gc.strokeLine(c1.getX(), c1.getY(), c2.getX(), c2.getY());
-            gc.setStroke(Color.valueOf(this.colors[(int) (Math.random() * 10)]));
+
+            if(colorChoice.equals("XXX")){
+                gc.setStroke(Color.valueOf(this.colors[(int) (Math.random() * 10)]));
+            }
+            else{
+                gc.setStroke(Color.valueOf(colorChoice));
+            }
         }
 
     }

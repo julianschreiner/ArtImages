@@ -1,4 +1,5 @@
-package sample;/**
+package sample;
+/**
  * Advanced Object Oriented Programming with Java, WS 2018 * Problem: AnimatedZoomOperator
  * Link: PDF Exercises
  *
