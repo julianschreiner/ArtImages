@@ -6,8 +6,10 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.*;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.input.ZoomEvent;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
+import javafx.scene.transform.Scale;
 import javafx.stage.*;
 import javafx.scene.shape.Rectangle;
 
@@ -19,6 +21,7 @@ public class Main extends Application {
 
     private Stage primaryStage;
     private AnchorPane pane;
+    private Scale scaleTransform;
 
     @Override
     public void start(Stage primaryStage) throws Exception{
@@ -33,6 +36,7 @@ public class Main extends Application {
             FXMLLoader loader = new FXMLLoader(Main.class.getResource("sample.fxml"));
             pane = loader.load();
 
+
             pane.setOnMouseClicked(new EventHandler<MouseEvent>() {
                 @Override
                 public void handle(MouseEvent event) {
@@ -40,6 +44,19 @@ public class Main extends Application {
                     System.out.println("Y: " + event.getSceneY());
                 }
             });
+
+            pane.setOnZoomStarted(new EventHandler<ZoomEvent>() {
+                @Override
+                public void handle(ZoomEvent zoomEvent) {
+                    System.out.println("zooms");
+                    double scaleValue = 1.5;
+                    scaleTransform = new Scale(scaleValue, scaleValue, 0, 0);
+                    System.out.println("Scale: " + scaleTransform);
+                    pane.getTransforms().add(scaleTransform);
+                }
+            });
+
+
 
             // TODO SET PANE HEIGHT
 
