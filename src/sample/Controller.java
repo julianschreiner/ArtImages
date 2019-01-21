@@ -13,12 +13,15 @@ import javafx.scene.canvas.Canvas;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 import java.util.*;
+import java.util.Timer;
 import java.util.concurrent.TimeUnit;
 
 import javafx.collections.*;
 import javafx.scene.layout.*;
 import javafx.event.*;
 import javafx.scene.shape.Line;
+
+import javax.swing.*;
 
 import static java.lang.Thread.sleep;
 
@@ -92,13 +95,14 @@ public class Controller {
     private int timer1Border = 20;
     private int timer2Border = 6;
     private int timer3Border = 7;
-    private int timer4Border = 10;
+    private int timer4Border = 5;
 
 
     private int timer1Counter = 1;
     private int timer2Counter = 1;
     private int timer3Counter = 1;
     private int timer4Counter = 1;
+
 
     @FXML
     private void initialize(){
@@ -117,6 +121,8 @@ public class Controller {
 
         itemsDrawn = new ArrayList<Node>();
         angleList = new ArrayList<Integer>();
+
+
     }
 
     @FXML
@@ -138,8 +144,8 @@ public class Controller {
             colorChoice = "BLACK";
         }
 
-        Double startPosX;
-        Double startPosY;
+        Double startPosX = 0.0;
+        Double startPosY = 0.0;
 
         if(!startPos.getText().isEmpty()){
             String[] coordinates = startPos.getText().split(",");
@@ -148,9 +154,36 @@ public class Controller {
             startPosY = Double.parseDouble(coordinates[1]);
         }
         else{
-            startPosX = 0.0;
-            startPosY = 0.0;
-            System.out.println("No starting point provided");
+            switch(userChoice){
+                case POINTALG:
+                    startPosX = 800.0;
+                    startPosY = 500.0;
+                    break;
+
+                case TREE:
+                    startPosX = 380.0;
+                    startPosY = 400.0;
+                    break;
+
+                case CIRCLE:
+                    startPosX = 380.0;
+                    startPosY = 260.0;
+                    break;
+
+                case CANTOR:
+                    startPosX = 10.0;
+                    startPosY = 20.0;
+                    break;
+
+                case KOCHCURVE:
+                    startPosX = 100.0;
+                    startPosY = 200.0;
+                    break;
+
+                    default:
+                        break;
+
+            }
         }
 
         Integer curveStart;
@@ -167,7 +200,9 @@ public class Controller {
 
         switch(userChoice){
             case POINTALG:
-                calculatePoint(800, 500, 3, 800);
+                calculatePoint(startPosX, startPosY, 3, 800);
+                final double xPosPointAlg = startPosX;
+                final double yPosPointAlg = startPosY;
                 timer.scheduleAtFixedRate(new TimerTask() {
                                               int i = 0;
                                               @Override
@@ -185,7 +220,7 @@ public class Controller {
                                                           type = 0;
                                                       }
 
-                                                      calculatePoint(800, 500, type, 800);
+                                                      calculatePoint(xPosPointAlg, yPosPointAlg, type, 800);
 
                                                   });
                                               }
@@ -194,7 +229,9 @@ public class Controller {
 
                 break;
             case TREE:
-                drawTree(380, 400, -90, 9, true,3.0f);
+                drawTree(startPosX, startPosY, -90, 9, true,3.0f);
+                final double xPosTree = startPosX;
+                final double yPosTree = startPosY;
                 timer1.scheduleAtFixedRate(new TimerTask() {
                                                //int i = 1;
                                                @Override
@@ -209,7 +246,7 @@ public class Controller {
                                                            timer1.purge();
                                                        }
 
-                                                       drawTree(380, 400, -90, 9, false,3.0f);
+                                                       drawTree(xPosTree, yPosTree, -90, 9, false,3.0f);
 
 
                                                    });
@@ -218,7 +255,7 @@ public class Controller {
                 );
                 break;
             case CIRCLE:
-                drawCircle(380,260, 190.0f);
+                drawCircle(startPosX,startPosY, 190.0f);
                 break;
             case SPONGE:
                 double size = CANVAS_WIDTH > CANVAS_HEIGHT ? (int) (CANVAS_HEIGHT * 0.8) : (int) (CANVAS_WIDTH * 0.8);
@@ -262,10 +299,12 @@ public class Controller {
                 );
                 break;
             case CANTOR:
-                cantor(10,20, CANVAS_WIDTH-20, 190.0f);
+                cantor(startPosX,startPosY, CANVAS_WIDTH-20, 190.0f);
+                double yPosCantor = startPosY;
+                final double xPosCantor = startPosX;
                 timer3.scheduleAtFixedRate(new TimerTask() {
                                                int i = 1;
-                                               int y = 20;
+                                               int y = (int) yPosCantor;
                                                @Override
                                                public void run() {
                                                    Platform.runLater(() -> {
@@ -279,19 +318,16 @@ public class Controller {
                                                        }
                                                        y+= 50;
 
-                                                       cantor(10,y, CANVAS_WIDTH-20, 190.0f);
+                                                       cantor(xPosCantor,y, CANVAS_WIDTH-20, 190.0f);
 
                                                    });
                                                }
                                            },  500,500
                 );
                 break;
-
             case KOCHCURVE:
-                Coordinates c1 = new Coordinates(100,200);
-                Coordinates c2 = new Coordinates(500,200);
-                Coordinates c3 = new Coordinates(100,400);
-                Coordinates c4 = new Coordinates(500,400);
+                Coordinates c1 = new Coordinates(startPosX,startPosY);
+                Coordinates c2 = new Coordinates(startPosX+400,startPosY);
                 timer4.scheduleAtFixedRate(new TimerTask() {
                                                int i = 1;
                                                int kochTimer = 4;
@@ -308,8 +344,8 @@ public class Controller {
                                                        }
 
                                                        kochCurve(c1,c2,kochTimer);
-                                                       //kochCurve(c3,c4,kochTimer);
                                                        kochTimer++;
+
 
 
                                                    });
@@ -350,7 +386,7 @@ public class Controller {
 
 
         //
-
+        this.drawArea.getGraphicsContext2D().clearRect(0,0, CANVAS_WIDTH, CANVAS_HEIGHT);
 
         for (Node item : itemsDrawn) {
             main.getRoot().getChildren().remove(item);
@@ -373,6 +409,7 @@ public class Controller {
         timer2.cancel();
         timer2.purge();
         timer2Counter = 0;
+
 
         timer3.cancel();
         timer3.purge();
@@ -463,6 +500,20 @@ public class Controller {
         lines.addAll(figures.init(1,gc, this.colors[(int) (Math.random() * 10) ], retArray[1].getX(), retArray[1].getY(), retArray[2].getX(), retArray[2].getY(), 0, 0, 1));
 
 
+        gc.strokeLine(retArray[0].getX(),retArray[0].getY(), retArray[1].getX(), retArray[1].getY());
+        gc.setStroke(Color.valueOf(this.colors[(int) (Math.random() * 10)]));
+
+        gc.strokeLine(retArray[2].getX(), retArray[2].getY(), retArray[3].getX(), retArray[3].getY());
+        gc.setStroke(Color.valueOf(this.colors[(int) (Math.random() * 10)]));
+
+        gc.strokeLine(retArray[0].getX(), retArray[0].getY(), retArray[3].getX(), retArray[3].getY());
+        gc.setStroke(Color.valueOf(this.colors[(int) (Math.random() * 10)]));
+
+        gc.strokeLine(retArray[1].getX(), retArray[1].getY(), retArray[2].getX(), retArray[2].getY());
+        gc.setStroke(Color.valueOf(this.colors[(int) (Math.random() * 10)]));
+
+
+
 
 
         ArrayList<Node> ret = new ArrayList<>();
@@ -475,6 +526,9 @@ public class Controller {
 
             ret.addAll(figures.init(type, gc, this.colors[(int) (Math.random() * 10) ], x, y, 0.0, 0.0, 0, 0, 0));
 
+
+            gc.strokeLine(x, y, 0.0, 0.0);
+            gc.setStroke(Color.valueOf(this.colors[(int) (Math.random() * 10)]));
         }
 
         // MERGE 2 ARRAYLIST'S
@@ -487,17 +541,17 @@ public class Controller {
 
         for (Node itemm: ret) {
             System.out.println("ITEM: " +  itemm.toString());
-            this.itemsDrawn.add(itemm);
-            main.getRoot().getChildren().add(itemm);
+            // this.itemsDrawn.add(itemm);
+            // main.getRoot().getChildren().add(itemm);
         }
 
 
     }
 
-    private void drawTree(int x1, int y1, double angle, int depth, Boolean firstCall, float widthModifier) {
+    private void drawTree(double x1, double y1, double angle, int depth, Boolean firstCall, float widthModifier) {
         if (depth == 0) return;
-        int x2 = x1 + (int) (Math.cos(Math.toRadians(angle)) * depth * 11.5);
-        int y2 = y1 + (int) (Math.sin(Math.toRadians(angle)) * depth * 9.0);
+        double x2 = x1 + (int) (Math.cos(Math.toRadians(angle)) * depth * 11.5);
+        double y2 = y1 + (int) (Math.sin(Math.toRadians(angle)) * depth * 9.0);
 
         int angleModifier;
         int angleCount = 20;
@@ -515,9 +569,15 @@ public class Controller {
 
         if(firstCall){
             lines = figures.init(1, gc, "BLACK", x1,y1 + 50, x2, y2, 0, 0, 5);
+
+            gc.strokeLine(x1, y1+50, x2, y2);
+            gc.setStroke(Color.valueOf(this.colors[(int) (Math.random() * 10)]));
         }
         else{
             lines = figures.init(1, gc, this.colors[(int) (Math.random() * 10) ], x1,y1, x2, y2, 0, 0, widthModifier);
+            gc.strokeLine(x1, y1, x2, y2);
+            gc.setStroke(Color.valueOf(this.colors[(int) (Math.random() * 10)]));
+
             widthModifier -= 0.5f;
             if(widthModifier < 0.5){
                 widthModifier = 0.25f;
@@ -527,8 +587,8 @@ public class Controller {
 
         for (Node itemm: lines) {
             //  System.out.println("ITEM: " +  itemm.toString());
-            this.itemsDrawn.add(itemm);
-            main.getRoot().getChildren().add(itemm);
+            //    this.itemsDrawn.add(itemm);
+            //     main.getRoot().getChildren().add(itemm);
         }
         //   System.out.println(angleList.toString());
         // System.out.println(angleList.get((int) Math.random() * angleList.size()));
@@ -596,6 +656,7 @@ public class Controller {
                 //main.getRoot().getChildren().add(itemm);
                 gc.strokeRect(x,y,height,width);
                 gc.setStroke(Color.valueOf(this.colors[(int) (Math.random() * 10) ]));
+
             }
 
             return;
@@ -623,8 +684,10 @@ public class Controller {
         ArrayList<Node> rectangles = figures.init(6, gc, this.colors[(int) (Math.random() * 10) ], x,y, 0, 0, 0, height, width);
 
         for (Node item: rectangles) {
-            this.itemsDrawn.add(item);
-            this.main.getRoot().getChildren().add(item);
+            gc.strokeRect(x, y-50, width, height);
+            gc.setStroke(Color.valueOf(this.colors[(int) (Math.random() * 10)]));
+            //this.itemsDrawn.add(item);
+            //this.main.getRoot().getChildren().add(item);
         }
 
         if(count < 1)
@@ -646,9 +709,13 @@ public class Controller {
             ArrayList<Node> rectangles = figures.init(1, gc, this.colors[(int) (Math.random() * 10)], x, y, x + len, y, 0, 0, 1);
 
             for (Node item : rectangles) {
-                this.itemsDrawn.add(item);
-                this.main.getRoot().getChildren().add(item);
+                gc.strokeLine(x, y, x+len, y);
+                gc.setStroke(Color.valueOf(this.colors[(int) (Math.random() * 10)]));
+                // this.itemsDrawn.add(item);
+                // this.main.getRoot().getChildren().add(item);
             }
+
+
 
             y += 20;
             radius *= 0.75f;
@@ -679,11 +746,16 @@ public class Controller {
         }
         else{
             ArrayList<Node> koch = figures.init(1,gc,"BLACK",c1.getX(),c1.getY(),c2.getX(),c2.getY(),0,0,1);
-
+/*
             for (Node item : koch) {
                 this.itemsDrawn.add(item);
                 this.main.getRoot().getChildren().add(item);
             }
+            */
+
+            gc.strokeLine(c1.getX(), c1.getY(), c2.getX(), c2.getY());
+            gc.setStroke(Color.valueOf(this.colors[(int) (Math.random() * 10)]));
+
         }
 
     }
