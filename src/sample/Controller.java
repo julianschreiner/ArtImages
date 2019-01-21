@@ -50,11 +50,11 @@ public class Controller {
 
     // VALUES FOR CURVE POINTS
     private static final double[] a = {0, 0.5, 0.5, 0},
-                                  b = {0.5, 0, 0, -0.5},
-                                  c = {0.5, 0, 0, -0.5},
-                                  d = {0, 0.5, 0.5, 0},
-                                  e = {0, 0, 0.5, 1},
-                                  f = {0, 0.5, 0.5, 0.5};
+            b = {0.5, 0, 0, -0.5},
+            c = {0.5, 0, 0, -0.5},
+            d = {0, 0.5, 0.5, 0},
+            e = {0, 0, 0.5, 1},
+            f = {0, 0.5, 0.5, 0.5};
 
 
 
@@ -106,7 +106,9 @@ public class Controller {
         drawArea.setWidth(CANVAS_WIDTH);
         drawArea.setLayoutX(X_OFFSET);
         drawArea.setLayoutY(Y_OFFSET);
-
+        startButton.setDisable(true);
+        resetButton.setDisable(true);
+        pauseButton.setDisable(true);
         ObservableList<String> list = FXCollections.observableArrayList(POINTALG,TREE,CIRCLE,SPONGE, ROTSQUARE, CANTOR,KOCHCURVE);
         choiceBox.setItems(list);
 
@@ -120,6 +122,9 @@ public class Controller {
     @FXML
     public void testMethod(){
         //drawShapes(gc);
+        startButton.setDisable(false);
+        resetButton.setDisable(false);
+        pauseButton.setDisable(false);
         GraphicsContext gc = drawArea.getGraphicsContext2D();
         String userChoice = choiceBox.getValue().toString();
         String colorChoice;
@@ -231,29 +236,29 @@ public class Controller {
                         sizeRotSquare,
                         1);
                 timer2.scheduleAtFixedRate(new TimerTask() {
-                    int i = 1;
-                                              @Override
-                                              public void run() {
-                                                  Platform.runLater(() -> {
-                                                      // your code here
-                                                      timer2Counter++;
-                                                      System.out.println("Count2: " + timer2Counter);
+                                               int i = 1;
+                                               @Override
+                                               public void run() {
+                                                   Platform.runLater(() -> {
+                                                       // your code here
+                                                       timer2Counter++;
+                                                       System.out.println("Count2: " + timer2Counter);
 
-                                                      if(timer2Counter > timer2Border){
-                                                          timer2.cancel();
-                                                          timer2.purge();
-                                                      }
+                                                       if(timer2Counter > timer2Border){
+                                                           timer2.cancel();
+                                                           timer2.purge();
+                                                       }
 
-                                                      rotatedSquare(
-                                                              CANVAS_WIDTH / 2 - sizeRotSquare / 2,
-                                                              CANVAS_HEIGHT / 2 - sizeRotSquare / 2 + 50,
-                                                              sizeRotSquare + 150,
-                                                              sizeRotSquare,
-                                                              i);
+                                                       rotatedSquare(
+                                                               CANVAS_WIDTH / 2 - sizeRotSquare / 2,
+                                                               CANVAS_HEIGHT / 2 - sizeRotSquare / 2 + 50,
+                                                               sizeRotSquare + 150,
+                                                               sizeRotSquare,
+                                                               timer2Counter);
 
-                                                  });
-                                              }
-                                          },  2500,2500
+                                                   });
+                                               }
+                                           },  2500,2500
                 );
                 break;
             case CANTOR:
@@ -281,6 +286,7 @@ public class Controller {
                                            },  500,500
                 );
                 break;
+
             case KOCHCURVE:
                 Coordinates c1 = new Coordinates(100,200);
                 Coordinates c2 = new Coordinates(500,200);
@@ -302,6 +308,7 @@ public class Controller {
                                                        }
 
                                                        kochCurve(c1,c2,kochTimer);
+                                                       //kochCurve(c3,c4,kochTimer);
                                                        kochTimer++;
 
 
@@ -318,7 +325,7 @@ public class Controller {
 
 
 
-     //   ArrayList<Node> ret = figures.init(Integer.parseInt(userChoice), gc, colorChoice, startPosX, startPosY, 0.0, 0.0, 0, 0 ,0); // TODO HEIGHT WIDTH
+        //   ArrayList<Node> ret = figures.init(Integer.parseInt(userChoice), gc, colorChoice, startPosX, startPosY, 0.0, 0.0, 0, 0 ,0); // TODO HEIGHT WIDTH
 /*
         for (Node item: ret) {
             System.out.println(item);
@@ -338,12 +345,11 @@ public class Controller {
         System.out.println("CLEARING...");
 /*
         CustomThread t1 = new CustomThread("ABC THREAD");
-
         t1.start();
 */
 
 
-   //
+        //
 
 
         for (Node item : itemsDrawn) {
@@ -367,7 +373,6 @@ public class Controller {
         timer2.cancel();
         timer2.purge();
         timer2Counter = 0;
-
 
         timer3.cancel();
         timer3.purge();
@@ -463,12 +468,12 @@ public class Controller {
         ArrayList<Node> ret = new ArrayList<>();
 
         for(Coordinates item : retArray){
-          //  System.out.println(item.toString());
+            //  System.out.println(item.toString());
 
             double x = item.getX();
             double y = item.getY();
 
-           ret.addAll(figures.init(type, gc, this.colors[(int) (Math.random() * 10) ], x, y, 0.0, 0.0, 0, 0, 0));
+            ret.addAll(figures.init(type, gc, this.colors[(int) (Math.random() * 10) ], x, y, 0.0, 0.0, 0, 0, 0));
 
         }
 
@@ -509,7 +514,7 @@ public class Controller {
 
 
         if(firstCall){
-             lines = figures.init(1, gc, "BLACK", x1,y1 + 50, x2, y2, 0, 0, 5);
+            lines = figures.init(1, gc, "BLACK", x1,y1 + 50, x2, y2, 0, 0, 5);
         }
         else{
             lines = figures.init(1, gc, this.colors[(int) (Math.random() * 10) ], x1,y1, x2, y2, 0, 0, widthModifier);
@@ -521,12 +526,12 @@ public class Controller {
 
 
         for (Node itemm: lines) {
-          //  System.out.println("ITEM: " +  itemm.toString());
+            //  System.out.println("ITEM: " +  itemm.toString());
             this.itemsDrawn.add(itemm);
             main.getRoot().getChildren().add(itemm);
         }
-     //   System.out.println(angleList.toString());
-       // System.out.println(angleList.get((int) Math.random() * angleList.size()));
+        //   System.out.println(angleList.toString());
+        // System.out.println(angleList.get((int) Math.random() * angleList.size()));
         int randomAngle = angleList.get((int) (Math.random() * angleList.size()));
         angleList.remove(angleList.indexOf(randomAngle));
         drawTree(x2, y2, angle - randomAngle, depth - 1, false, widthModifier);
@@ -547,7 +552,7 @@ public class Controller {
 
         if(radius > 2) {
             radius *= 0.75f;
-           // drawCircle(x, y, radius);
+            // drawCircle(x, y, radius);
 
             /*
             drawCircle(x + radius/2, y, radius/2);
@@ -567,8 +572,6 @@ public class Controller {
             drawCircle(x - radius/2 + 150, y, radius/2);
             drawCircle(x, y + radius/2 - 150, radius/2);
             drawCircle(x, y - radius/2 - 150, radius/2);
-
-
             drawCircle(x + radius/2 - 150, y, radius/2);
             drawCircle(x - radius/2 - 150, y, radius/2);
             drawCircle(x, y + radius/2 + 50, radius/2);
@@ -583,7 +586,7 @@ public class Controller {
         System.out.println(x + " , " + y);
         GraphicsContext gc = drawArea.getGraphicsContext2D();
         if(count < 1) {
-           // g.drawRect(r.x, r.y, r.width, r.height);
+            // g.drawRect(r.x, r.y, r.width, r.height);
 
             ArrayList<Node> lines = figures.init(6, gc, this.colors[(int) (Math.random() * 10) ], x,y, 0, 0, 0, height, width);
 
@@ -602,7 +605,7 @@ public class Controller {
         for(int i = 0; i < 3; i++) {
             for(int j = 0; j < 3; j++) {
                 if(!(i == 1 && j == 1)) {
-                   // fractal(new Rectangle(r.x + (int) (i * width), r.y + (int) (j * height), (int) width, (int) height), count - 1);
+                    // fractal(new Rectangle(r.x + (int) (i * width), r.y + (int) (j * height), (int) width, (int) height), count - 1);
 
                     sponge(count - 1, width2, height2, x + (int) (i * width2), y + (int) (j * height2));
                 }
@@ -679,7 +682,6 @@ public class Controller {
                 this.itemsDrawn.add(item);
                 this.main.getRoot().getChildren().add(item);
             }
-
         }
 
     }
