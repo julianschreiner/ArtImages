@@ -50,11 +50,11 @@ public class Controller {
 
     // VALUES FOR CURVE POINTS
     private static final double[] a = {0, 0.5, 0.5, 0},
-                                  b = {0.5, 0, 0, -0.5},
-                                  c = {0.5, 0, 0, -0.5},
-                                  d = {0, 0.5, 0.5, 0},
-                                  e = {0, 0, 0.5, 1},
-                                  f = {0, 0.5, 0.5, 0.5};
+            b = {0.5, 0, 0, -0.5},
+            c = {0.5, 0, 0, -0.5},
+            d = {0, 0.5, 0.5, 0},
+            e = {0, 0, 0.5, 1},
+            f = {0, 0.5, 0.5, 0.5};
 
 
 
@@ -106,7 +106,9 @@ public class Controller {
         drawArea.setWidth(CANVAS_WIDTH);
         drawArea.setLayoutX(X_OFFSET);
         drawArea.setLayoutY(Y_OFFSET);
-
+        startButton.setDisable(true);
+        resetButton.setDisable(true);
+        pauseButton.setDisable(true);
         ObservableList<String> list = FXCollections.observableArrayList(POINTALG,TREE,CIRCLE,SPONGE, ROTSQUARE, CANTOR,KOCHCURVE);
         choiceBox.setItems(list);
 
@@ -120,10 +122,10 @@ public class Controller {
     @FXML
     public void testMethod(){
         //drawShapes(gc);
+        startButton.setDisable(false);
+        resetButton.setDisable(false);
+        pauseButton.setDisable(false);
         GraphicsContext gc = drawArea.getGraphicsContext2D();
-
-
-
         String userChoice = choiceBox.getValue().toString();
         String colorChoice;
 
@@ -150,7 +152,6 @@ public class Controller {
             startPosY = 0.0;
             System.out.println("No starting point provided");
         }
-
 
         Integer curveStart;
 
@@ -253,7 +254,7 @@ public class Controller {
                                                               CANVAS_HEIGHT / 2 - sizeRotSquare / 2 + 50,
                                                               sizeRotSquare + 150,
                                                               sizeRotSquare,
-                                                              timer2Counter);
+                                                              i);
 
                                                   });
                                               }
@@ -285,7 +286,6 @@ public class Controller {
                                            },  500,500
                 );
                 break;
-
             case KOCHCURVE:
                 Coordinates c1 = new Coordinates(100,200);
                 Coordinates c2 = new Coordinates(500,200);
@@ -307,7 +307,6 @@ public class Controller {
                                                        }
 
                                                        kochCurve(c1,c2,kochTimer);
-                                                       //kochCurve(c3,c4,kochTimer);
                                                        kochTimer++;
 
 
@@ -373,6 +372,7 @@ public class Controller {
         timer2.cancel();
         timer2.purge();
         timer2Counter = 0;
+
 
         timer3.cancel();
         timer3.purge();
@@ -680,8 +680,6 @@ public class Controller {
             cantor(x + len * 2 / 3, y, len / 3, radius);
 
             cantor(x + len * 2 / 6, y, len / 6, radius);
-
-
 
 
         }
