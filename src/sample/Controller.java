@@ -201,13 +201,7 @@ public class Controller {
             curveStart = Integer.parseInt(startCurve.getText().toString());
         }
         System.out.println("Curve Start: " + curveStart);
-
-
-        this.timer1Counter = 1;
-        this.timer2Counter = 1;
-        this.timer3Counter = 1;
-        this.timer4Counter = 1;
-
+        
 
         switch(userChoice){
             case POINTALG:
@@ -428,30 +422,35 @@ public class Controller {
         else if(checkTimer1On){
             timer1.cancel();
             timer1.purge();
-            this.timer1Counter = 0;
+
             this.checkTimer1On = false;
         }
         else if(checkTimer2On){
             timer2.cancel();
             timer2.purge();
-            this.timer2Counter = 0;
+
             this.checkTimer2On = false;
         }
         else if(checkTimer3On){
             timer3.cancel();
             timer3.purge();
-            this.timer3Counter = 0;
+
             this.checkTimer3On = false;
         }
         else if(checkTimer4On){
             timer4.cancel();
             timer4.purge();
-            this.timer4Counter = 0;
+
             this.checkTimer4On = false;
         }
         else{
             return;
         }
+
+        this.timer1Counter = 1;
+        this.timer2Counter = 1;
+        this.timer3Counter = 1;
+        this.timer4Counter = 1;
 
 
     }
@@ -487,11 +486,6 @@ public class Controller {
 
     @FXML
     public void resumeTimer(){
-        timer = new Timer();
-        timer1 = new Timer();
-        timer2 = new Timer();
-        timer3 = new Timer();
-        timer4 = new Timer();
         testMethod();
     }
 
