@@ -126,7 +126,7 @@ public class Controller {
         ObservableList<String> list = FXCollections.observableArrayList(POINTALG,TREE,CIRCLE,SPONGE, ROTSQUARE, CANTOR,KOCHCURVE);
         choiceBox.setItems(list);
 
-        ObservableList<String> list2 = FXCollections.observableArrayList("BLUE","BLACK","GREEN","PURPLE","RED","BROWN","CYAN","GREY","PINK","LIME");
+        ObservableList<String> list2 = FXCollections.observableArrayList("NO COLOR","BLUE","BLACK","GREEN","PURPLE","RED","BROWN","CYAN","GREY","PINK","LIME");
         colorInput.setItems(list2);
 
         itemsDrawn = new ArrayList<Node>();
@@ -148,9 +148,7 @@ public class Controller {
         if(colorInput.getValue() != null){
             this.colorChoice = colorInput.getValue().toString();
         }
-        else{
-            this.colorChoice = "XXX";        // FALLBACK
-        }
+        
 
         Double startPosX = 0.0;
         Double startPosY = 0.0;
@@ -425,25 +423,25 @@ public class Controller {
         else if(checkTimer1On){
             timer1.cancel();
             timer1.purge();
-            timer1Counter = 0;
+            this.timer1Counter = 0;
             this.checkTimer1On = false;
         }
         else if(checkTimer2On){
             timer2.cancel();
             timer2.purge();
-            timer2Counter = 0;
+            this.timer2Counter = 0;
             this.checkTimer2On = false;
         }
         else if(checkTimer3On){
             timer3.cancel();
             timer3.purge();
-            timer3Counter = 0;
+            this.timer3Counter = 0;
             this.checkTimer3On = false;
         }
         else if(checkTimer4On){
             timer4.cancel();
             timer4.purge();
-            timer4Counter = 0;
+            this.timer4Counter = 0;
             this.checkTimer4On = false;
         }
         else{
@@ -536,7 +534,7 @@ public class Controller {
 
         ArrayList<Node> lines = new ArrayList<>();
 
-        if(colorChoice.equals("XXX")){
+        if(colorChoice.equals("NO COLOR")){
             lines = figures.init(1, gc, this.colors[(int) (Math.random() * 10) ], retArray[0].getX(),retArray[0].getY(), retArray[1].getX(), retArray[1].getY(),0, 0, 1);
             lines.addAll(figures.init(1,gc, this.colors[(int) (Math.random() * 10) ], retArray[2].getX(), retArray[2].getY(), retArray[3].getX(), retArray[3].getY(),0, 0, 1));
 
@@ -592,7 +590,7 @@ public class Controller {
             double y = item.getY();
 
 
-            if(colorChoice.equals("XXX")){
+            if(colorChoice.equals("NO COLOR")){
                 ret.addAll(figures.init(type, gc, this.colors[(int) (Math.random() * 10) ], x, y, 0.0, 0.0, 0, 0, 0));
                 gc.strokeLine(x, y, 0.0, 0.0);
                 gc.setStroke(Color.valueOf(this.colors[(int) (Math.random() * 10)]));
@@ -624,6 +622,7 @@ public class Controller {
     }
 
     private void drawTree(double x1, double y1, double angle, int depth, Boolean firstCall, float widthModifier) {
+        System.out.println("First CAll: " + firstCall);
         if (depth == 0) return;
         double x2 = x1 + (int) (Math.cos(Math.toRadians(angle)) * depth * 11.5);
         double y2 = y1 + (int) (Math.sin(Math.toRadians(angle)) * depth * 9.0);
@@ -650,7 +649,7 @@ public class Controller {
         }
         else{
 
-            if(colorChoice.equals("XXX")){
+            if(colorChoice.equals("NO COLOR")){
                 lines = figures.init(1, gc, this.colors[(int) (Math.random() * 10) ], x1,y1, x2, y2, 0, 0, widthModifier);
                 gc.strokeLine(x1, y1, x2, y2);
                 gc.setStroke(Color.valueOf(this.colors[(int) (Math.random() * 10)]));
@@ -685,7 +684,7 @@ public class Controller {
         GraphicsContext gc = drawArea.getGraphicsContext2D();
         ArrayList<Node> lines = new ArrayList<>();
 
-        if(colorChoice.equals("XXX")){
+        if(colorChoice.equals("NO COLOR")){
             lines = figures.init(5, gc, this.colors[(int) (Math.random() * 10) ], x,y, 0, 0, radius, 0,0);
         }
         else{
@@ -738,7 +737,7 @@ public class Controller {
         if(count < 1) {
            // g.drawRect(r.x, r.y, r.width, r.height);
             ArrayList<Node> lines = new ArrayList<>();
-            if(colorChoice.equals("XXX")){
+            if(colorChoice.equals("NO COLOR")){
                 lines = figures.init(6, gc, this.colors[(int) (Math.random() * 10) ], x,y, 0, 0, 0, height, width);
             }
             else{
@@ -751,7 +750,7 @@ public class Controller {
                 //main.getRoot().getChildren().add(itemm);
                 gc.strokeRect(x,y,height,width);
 
-                if(colorChoice.equals("XXX")) {
+                if(colorChoice.equals("NO COLOR")) {
                     gc.setStroke(Color.valueOf(this.colors[(int) (Math.random() * 10)]));
                 }
                 else{
@@ -782,7 +781,7 @@ public class Controller {
         GraphicsContext gc = drawArea.getGraphicsContext2D();
         ArrayList<Node> rectangles = new ArrayList<>();
 
-        if(colorChoice.equals("XXX")){
+        if(colorChoice.equals("NO COLOR")){
             rectangles = figures.init(6, gc, this.colors[(int) (Math.random() * 10) ], x,y, 0, 0, 0, height, width);
         }
         else{
@@ -792,7 +791,7 @@ public class Controller {
         for (Node item: rectangles) {
             gc.strokeRect(x, y-50, width, height);
 
-            if(colorChoice.equals("XXX")){
+            if(colorChoice.equals("NO COLOR")){
                 gc.setStroke(Color.valueOf(this.colors[(int) (Math.random() * 10)]));
             }
             else{
@@ -820,7 +819,7 @@ public class Controller {
         if (len >= 1 && radius > 2) {
             ArrayList<Node> rectangles = new ArrayList<>();
 
-            if(colorChoice.equals("XXX")){
+            if(colorChoice.equals("NO COLOR")){
                 rectangles = figures.init(1, gc, this.colors[(int) (Math.random() * 10)], x, y, x + len, y, 0, 0, 1);
             }
             else{
@@ -829,7 +828,7 @@ public class Controller {
 
             for (Node item : rectangles) {
                 gc.strokeLine(x, y, x+len, y);
-                if(colorChoice.equals("XXX")){
+                if(colorChoice.equals("NO COLOR")){
                     gc.setStroke(Color.valueOf(this.colors[(int) (Math.random() * 10)]));
                 }
                 else{
@@ -868,7 +867,7 @@ public class Controller {
         }
         else{
             ArrayList<Node> koch = new ArrayList<>();
-            if(colorChoice.equals("XXX")){
+            if(colorChoice.equals("NO COLOR")){
                 koch = figures.init(1,gc,this.colors[(int) (Math.random() * 10)],c1.getX(),c1.getY(),c2.getX(),c2.getY(),0,0,1);
             }
             else{
@@ -883,7 +882,7 @@ public class Controller {
 
             gc.strokeLine(c1.getX(), c1.getY(), c2.getX(), c2.getY());
 
-            if(colorChoice.equals("XXX")){
+            if(colorChoice.equals("NO COLOR")){
                 gc.setStroke(Color.valueOf(this.colors[(int) (Math.random() * 10)]));
             }
             else{
