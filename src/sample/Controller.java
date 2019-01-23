@@ -15,6 +15,7 @@ import javafx.scene.paint.Color;
 import java.util.*;
 import java.util.Timer;
 import java.util.concurrent.TimeUnit;
+import java.util.concurrent.atomic.AtomicInteger;
 
 import javafx.collections.*;
 import javafx.scene.layout.*;
@@ -105,17 +106,31 @@ public class Controller {
     private int timer3Border = 7;
     private int timer4Border = 5;
 
-
+/*
     private int timer1Counter = 1;
     private int timer2Counter = 1;
     private int timer3Counter = 1;
     private int timer4Counter = 1;
+*/
+
+    private static final AtomicInteger timer1Counter = new AtomicInteger();
+    private static final AtomicInteger timer2Counter = new AtomicInteger();
+    private static final AtomicInteger timer3Counter = new AtomicInteger();
+    private static final AtomicInteger timer4Counter = new AtomicInteger();
+
 
     private String colorChoice;
 
 
+
+
     @FXML
     private void initialize(){
+        timer1Counter.set(1);
+        timer2Counter.set(1);
+        timer3Counter.set(1);
+        timer4Counter.set(1);
+
         drawArea.setHeight(CANVAS_HEIGHT);
         drawArea.setWidth(CANVAS_WIDTH);
         drawArea.setLayoutX(X_OFFSET);
@@ -201,7 +216,7 @@ public class Controller {
             curveStart = Integer.parseInt(startCurve.getText().toString());
         }
         System.out.println("Curve Start: " + curveStart);
-        
+
 
         switch(userChoice){
             case POINTALG:
@@ -227,7 +242,7 @@ public class Controller {
                                                           type = 0;
                                                       }
 
-                                                      calculatePoint(800, 500, type, 800);
+                                                      calculatePoint(xPosPointAlg, yPosPointAlg, type, 800);
 
                                                   });
                                               }
@@ -247,10 +262,10 @@ public class Controller {
                                                public void run() {
                                                    Platform.runLater(() -> {
                                                        // your code here
-                                                       timer1Counter++;
+                                                       timer1Counter.incrementAndGet();
                                                        System.out.println("COUNT: " + timer1Counter);
 
-                                                       if(timer1Counter >= timer1Border){
+                                                       if(timer1Counter.get() >= timer1Border){
                                                            timer1.cancel();
                                                            timer1.purge();
                                                        }
@@ -283,27 +298,30 @@ public class Controller {
                         1);
 
                 timer2 = new Timer();
-                this.checkTimer2On = true;
+                checkTimer2On = true;
+
                 timer2.scheduleAtFixedRate(new TimerTask() {
                                                int i = 1;
                                                @Override
                                                public void run() {
                                                    Platform.runLater(() -> {
                                                        // your code here
-                                                       timer2Counter++;
+                                                       timer2Counter.incrementAndGet();
                                                        System.out.println("Count2: " + timer2Counter);
 
-                                                       if(timer2Counter > timer2Border){
+                                                       if(timer2Counter.get() > timer2Border){
                                                            timer2.cancel();
                                                            timer2.purge();
                                                        }
+
+                                                       // TODO MAKE USE OF STARTX/STARTY FROM INPUT
 
                                                       rotatedSquare(
                                                               CANVAS_WIDTH / 2 - sizeRotSquare / 2,
                                                               CANVAS_HEIGHT / 2 - sizeRotSquare / 2 + 50,
                                                               sizeRotSquare + 150,
                                                               sizeRotSquare,
-                                                              timer2Counter);
+                                                              timer2Counter.get());
 
                                                   });
                                               }
@@ -323,10 +341,10 @@ public class Controller {
                                                public void run() {
                                                    Platform.runLater(() -> {
                                                        // your code here
-                                                       timer3Counter++;
+                                                       timer3Counter.incrementAndGet();
                                                        System.out.println("Count3: " + timer3Counter);
 
-                                                       if(timer3Counter > timer3Border){
+                                                       if(timer3Counter.get() > timer3Border){
                                                            timer3.cancel();
                                                            timer3.purge();
                                                        }
@@ -345,6 +363,7 @@ public class Controller {
                 Coordinates c2 = new Coordinates(startPosX+400,startPosY);
                 timer4 = new Timer();
                 this.checkTimer4On = true;
+                System.out.println("COUNTER 4 STATE: " + timer4Counter);
                 timer4.scheduleAtFixedRate(new TimerTask() {
                                                int i = 1;
                                                int kochTimer = 4;
@@ -352,10 +371,10 @@ public class Controller {
                                                public void run() {
                                                    Platform.runLater(() -> {
                                                        // your code here
-                                                       timer4Counter++;
+                                                       timer4Counter.incrementAndGet();
                                                        System.out.println("Count: " + timer4Counter);
 
-                                                       if(timer4Counter > timer4Border){
+                                                       if(timer4Counter.get() > timer4Border){
                                                            timer4.cancel();
                                                            timer4.purge();
                                                        }
@@ -401,7 +420,7 @@ public class Controller {
 */
 
 
-        //
+
         this.drawArea.getGraphicsContext2D().clearRect(0,0, CANVAS_WIDTH, CANVAS_HEIGHT);
 
         for (Node item : itemsDrawn) {
@@ -412,45 +431,48 @@ public class Controller {
 
     @FXML
     public void resetTimer(){
+        // TODO FIX ERROR IN ALWAYS GOES INTO ELSE BRANCH
         System.out.println("Reset");
 
         if(checkTimerOn){
             timer.cancel();
             timer.purge();
-            this.checkTimerOn = false;
+            checkTimerOn = false;
         }
         else if(checkTimer1On){
             timer1.cancel();
             timer1.purge();
 
-            this.checkTimer1On = false;
+            checkTimer1On = false;
         }
         else if(checkTimer2On){
             timer2.cancel();
             timer2.purge();
 
-            this.checkTimer2On = false;
+            timer2Counter.set(1);
+
+            checkTimer2On = false;
         }
         else if(checkTimer3On){
             timer3.cancel();
             timer3.purge();
 
-            this.checkTimer3On = false;
+            checkTimer3On = false;
         }
         else if(checkTimer4On){
             timer4.cancel();
             timer4.purge();
-
-            this.checkTimer4On = false;
+            checkTimer4On = false;
         }
         else{
+            System.out.println("return");
             return;
         }
 
-        this.timer1Counter = 1;
-        this.timer2Counter = 1;
-        this.timer3Counter = 1;
-        this.timer4Counter = 1;
+        timer1Counter.set(1);
+        timer3Counter.set(1);
+        timer4Counter.set(1);
+
 
 
     }
@@ -460,23 +482,18 @@ public class Controller {
 
         if(checkTimerOn){
             timer.cancel();
-            this.checkTimerOn = false;
         }
         else if(checkTimer1On){
             timer1.cancel();
-            this.checkTimer1On = false;
         }
         else if(checkTimer2On){
             timer2.cancel();
-            this.checkTimer2On = false;
         }
         else if(checkTimer3On){
             timer3.cancel();
-            this.checkTimer3On = false;
         }
         else if(checkTimer4On){
             timer4.cancel();
-            this.checkTimer4On = false;
         }
         else{
             return;
@@ -690,10 +707,14 @@ public class Controller {
             lines = figures.init(5, gc, colorChoice, x,y, 0, 0, radius, 0,0);
         }
 
+
+
         for (Node itemm: lines) {
             //  System.out.println("ITEM: " +  itemm.toString());
-            this.itemsDrawn.add(itemm);
-            main.getRoot().getChildren().add(itemm);
+            // TODO FIX THIS SO IT LOOKS NICE AND DRAWING WITH CANVAS
+             gc.strokeOval(x, y, radius, radius);
+            //this.itemsDrawn.add(itemm);
+            //main.getRoot().getChildren().add(itemm);
         }
 
         if(radius > 2) {
