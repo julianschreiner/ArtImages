@@ -19,26 +19,26 @@ import javafx.util.Duration;
 
 import java.util.*;
 
-public class AnimatedZoomOperator {
+public class ZoomHelperClass {
 
     private Timeline timeline;
 
-    public AnimatedZoomOperator() {
+    public ZoomHelperClass() {
         this.timeline = new Timeline(60);
     }
 
     public void zoom(Node node, double factor, double x, double y) {
-        // determine scale
+        // scale herausfinden
         double oldScale = node.getScaleX();
         double scale = oldScale * factor;
         double f = (scale / oldScale) - 1;
 
-        // determine offset that we will have to move the node
+        // offset herausfinden wo wir den zoom hinbewegen
         Bounds bounds = node.localToScene(node.getBoundsInLocal());
         double dx = (x - (bounds.getWidth() / 2 + bounds.getMinX()));
         double dy = (y - (bounds.getHeight() / 2 + bounds.getMinY()));
 
-        // timeline that scales and moves the node
+        // node moven
         timeline.getKeyFrames().clear();
         timeline.getKeyFrames().addAll(
                 new KeyFrame(Duration.millis(200), new KeyValue(node.translateXProperty(), node.getTranslateX() - f * dx)),

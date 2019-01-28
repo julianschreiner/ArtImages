@@ -176,13 +176,13 @@ public class Controller {
         else{
             switch(userChoice){
                 case POINTALG:
-                    startPosX = 800.0;
+                    startPosX = 900.0;
                     startPosY = 500.0;
                     break;
 
                 case TREE:
                     startPosX = 450.0;
-                    startPosY = 450.0;
+                    startPosY = 370.0;
                     break;
 
                 case CIRCLE:
@@ -209,6 +209,7 @@ public class Controller {
         switch(userChoice){
             case POINTALG:
                 calculatePoint(startPosX, startPosY, 3, 800);
+                calculatePoint(startPosX+200, startPosY-200, 3, 800);
                 final double xPosPointAlg = startPosX;
                 final double yPosPointAlg = startPosY;
                 timer = new Timer();
@@ -231,6 +232,7 @@ public class Controller {
                                                       }
 
                                                       calculatePoint(xPosPointAlg, yPosPointAlg, type, 800);
+                                                      calculatePoint(xPosPointAlg+200, yPosPointAlg-200, type, 800);
 
                                                   });
                                               }
@@ -239,7 +241,20 @@ public class Controller {
 
                 break;
             case TREE:
+                // Oben
                 drawTree(startPosX, startPosY, -90, 9, true,3.0f);
+
+                // Unten
+                drawTree(startPosX, startPosY, 90, 9, true,3.0f);
+
+                //Links
+                drawTree(startPosX, startPosY, 180, 9, true,3.0f);
+
+                //Rechts
+                drawTree(startPosX, startPosY, 0, 9, true,3.0f);
+
+
+
                 final double xPosTree = startPosX;
                 final double yPosTree = startPosY;
                 timer1 = new Timer();
@@ -259,6 +274,10 @@ public class Controller {
                                                        }
 
                                                        drawTree(xPosTree, yPosTree, -90, 9, false,3.0f);
+                                                       drawTree(xPosTree, yPosTree, 90, 9, false,3.0f);
+
+                                                       drawTree(xPosTree, yPosTree, 180, 9, false,3.0f);
+                                                       drawTree(xPosTree, yPosTree, 0, 9, false,3.0f);
 
 
                                                    });
@@ -271,7 +290,10 @@ public class Controller {
                 break;
             case SPONGE:
                 double size = CANVAS_WIDTH > CANVAS_HEIGHT ? (int) (CANVAS_HEIGHT * 0.8) : (int) (CANVAS_WIDTH * 0.8);
-                sponge(5,size, size, CANVAS_WIDTH / 2 - size / 2, CANVAS_HEIGHT / 2 - size / 2);
+                //sponge(5,size, size, CANVAS_WIDTH / 2 - size / 2, CANVAS_HEIGHT / 2 - size / 2);
+                sponge(5,size, size, CANVAS_WIDTH / 32 - size / 32, CANVAS_HEIGHT / 32 - size / 32);
+                sponge(5,size, size, (CANVAS_WIDTH / 32 - size / 32) + 200, CANVAS_HEIGHT / 32 - size / 32);
+                sponge(5,size, size, (CANVAS_WIDTH / 32 - size / 32) + 350, CANVAS_HEIGHT / 32 - size / 32);
                 break;
             case ROTSQUARE:
                 double sizeRotSquare = CANVAS_WIDTH > CANVAS_HEIGHT ? CANVAS_HEIGHT / 3 : CANVAS_WIDTH / 3;
@@ -284,6 +306,38 @@ public class Controller {
                         sizeRotSquare + 150,
                         sizeRotSquare,
                         1);
+
+                for (int j = 0; j < 5; j++) {
+                    rotatedSquare(
+                            384.0 - j * 20,
+                            230.0 + j * 20,
+                            sizeRotSquare + 150,
+                            sizeRotSquare,
+                            1);
+                }
+
+                for (int j = 0; j < 5; j++) {
+                    rotatedSquare(
+                            384.0 + j * 15,
+                            230.0 - j * 15,
+                            sizeRotSquare + 200,
+                            sizeRotSquare,
+                            1);
+                }
+
+                for (int j = 0; j < 5; j++) {
+                    rotatedSquare(
+                            384.0 - j * 20,
+                            230.0 - j * 20,
+                            sizeRotSquare + 200,
+                            sizeRotSquare,
+                            1);
+                }
+
+                /*
+                        x: 384.5
+                        y: 230.0
+                 */
 
                 timer2 = new Timer();
                 checkTimer2On = true;
@@ -311,13 +365,44 @@ public class Controller {
                                                               sizeRotSquare,
                                                               timer2Counter.get());
 
-                                                  });
+                                                       for (int j = 0; j < 5; j++) {
+                                                           rotatedSquare(
+                                                                   384.0 - j * 20,
+                                                                   230.0 + j * 20,
+                                                                   sizeRotSquare + 150,
+                                                                   sizeRotSquare,
+                                                                   timer2Counter.get());
+                                                       }
+
+                                                       for (int j = 0; j < 5; j++) {
+                                                           rotatedSquare(
+                                                                   384.0 + j * 15,
+                                                                   230.0 - j * 15,
+                                                                   sizeRotSquare + 200,
+                                                                   sizeRotSquare,
+                                                                   timer2Counter.get());
+                                                       }
+
+                                                       for (int j = 0; j < 5; j++) {
+                                                           rotatedSquare(
+                                                                   384.0 - j * 20 / 2.0,
+                                                                   230.0 - j * 20 / 2.0,
+                                                                   sizeRotSquare + 200,
+                                                                   sizeRotSquare,
+                                                                   timer2Counter.get());
+                                                       }
+
+                                                   });
                                               }
                                           },  2500,2500
                 );
+
+
+
                 break;
             case CANTOR:
                 cantor(startPosX,startPosY, CANVAS_WIDTH-20, 190.0f);
+
                 double yPosCantor = startPosY;
                 final double xPosCantor = startPosX;
                 timer3 = new Timer();
@@ -368,6 +453,7 @@ public class Controller {
                                                        }
 
                                                        kochCurve(c1,c2,kochTimer);
+
                                                        kochTimer++;
 
 
@@ -515,12 +601,12 @@ public class Controller {
             jNew += (double) (Math.cos(Math.toRadians(-90)) * 5 * 5.0);
 
 
-            if(iNew >= 770){
-                iNew = Math.random() * 770 + 20;
+            if(iNew >= 1000){
+                iNew = Math.random() * 1000 + 20;
             }
 
-            if(jNew >= 420){
-                jNew = Math.random() * 420 + 1;
+            if(jNew >= 600){
+                jNew = Math.random() * 600 + 1;
             }
 
 
@@ -789,6 +875,7 @@ public class Controller {
         GraphicsContext gc = drawArea.getGraphicsContext2D();
         ArrayList<Node> rectangles = new ArrayList<>();
 
+
         if(colorChoice.equals("NO COLOR")){
             rectangles = figures.init(6, gc, this.colors[(int) (Math.random() * 10) ], x,y, 0, 0, 0, height, width);
         }
@@ -852,6 +939,15 @@ public class Controller {
             cantor(x, y, len / 3, radius);
             cantor(x + len * 2 / 3, y, len / 3, radius);
 
+            cantor(x + len * 2, y, len / 3, radius);
+            cantor(x + len * 4, y +50, len / 3, radius);
+            cantor(x + len * 6, y+100, len / 3, radius);
+            cantor(x + len * 8, y+100, len / 3, radius);
+            cantor(x + len * 10, y+75, len / 3, radius);
+
+
+
+
             cantor(x + len * 2 / 6, y, len / 6, radius);
 
 
@@ -887,6 +983,8 @@ public class Controller {
                 this.main.getRoot().getChildren().add(item);
             }
             */
+
+            gc.setFill(Color.BLUE);
 
             gc.strokeLine(c1.getX(), c1.getY(), c2.getX(), c2.getY());
 

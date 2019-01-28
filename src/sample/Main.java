@@ -3,6 +3,7 @@ package sample;
 import javafx.application.Application;
 import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
+import javafx.geometry.Insets;
 import javafx.scene.Parent;
 import javafx.scene.*;
 import javafx.scene.input.MouseEvent;
@@ -30,8 +31,6 @@ public class Main extends Application {
     public void start(Stage primaryStage) throws Exception{
         this.primaryStage = primaryStage;
         mainWindow();
-
-
     }
 
     public void mainWindow(){
@@ -67,11 +66,8 @@ public class Main extends Application {
 
 
                     zoomOperator.zoom(pane.getChildren().get(4), zoomFactor, zoomEvent.getSceneX(), zoomEvent.getSceneY());
-
                 }
             });
-
-
 
             // TODO SET PANE HEIGHT
 
@@ -86,7 +82,6 @@ public class Main extends Application {
             //primaryStage.setMinWidth(600.00);
 
             primaryStage.setTitle("Java Project");
-
 
             Controller windowController = loader.getController();
             windowController.setMain(this);
