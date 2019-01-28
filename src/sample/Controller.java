@@ -20,6 +20,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 import javafx.collections.*;
 import javafx.scene.layout.*;
 import javafx.event.*;
+import javafx.scene.shape.ArcType;
 import javafx.scene.shape.Line;
 
 import javax.swing.*;
@@ -101,7 +102,7 @@ public class Controller {
 
 
     private int timer1Border = 20;
-    private int timer2Border = 6;
+    private int timer2Border = 7;
     private int timer3Border = 7;
     private int timer4Border = 5;
 
@@ -119,8 +120,6 @@ public class Controller {
 
 
     private String colorChoice;
-
-
 
 
     @FXML
@@ -278,7 +277,7 @@ public class Controller {
 
                                                        drawTree(xPosTree, yPosTree, 180, 9, false,3.0f);
                                                        drawTree(xPosTree, yPosTree, 0, 9, false,3.0f);
-
+        
 
                                                    });
                                                }
@@ -494,7 +493,7 @@ public class Controller {
 */
 
 
-
+        //
         this.drawArea.getGraphicsContext2D().clearRect(0,0, CANVAS_WIDTH, CANVAS_HEIGHT);
 
         for (Node item : itemsDrawn) {
@@ -774,6 +773,7 @@ public class Controller {
         GraphicsContext gc = drawArea.getGraphicsContext2D();
         ArrayList<Node> lines = new ArrayList<>();
 
+
         if(colorChoice.equals("NO COLOR")){
             lines = figures.init(5, gc, this.colors[(int) (Math.random() * 10) ], x,y, 0, 0, radius, 0,0);
         }
@@ -781,14 +781,14 @@ public class Controller {
             lines = figures.init(5, gc, colorChoice, x,y, 0, 0, radius, 0,0);
         }
 
-
-
         for (Node itemm: lines) {
-            //  System.out.println("ITEM: " +  itemm.toString());
+            System.out.println("ITEM: " +  itemm.toString());
             // TODO FIX THIS SO IT LOOKS NICE AND DRAWING WITH CANVAS
-             gc.strokeOval(x, y, radius, radius);
-            //this.itemsDrawn.add(itemm);
-            //main.getRoot().getChildren().add(itemm);
+            //gc.strokeOval(x, y, radius, radius);
+            this.itemsDrawn.add(itemm);
+            main.getRoot().getChildren().add(itemm);
+
+
         }
 
         if(radius > 2) {
@@ -884,7 +884,9 @@ public class Controller {
         }
 
         for (Node item: rectangles) {
-            gc.strokeRect(x, y-50, width, height);
+            gc.strokeRect(x, y, width, height);
+            gc.strokeRect(x-200,y-200,width,height);
+            gc.strokeRect(x+200,y+200,width,height);
 
             if(colorChoice.equals("NO COLOR")){
                 gc.setStroke(Color.valueOf(this.colors[(int) (Math.random() * 10)]));
