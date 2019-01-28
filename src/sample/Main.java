@@ -25,7 +25,7 @@ public class Main extends Application {
     private AnchorPane pane;
     private Scale scaleTransform;
     // Create operator
-    private AnimatedZoomOperator zoomOperator = new AnimatedZoomOperator();
+    private ZoomHelperClass zoomOperator = new ZoomHelperClass();
 
     @Override
     public void start(Stage primaryStage) throws Exception{
