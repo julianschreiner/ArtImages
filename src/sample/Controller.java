@@ -38,7 +38,6 @@ public class Controller {
     @FXML private ChoiceBox colorInput;
     @FXML private ChoiceBox choiceBox;
     @FXML private TextField startPos;
-    @FXML private TextField layer;
     @FXML private TextField sizeOfSquare;
 
     // Size of the canvas for the Mandelbrot set
@@ -206,17 +205,6 @@ public class Controller {
 
             }
         }
-
-        Integer curveStart;
-
-        if(startCurve.getText().isEmpty()){
-            curveStart = 5;
-        }
-        else{
-            curveStart = Integer.parseInt(startCurve.getText().toString());
-        }
-        System.out.println("Curve Start: " + curveStart);
-
 
         switch(userChoice){
             case POINTALG:
