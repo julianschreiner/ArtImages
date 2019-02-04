@@ -106,6 +106,7 @@ public class Controller {
     private int timer3Border = 7;
     private int timer4Border = 5;
 
+
 /*
     private int timer1Counter = 1;
     private int timer2Counter = 1;
@@ -161,6 +162,13 @@ public class Controller {
         if(colorInput.getValue() != null){
             this.colorChoice = colorInput.getValue().toString();
         }
+
+        timer1Border = Integer.parseInt(sizeOfSquare.getText());
+        timer2Border = Integer.parseInt(sizeOfSquare.getText());
+        timer3Border = Integer.parseInt(sizeOfSquare.getText());
+        timer4Border = Integer.parseInt(sizeOfSquare.getText());
+
+
         
 
         Double startPosX = 0.0;
@@ -545,6 +553,10 @@ public class Controller {
         timer1Counter.set(1);
         timer3Counter.set(1);
         timer4Counter.set(1);
+
+        sizeOfSquare.clear();
+        startPos.clear();
+
 
 
 
