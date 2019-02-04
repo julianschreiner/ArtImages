@@ -9,7 +9,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1000.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.Controller">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1000.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/8.0.172-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.Controller">
    <children>
       <Label layoutX="31.0" layoutY="692.0" prefHeight="27.0" prefWidth="126.0" text="Parameters" />
       <Text layoutX="32.0" layoutY="741.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Color" wrappingWidth="33.991701900959015" />
@@ -23,7 +23,7 @@
       <Text layoutX="388.0" layoutY="808.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Start pos (x,y)" />
       <TextField fx:id="startPos" layoutX="388.0" layoutY="813.0" />
       <TextField fx:id="sizeOfSquare" layoutX="388.0" layoutY="750.0" />
-      <Text layoutX="388.0" layoutY="741.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Size of square" />
+      <Text layoutX="388.0" layoutY="741.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Steps" />
       <Button fx:id="clearButton" layoutX="714.0" layoutY="813.0" mnemonicParsing="false" onAction="#clearCanvas" text="Clear" />
       <ChoiceBox fx:id="colorInput" layoutX="32.0" layoutY="750.0" prefWidth="150.0" />
       <Button fx:id="resetButton" layoutX="602.0" layoutY="813.0" mnemonicParsing="false" onAction="#resetTimer" text="Reset" />
