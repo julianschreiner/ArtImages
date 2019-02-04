@@ -163,11 +163,20 @@ public class Controller {
             this.colorChoice = colorInput.getValue().toString();
         }
 
-        timer1Border = Integer.parseInt(sizeOfSquare.getText());
-        timer2Border = Integer.parseInt(sizeOfSquare.getText());
-        timer3Border = Integer.parseInt(sizeOfSquare.getText());
-        timer4Border = Integer.parseInt(sizeOfSquare.getText());
 
+        if(!sizeOfSquare.getText().isEmpty()){
+            timer1Border = Integer.parseInt(sizeOfSquare.getText());
+            timer2Border = Integer.parseInt(sizeOfSquare.getText());
+            timer3Border = Integer.parseInt(sizeOfSquare.getText());
+            timer4Border = Integer.parseInt(sizeOfSquare.getText());
+        }
+        else{
+            timer1Border = 20;
+            timer2Border = 7;
+            timer3Border = 7;
+            timer4Border = 5;
+
+        }
 
         
 
